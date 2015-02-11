@@ -8,7 +8,7 @@
 
 #import "BFCategoryViewController.h"
 #import "BFCategoryTableViewCell.h"
-#import "BFCategory.h"
+#import "CategoryMain.h"
 #import "BFClientAPI.h"
 
 static NSString *const CategoryCellIdentifier = @"CategoryCell";
@@ -85,7 +85,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     BFCategoryTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CategoryCellIdentifier
                                                             forIndexPath:indexPath];
 
-    BFCategory* category = self.objects[indexPath.row];
+    CategoryMain* category = self.objects[indexPath.row];
     
     cell.contentView.backgroundColor = [UIColor redColor];
     if (self.categoryIndex == 1) cell.contentView.backgroundColor = [UIColor blueColor];

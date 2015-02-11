@@ -144,7 +144,7 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
         {
             NSError *error = nil;
             NSArray* data = [response objectForKey:@"data"];
-            NSArray *categories = [MTLJSONAdapter modelsOfClass:BFCategory.class fromJSONArray:data error:&error];
+            NSArray *categories = [MTLJSONAdapter modelsOfClass:CategoryMain.class fromJSONArray:data error:&error];
             success(categories);
         }
     } failure:^(NSError *error, NSInteger statusCode) {
@@ -155,7 +155,9 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
     }];
 }
 
-- (void)createCategory:(BFCategory *)category
+
+
+- (void)createCategory:(CategoryMain *)category
         withSuccess:(BFSuccessBlock)success
             failure:(BFFailureBlock)failure
 {
@@ -165,6 +167,28 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
         if(success)
         {            
             success();
+        }
+    } failure:^(NSError *error, NSInteger statusCode) {
+        if(failure)
+        {
+            failure(error);
+        }
+    }];
+}
+
+#pragma mark - Products
+- (void)getProductsWithParameters:(NSDictionary *)parameters
+                      withSuccess:(BFCategoryBlock)success
+                          failure:(BFFailureBlock)failure
+{
+    
+    [self postPath:[NSString stringWithFormat:@"product/read"] parameters:parameters responseModel:[NSDictionary class] success:^(id response) {
+        if(success)
+        {
+            NSError *error = nil;
+            NSArray* data = [response objectForKey:@"data"];
+            NSArray *categories = [MTLJSONAdapter modelsOfClass:CategoryMain.class fromJSONArray:data error:&error];
+            success(categories);
         }
     } failure:^(NSError *error, NSInteger statusCode) {
         if(failure)

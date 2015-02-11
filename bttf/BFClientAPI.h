@@ -7,7 +7,7 @@
 //
 
 #import "AFHTTPSessionManager.h"
-#import "BFCategory.h"
+#import "CategoryMain.h"
 
 
 typedef void(^BFLoginBlock)(NSError* error);
@@ -31,13 +31,17 @@ typedef void (^BFSuccessBlock)();
 // */
 //- (NSURLSessionDataTask *)fetchTopicsOnSuccess:(void (^)(NSURLSessionDataTask *task, NSArray *topics))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
 
+#pragma mark - Category
 - (void)getCategoryWithParameters:(NSDictionary *)parameters
                       withSuccess:(BFCategoryBlock)success
                           failure:(BFFailureBlock)failure;
 
-- (void)createCategory:(BFCategory *)category
+- (void)createCategory:(CategoryMain *)category
             withSuccess:(BFSuccessBlock)success
                failure:(BFFailureBlock)failure;
 
-
+#pragma mark - Products
+- (void)getProductsWithParameters:(NSDictionary *)parameters
+                        withSuccess:(BFCategoryBlock)success
+                          failure:(BFFailureBlock)failure;
 @end

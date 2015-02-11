@@ -9,12 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <Mantle/Mantle.h>
 
-@interface BFCategory : MTLModel <MTLJSONSerializing>
+@interface CategoryMain : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic) NSString* name;
-@property (nonatomic) NSNumber* level;
-@property (nonatomic) BFCategory* parent;
-
-
 
 @end
