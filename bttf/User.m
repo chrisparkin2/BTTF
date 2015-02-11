@@ -1,0 +1,254 @@
+//
+//  User.m
+//  BackToTheFarm
+//
+//  Created by Siddhant Dange on 1/6/15.
+//  Copyright (c) 2015 Siddhant Dange. All rights reserved.
+//
+
+#import "User.h"
+#import "APIConnector.h"
+
+#define TEST_MODE_NEW 1
+#define TEST_MODE_SAVE 2
+
+#define TEST_MODE TEST_MODE_NEW
+
+
+
+static User *gInstance;
+
+@interface User ()
+
+@property (nonatomic, strong) NSMutableDictionary *percData;
+@property (nonatomic, strong) APIConnector *apiConnector;
+
+@end
+
+@implementation User
+
+-(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*))completion{
+    [_apiConnector createUserWithUsername:username password:password email:email completion:^(NSDictionary *data) {
+        _token = data[@"data"][@"token_id"];
+        completion(data);
+    }];
+}
+
+-(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*))completion{
+    [_apiConnector loginUserWithUsername:username password:password completion:^(NSDictionary *data) {
+        _token = data[@"data"][@"token_id"];
+        completion(data);
+    }];
+}
+
+
+-(void)setTotalWeight{
+    _totalWeight = [self generateTotal:_meatData];
+}
+
+-(void)setYieldTestFromMeatData{
+    _percData = [self generatePercData:_meatData];
+    
+    //store into local
+    [self writePercDataToFile];
+    [self writeMeatDataToFile];
+    
+    //store on cloud
+    [self syncMeatWithCloudSuccess:^{
+        [self readMeatFromCloud:nil failure:nil];
+    } failure:nil];
+    
+}
+
+-(void)syncMeatWeightSuccess:(void(^)(void))success failure:(void(^)(NSString*))failure{
+    [self writeMeatDataToFile];
+    [self syncMeatWithCloudSuccess:success failure:failure];
+}
+
+-(void)syncPercSuccess:(void(^)(void))success failure:(void(^)(NSString*))failure{
+    [self writePercDataToFile];
+    [self syncMeatWithCloudSuccess:success failure:failure];
+}
+
+-(void)syncMeatWithCloudSuccess:(void(^)(void))success failure:(void(^)(NSString*))failure{
+    NSData *meatPlist = [NSPropertyListSerialization
+                     dataWithPropertyList:_meatData
+                     format:NSPropertyListXMLFormat_v1_0
+                     options:kNilOptions
+                     error:NULL];
+    
+    NSString *meatStr = [[NSString alloc] initWithData:meatPlist encoding:NSUTF8StringEncoding];
+    NSData *percPlist = [NSPropertyListSerialization
+                         dataWithPropertyList:_percData
+                         format:NSPropertyListXMLFormat_v1_0
+                         options:kNilOptions
+                         error:NULL];
+    
+    NSString *percStr = [[NSString alloc] initWithData:percPlist encoding:NSUTF8StringEncoding];
+    [_apiConnector updateMeat:@{
+                                @"meat_data" : meatStr,
+                                @"perc_data" : percStr
+                                }
+               WithCompletion:^(NSDictionary *data) {
+                   
+        int statusCode = ((NSNumber*)data[@"status"]).intValue;
+        if(statusCode == 100 && success){
+            success();
+        } else if(statusCode == 200 && failure){
+            failure(data[@"message"]);
+        }
+    }];
+}
+
+-(void)readMeatFromCloud:(void(^)(void))success failure:(void(^)(NSString*))failure{
+    [_apiConnector readMeatWithCompletion:^(NSDictionary *data) {
+        int statusCode = ((NSNumber*)data[@"status"]).intValue;
+        if(statusCode == 100){
+            _meatData = [NSPropertyListSerialization
+                                  propertyListWithData:[data[@"meat_data"] dataUsingEncoding:NSUTF8StringEncoding]
+                                  options:kNilOptions
+                                  format:NULL
+                                  error:NULL];
+            
+            _percData = [NSPropertyListSerialization
+                                      propertyListWithData:[data[@"perc_data"] dataUsingEncoding:NSUTF8StringEncoding]
+                                      options:kNilOptions
+                                      format:NULL
+                                      error:NULL];
+            [self writeMeatDataToFile];
+            [self writePercDataToFile];
+            if(success){
+                success();
+            }
+        } else if(statusCode == 200 && failure){
+            NSLog(@"Error reading meat from cloud");
+            if(failure){
+                failure(data[@"message"]);
+            }
+        }
+    }];
+}
+
+-(void)writePercDataToFile{
+    [_apiConnector writeDictionaryToFile:_percData withName:@"perc_data"];
+}
+
+-(void)writeMeatDataToFile{
+    [_apiConnector writeDictionaryToFile:_meatData withName:@"meat_data"];
+}
+
+-(NSDictionary*)getPercData{
+    return _percData;
+}
+
+-(NSDictionary*)returnUserLoginData{
+    NSDictionary *userData = [_apiConnector readDictionaryFromFile:@"user_login_data"];
+    return userData;
+}
+
+-(void)writeUserLoginData:(NSDictionary*)userData{
+    [_apiConnector writeDictionaryToFile:userData withName:@"user_login_data"];
+}
+
+#pragma -mark Meat Conversion
+
+-(float)generateTotal:(NSDictionary*)meats{
+    float total = 0.0f;
+    
+    if([meats objectForKey:@"Meat"]){
+        for(NSString *key in meats){
+            total += ((NSNumber*)meats[key]).floatValue;
+        }
+        
+        return total;
+    }
+    
+    for(NSString* key in meats){
+        total += [self generateTotal:meats[key]];
+    }
+    
+    return total;
+}
+
+-(NSMutableDictionary*)generatePercData:(NSMutableDictionary*)meats{
+    float totalWeight = [self generateTotal:meats];
+    NSMutableDictionary *percData = (NSMutableDictionary*)CFBridgingRelease(CFPropertyListCreateDeepCopy(kCFAllocatorDefault, (CFPropertyListRef)meats, kCFPropertyListMutableContainers));
+    [self meatsToPerc:percData withTotalWeight:totalWeight];
+    return percData;
+}
+
+
+-(void)meatsToPerc:(NSMutableDictionary*)meats withTotalWeight:(float)totalWeight{
+    for(NSString *key in meats.allKeys){
+        if([meats[key] isKindOfClass:[NSDictionary class]]){
+            [self meatsToPerc:meats[key] withTotalWeight:totalWeight];
+        } else{
+            NSNumber *val = meats[key];
+            float perc = val.floatValue / totalWeight;
+            [meats setObject:@(perc) forKey:key];
+        }
+    }
+}
+
+-(BOOL)loadMeatFromFile{
+    _meatData = [_apiConnector readDictionaryFromFile:@"meat_data"].mutableCopy;
+    _meatData = (NSMutableDictionary *)CFBridgingRelease(CFPropertyListCreateDeepCopy(kCFAllocatorDefault, (CFDictionaryRef)_meatData, kCFPropertyListMutableContainers));
+    if (!_meatData) {
+        _meatData = @{
+                                           @"cow" : @{
+                                                   @"Forequarter" : @{}.mutableCopy,
+                                                   @"Hindquarter" : @{}.mutableCopy,
+                                                }.mutableCopy,
+                                           @"pig" : @{}.mutableCopy,
+                                           @"sheep" : @{}.mutableCopy,
+                                           @"goat" : @{}.mutableCopy
+                                           }.mutableCopy;
+        [_apiConnector writeDictionaryToFile:_meatData withName:@"meat_data"];
+        
+    } else{
+        _totalWeight = [self generateTotal:_meatData];
+    }
+    
+    _firstYieldTestComplete = _meatData && _meatData.allKeys.count > 0 && [self checkIfFilled:_meatData];
+    return _firstYieldTestComplete;
+}
+
+-(BOOL)loadPercsFromFile{
+    _percData = [_apiConnector readDictionaryFromFile:@"perc_data"].mutableCopy;
+    _firstYieldTestComplete = _percData && _percData.allKeys.count > 0  && [self checkIfFilled:_percData];
+    return _firstYieldTestComplete;
+}
+
+-(BOOL)checkIfFilled:(NSDictionary*)data{
+    
+    BOOL valid = NO;
+    for(NSString *key in data.allKeys){
+        if(valid){
+            return valid;
+        }
+        
+        if([data[key] isKindOfClass:[NSDictionary class]]){
+            valid |= [self checkIfFilled:data[key]];
+        } else{
+            valid |= [data[key] isKindOfClass:[NSNumber class]];
+        }
+    }
+    
+    return valid;
+}
+
+#pragma -mark Singleton
+
++(instancetype)sharedInstance {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        gInstance = [[User alloc] init];
+        
+        gInstance.apiConnector = [[APIConnector alloc] init];
+        gInstance.percData = @{}.mutableCopy;
+    });
+            
+    return gInstance;
+}
+
+@end
