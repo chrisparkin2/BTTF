@@ -102,10 +102,25 @@
     if([self validateFields:1]){
         [_spinnerView startAnimating];
         [_signUpButton setUserInteractionEnabled:NO];
-        [user createUserWithUsername:_usernameTextField.text password:_passwordTextField.text email:_emailTextField.text completion:^(NSDictionary *data) {
+        [user createUserWithUsername:_usernameTextField.text password:_passwordTextField.text email:_emailTextField.text completion:^(NSDictionary *data,NSError* error) {
+            
             [_spinnerView stopAnimating];
             [_signUpButton setUserInteractionEnabled:YES];
             int statusCode = ((NSNumber*)data[@"status"]).intValue;
+
+            if (error) {
+                UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                                  message:[NSString stringWithFormat:@"%@ - %@",[error localizedDescription],[error localizedFailureReason]]
+                                                                 delegate:nil
+                                                        cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                                        otherButtonTitles:nil];
+                [message show];
+                
+                NSLog(@"response = %@ \n connectionError = %@",data, error);
+                return;
+                
+            }
+
             
             //failed then show message
             if(statusCode == 200){
@@ -128,10 +143,24 @@
     if([self validateFields:0]){
         [_spinnerView startAnimating];
         [_loginButton setUserInteractionEnabled:NO];
-        [user loginUserWithUsername:_usernameTextField.text password:_passwordTextField.text completion:^(NSDictionary *data) {
+        [user loginUserWithUsername:_usernameTextField.text password:_passwordTextField.text completion:^(NSDictionary *data, NSError* error) {
+            
             [_spinnerView stopAnimating];
             [_loginButton setUserInteractionEnabled:YES];
             int statusCode = ((NSNumber*)data[@"status"]).intValue;
+            
+            if (error) {
+                UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                                  message:[NSString stringWithFormat:@"%@ - %@",[error localizedDescription],[error localizedFailureReason]]
+                                                                 delegate:nil
+                                                        cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                                        otherButtonTitles:nil];
+                [message show];
+                
+                NSLog(@"response = %@ \n connectionError = %@",data, error);
+                return;
+
+            }
             
             //failed then show message
             if(statusCode == 200){

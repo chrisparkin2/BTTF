@@ -50,19 +50,63 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     NSLog(@"self.categoryIndex = %ld",(long)self.categoryIndex);
     
     __weak __typeof(self) weakSelf = self;
-    NSDictionary* parameters = @{ @"level" : @(self.categoryIndex) };
-    [[BFClientAPI sharedAPI] getCategoryWithParameters:parameters withSuccess:^(NSArray *categories) {
-        
-        __strong __typeof(weakSelf) strongSelf = weakSelf;
-        
-        strongSelf.objects = categories;
-        [strongSelf objectsDidLoad];
-        
-    } failure:^(NSError *error) {
-        
-        NSLog(@"error = %@",error);
-        
-    }];
+    
+    switch (self.categoryIndex) {
+        case 0:
+        {
+            [[BFClientAPI sharedAPI] getCategoriesMainWithParameters:nil withSuccess:^(NSArray *categories) {
+                
+                __strong __typeof(weakSelf) strongSelf = weakSelf;
+                
+                strongSelf.objects = categories;
+                [strongSelf objectsDidLoad];
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"error = %@",error);
+                
+            }];
+        }
+            break;
+            
+        case 1:
+        {
+            [[BFClientAPI sharedAPI] getCategoriesSubWithParameters:nil withSuccess:^(NSArray *categories) {
+                
+                __strong __typeof(weakSelf) strongSelf = weakSelf;
+                
+                strongSelf.objects = categories;
+                [strongSelf objectsDidLoad];
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"error = %@",error);
+                
+            }];
+        }
+            break;
+            
+        case 2:
+        {
+            [[BFClientAPI sharedAPI] getCategoriesProductWithParameters:nil withSuccess:^(NSArray *categories) {
+                
+                __strong __typeof(weakSelf) strongSelf = weakSelf;
+                
+                strongSelf.objects = categories;
+                [strongSelf objectsDidLoad];
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"error = %@",error);
+                
+            }];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
     
 }
 

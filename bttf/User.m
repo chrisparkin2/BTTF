@@ -27,17 +27,25 @@ static User *gInstance;
 
 @implementation User
 
--(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*))completion{
-    [_apiConnector createUserWithUsername:username password:password email:email completion:^(NSDictionary *data) {
+#pragma mark MTLJSONSerializing
++ (NSDictionary *)JSONKeyPathsByPropertyKey
+{
+    return @{@"username" : @"username"
+             
+             };
+}
+
+-(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*,NSError*))completion{
+    [_apiConnector createUserWithUsername:username password:password email:email completion:^(NSDictionary *data,NSError*error) {
         _token = data[@"data"][@"token_id"];
-        completion(data);
+        completion(data,error);
     }];
 }
 
--(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*))completion{
-    [_apiConnector loginUserWithUsername:username password:password completion:^(NSDictionary *data) {
+-(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*,NSError*))completion{
+    [_apiConnector loginUserWithUsername:username password:password completion:^(NSDictionary *data,NSError*error) {
         _token = data[@"data"][@"token_id"];
-        completion(data);
+        completion(data,error);
     }];
 }
 

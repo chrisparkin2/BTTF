@@ -11,6 +11,7 @@
 
 @interface CategoryMain : MTLModel <MTLJSONSerializing>
 
+@property (nonatomic) NSString* objectId;
 @property (nonatomic) NSString* name;
 
 @end

@@ -6,16 +6,19 @@
 //  Copyright (c) 2015 bttf. All rights reserved.
 //
 
-#import "MTLModel.h"
+#import <Foundation/Foundation.h>
+#import <Mantle/Mantle.h>
 
 @class  CategoryMain;
 @class  CategorySub;
 
 @interface CategoryProduct : MTLModel
 
+@property (nonatomic) NSString* objectId;
 @property (nonatomic) NSString* name;
 @property (nonatomic) CategoryMain* categoryMain;
 @property (nonatomic) CategorySub* categorySub;
+
 
 
 @end

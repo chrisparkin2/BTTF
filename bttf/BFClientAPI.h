@@ -8,10 +8,12 @@
 
 #import "AFHTTPSessionManager.h"
 #import "CategoryMain.h"
+#import "CategorySub.h"
+#import "CategoryProduct.h"
 
 
 typedef void(^BFLoginBlock)(NSError* error);
-typedef void(^BFCategoryBlock)(NSArray *categories);
+typedef void(^BFSuccessObjectsBlock)(NSArray *objects);
 typedef void (^BFFailureBlock)(NSError* error);
 typedef void (^BFSuccessBlock)();
 
@@ -32,16 +34,38 @@ typedef void (^BFSuccessBlock)();
 //- (NSURLSessionDataTask *)fetchTopicsOnSuccess:(void (^)(NSURLSessionDataTask *task, NSArray *topics))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
 
 #pragma mark - Category
-- (void)getCategoryWithParameters:(NSDictionary *)parameters
-                      withSuccess:(BFCategoryBlock)success
+- (void)getCategoriesMainWithParameters:(NSDictionary *)parameters
+                      withSuccess:(BFSuccessObjectsBlock)success
                           failure:(BFFailureBlock)failure;
+
+- (void)getCategoriesSubWithParameters:(NSDictionary *)parameters
+                           withSuccess:(BFSuccessObjectsBlock)success
+                               failure:(BFFailureBlock)failure;
+
+- (void)getCategoriesProductWithParameters:(NSDictionary *)parameters
+                               withSuccess:(BFSuccessObjectsBlock)success
+                                   failure:(BFFailureBlock)failure;
 
 - (void)createCategory:(CategoryMain *)category
             withSuccess:(BFSuccessBlock)success
                failure:(BFFailureBlock)failure;
 
+- (void)createCategorySub:(CategorySub *)category
+              withSuccess:(BFSuccessBlock)success
+                  failure:(BFFailureBlock)failure;
+
+- (void)createCategoryProduct:(CategoryProduct *)category
+                  withSuccess:(BFSuccessBlock)success
+                      failure:(BFFailureBlock)failure;
 #pragma mark - Products
 - (void)getProductsWithParameters:(NSDictionary *)parameters
-                        withSuccess:(BFCategoryBlock)success
+                        withSuccess:(BFSuccessObjectsBlock)success
                           failure:(BFFailureBlock)failure;
+
+
+#ifdef DEBUG
+#pragma mark - Admin
+- (void)processCategoriesFromCSV;
+#endif
+
 @end

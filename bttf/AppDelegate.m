@@ -49,6 +49,8 @@
 
 -(void)loginBoxClosed {
     
+    [self runAdmin];
+    
     
     // Present the main interface
     [self setupDrillDownController];
@@ -120,6 +122,13 @@
     }
 }
 
+#ifdef DEBUG
+#pragma mark - Admin
+- (void)runAdmin {
+    
+    [[BFClientAPI sharedAPI] processCategoriesFromCSV];
+    
+}
 
-
+#endif
 @end

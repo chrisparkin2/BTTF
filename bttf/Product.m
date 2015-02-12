@@ -10,13 +10,16 @@
 #import "CategoryMain.h"
 #import "CategorySub.h"
 #import "CategoryProduct.h"
+#import "User.h"
 
 @implementation Product
 
 #pragma mark MTLJSONSerializing
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"name" : @"name",
+    return @{@"objectId" : @"_id",
+             @"user" : @"user",
+             @"name" : @"name",
              @"price" : @"price",
              @"supplier" : @"supplier",
              @"categoryMain" : @"category_main",
@@ -38,6 +41,11 @@
 + (NSValueTransformer *)categoryProductJSONTransformer
 {
     return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryProduct.class];
+}
+
++ (NSValueTransformer *)userJSONTransformer
+{
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:User.class];
 }
 
 

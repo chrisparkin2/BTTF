@@ -12,15 +12,17 @@
 @class CategoryMain;
 @class CategorySub;
 @class CategoryProduct;
+@class User;
 
 @interface Product : MTLModel <MTLJSONSerializing>
 
+@property (nonatomic) User* user;
+@property (nonatomic) NSString* objectId;
 @property (nonatomic) NSString* name;
 @property (nonatomic) NSNumber* price;
 @property (nonatomic) NSString* supplier;
 @property (nonatomic) CategoryMain* categoryMain;
 @property (nonatomic) CategorySub* categorySub;
 @property (nonatomic) CategoryProduct* categoryProduct;
-
 
 @end

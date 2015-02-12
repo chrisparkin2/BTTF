@@ -47,7 +47,7 @@
                 }];
 }
 
--(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*))completion{
+-(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*, NSError*))completion{
     
         [self makeRequestAtUrl:[self userCreateUrl]
                           post:YES
@@ -65,11 +65,11 @@
                             NSLog(@"error creating user: %@", error);
                         }
                         
-                        completion(data);
+                        completion(data,error);
                     }];
 }
 
--(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*))completion{
+-(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*, NSError*))completion{
     [self makeRequestAtUrl:[self userLoginUrl]
                       post:YES
                       data:@{
@@ -81,7 +81,7 @@
             NSLog(@"error logging in user: %@", error);
         }
         
-        completion(data);
+        completion(data,error);
     }];
 }
 
@@ -107,6 +107,11 @@
     
 
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        if (!data) {
+            completion(nil, connectionError);
+            return;
+        }
         
         //JSON array or object
         NSError *jsonError = nil;

@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Mantle/Mantle.h>
 
-@interface User : NSObject
+@interface User : MTLModel <MTLJSONSerializing>
+
 
 @property (nonatomic, strong) NSString *username, *token;
 @property (nonatomic, strong) NSMutableDictionary *meatData;
@@ -16,8 +18,8 @@
 @property (nonatomic, assign) float totalWeight;
 
 
--(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*))completion;
--(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*))completion;
+-(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*,NSError*))completion;
+-(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*,NSError*))completion;
 -(NSDictionary*)returnUserLoginData;
 -(void)writeUserLoginData:(NSDictionary*)userData;
 -(void)syncMeatWeightSuccess:(void(^)(void))success failure:(void(^)(NSString*))failure;

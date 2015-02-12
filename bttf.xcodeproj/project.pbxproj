@@ -11,6 +11,7 @@
 		845109011A8C04A900CAF176 /* BFProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109001A8C04A900CAF176 /* BFProductTableViewCell.m */; };
 		845109041A8C173C00CAF176 /* CategorySub.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109031A8C173C00CAF176 /* CategorySub.m */; };
 		845109071A8C174800CAF176 /* CategoryProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109061A8C174800CAF176 /* CategoryProduct.m */; };
+		8451090B1A8C194F00CAF176 /* categories.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8451090A1A8C194F00CAF176 /* categories.csv */; };
 		84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */; };
 		848859031A8A82C5004BB75C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859021A8A82C5004BB75C /* main.m */; };
 		848859061A8A82C5004BB75C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859051A8A82C5004BB75C /* AppDelegate.m */; };
@@ -56,6 +57,7 @@
 		845109031A8C173C00CAF176 /* CategorySub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategorySub.m; sourceTree = "<group>"; };
 		845109051A8C174800CAF176 /* CategoryProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryProduct.h; sourceTree = "<group>"; };
 		845109061A8C174800CAF176 /* CategoryProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryProduct.m; sourceTree = "<group>"; };
+		8451090A1A8C194F00CAF176 /* categories.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = categories.csv; sourceTree = "<group>"; };
 		84796C1C1A8BFB0600D83F7A /* BFProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductViewController.h; sourceTree = "<group>"; };
 		84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFProductViewController.m; sourceTree = "<group>"; };
 		848858FD1A8A82C5004BB75C /* bttf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bttf.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +169,7 @@
 		848859001A8A82C5004BB75C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8451090A1A8C194F00CAF176 /* categories.csv */,
 				848859011A8A82C5004BB75C /* Info.plist */,
 				848859021A8A82C5004BB75C /* main.m */,
 			);
@@ -380,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8488590C1A8A82C5004BB75C /* Main.storyboard in Resources */,
+				8451090B1A8C194F00CAF176 /* categories.csv in Resources */,
 				848859501A8B1A88004BB75C /* LoginScreen.xib in Resources */,
 				848859561A8B1B02004BB75C /* PopupView.xib in Resources */,
 				8488595F1A8B1BD4004BB75C /* ScreenNavigation.xib in Resources */,
@@ -400,7 +404,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		27CFAB8B94DA45C090EEF8BB /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -408,7 +412,7 @@
 			name = "Copy Pods Resources";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;

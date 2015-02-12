@@ -12,8 +12,8 @@
 
 -(void)updateMeat:(NSDictionary*)meatData WithCompletion:(void(^)(NSDictionary*))completion;
 -(void)readMeatWithCompletion:(void(^)(NSDictionary*))completion;
--(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*))completion;
--(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*))completion;
+-(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*,NSError*))completion;
+-(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*, NSError*))completion;
 -(void)writeStringToFile:(NSString*)data withName:(NSString*)name;
 -(NSString*)readStringToFile:(NSString*)name;
 
