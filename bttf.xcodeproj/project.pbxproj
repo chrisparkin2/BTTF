@@ -12,6 +12,7 @@
 		845109041A8C173C00CAF176 /* CategorySub.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109031A8C173C00CAF176 /* CategorySub.m */; };
 		845109071A8C174800CAF176 /* CategoryProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109061A8C174800CAF176 /* CategoryProduct.m */; };
 		8451090B1A8C194F00CAF176 /* categories.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8451090A1A8C194F00CAF176 /* categories.csv */; };
+		846101421A8D733B00B4C3FD /* CategoryAbstract.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101411A8D733B00B4C3FD /* CategoryAbstract.m */; };
 		84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */; };
 		848859031A8A82C5004BB75C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859021A8A82C5004BB75C /* main.m */; };
 		848859061A8A82C5004BB75C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859051A8A82C5004BB75C /* AppDelegate.m */; };
@@ -58,6 +59,8 @@
 		845109051A8C174800CAF176 /* CategoryProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryProduct.h; sourceTree = "<group>"; };
 		845109061A8C174800CAF176 /* CategoryProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryProduct.m; sourceTree = "<group>"; };
 		8451090A1A8C194F00CAF176 /* categories.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = categories.csv; sourceTree = "<group>"; };
+		846101401A8D733B00B4C3FD /* CategoryAbstract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryAbstract.h; sourceTree = "<group>"; };
+		846101411A8D733B00B4C3FD /* CategoryAbstract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryAbstract.m; sourceTree = "<group>"; };
 		84796C1C1A8BFB0600D83F7A /* BFProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductViewController.h; sourceTree = "<group>"; };
 		84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFProductViewController.m; sourceTree = "<group>"; };
 		848858FD1A8A82C5004BB75C /* bttf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bttf.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,7 +211,6 @@
 		848859271A8A8C49004BB75C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				848859511A8B1AF2004BB75C /* PopupView */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -219,6 +221,8 @@
 				848859411A8AAF3F004BB75C /* Category */,
 				8488592F1A8A8E4F004BB75C /* User.h */,
 				848859301A8A8E4F004BB75C /* User.m */,
+				845108FC1A8BFFCB00CAF176 /* Product.h */,
+				845108FD1A8BFFCB00CAF176 /* Product.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -246,10 +250,10 @@
 		848859411A8AAF3F004BB75C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				846101401A8D733B00B4C3FD /* CategoryAbstract.h */,
+				846101411A8D733B00B4C3FD /* CategoryAbstract.m */,
 				848859451A8AAFC0004BB75C /* CategoryMain.h */,
 				848859461A8AAFC0004BB75C /* CategoryMain.m */,
-				845108FC1A8BFFCB00CAF176 /* Product.h */,
-				845108FD1A8BFFCB00CAF176 /* Product.m */,
 				845109021A8C173C00CAF176 /* CategorySub.h */,
 				845109031A8C173C00CAF176 /* CategorySub.m */,
 				845109051A8C174800CAF176 /* CategoryProduct.h */,
@@ -288,6 +292,7 @@
 				8488595C1A8B1BD4004BB75C /* ScreenNavigation.xib */,
 				848859341A8A8E63004BB75C /* APIConnector.h */,
 				848859351A8A8E63004BB75C /* APIConnector.m */,
+				848859511A8B1AF2004BB75C /* PopupView */,
 			);
 			name = Sidd;
 			sourceTree = "<group>";
@@ -444,6 +449,7 @@
 				848859361A8A8E63004BB75C /* APIConnector.m in Sources */,
 				845108FE1A8BFFCB00CAF176 /* Product.m in Sources */,
 				848859311A8A8E4F004BB75C /* User.m in Sources */,
+				846101421A8D733B00B4C3FD /* CategoryAbstract.m in Sources */,
 				848859061A8A82C5004BB75C /* AppDelegate.m in Sources */,
 				8488592D1A8A8CF3004BB75C /* BFBaseViewController.m in Sources */,
 				8488593D1A8A9DD6004BB75C /* BFCategoryTableViewCell.m in Sources */,

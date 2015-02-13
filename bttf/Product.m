@@ -22,9 +22,9 @@
              @"name" : @"name",
              @"price" : @"price",
              @"supplier" : @"supplier",
-             @"categoryMain" : @"category_main",
-             @"categorySub" : @"category_sub",
-             @"categoryProduct" : @"category_product"
+             @"categoryMain" : @"_category_main",
+             @"categorySub" : @"_category_sub",
+             @"categoryProduct" : @"_category_product"
              };
 }
 

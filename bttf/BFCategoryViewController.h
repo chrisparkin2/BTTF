@@ -19,13 +19,17 @@
 
 @property (nonatomic, strong) NSArray* objects;
 
+@property (nonatomic, strong) id parentObject;
+
 @property (nonatomic, weak) id<BFCategoryVCDelegate> delegate;
+
+- (void)reloadData;
 
 @end
 
 
 @protocol BFCategoryVCDelegate <NSObject>
 
-- (void)didTapCellAtIndex:(NSInteger)index tableViewIndex:(NSInteger)tableViewIndex;
+- (void)didTapCellWithObject:(id)object tableViewIndex:(NSInteger)tableViewIndex;
 
 @end

@@ -13,8 +13,6 @@
 #import "PopupView.h"
 #import "User.h"
 
-#define kMaxCategoryLevels 2
-
 @interface AppDelegate () <BFCategoryVCDelegate>
 
 
@@ -82,7 +80,7 @@
     self.drillDownController.leftPlaceholderController = [UIViewController new];
     self.drillDownController.rightPlaceholderController = [UIViewController new];
     
-    [self.drillDownController setNavigationBarsHidden:YES];
+    [self.drillDownController setNavigationBarsHidden:NO];
     
     self.drillDownController.leftPlaceholderController.view.backgroundColor = [UIColor brownColor];
     self.drillDownController.rightPlaceholderController.view.backgroundColor = [UIColor greenColor];
@@ -91,42 +89,73 @@
 
 - (void)presentDrillDownController {
     [self.navController setViewControllers:@[self.drillDownController]];
-    [self.navController setNavigationBarHidden:NO animated:YES];
+//    [self.navController setNavigationBarHidden:NO animated:YES];
     
-    [self pushCategoryController:0];
+    [self pushCategoryController:BFCategoryMain object:nil];
 }
 
+- (void) presentCategoryController:(NSInteger)index object:(id)object{
 
+    BFCategoryViewController* lastVC = (BFCategoryViewController*)[self.drillDownController.viewControllers lastObject];
+    
+    // If current vc is last on drilldown stack, then push
+    if (index > lastVC.categoryIndex) {
+        [self pushCategoryController:index object:object];
+    }
+    // Else push
+    else {
+        [self reloadRightCategoryController:index object:object];
+    }
+    
+}
 
-- (void) pushCategoryController:(NSInteger)index{
+- (void) pushCategoryController:(NSInteger)index object:(id)object{
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     BFCategoryViewController* categoryVC = (BFCategoryViewController*)[storyboard instantiateViewControllerWithIdentifier:@"CategoryViewController"];
     categoryVC.delegate = self;
     categoryVC.categoryIndex = index;
+    categoryVC.parentObject = object;
     
     [self.drillDownController pushViewController:categoryVC animated:YES completion:nil];
 }
 
+- (void) reloadRightCategoryController:(NSInteger)index object:(id)object{
 
-//- (NSArray*) dataSourceForCategoryIndex:(NSInteger)index parentCategory:(Category*)parentCategory {
-//    
-//}
+    BFCategoryViewController* rightVC = (BFCategoryViewController*)[self.drillDownController.viewControllers lastObject];
+    rightVC.parentObject = object;
+    [rightVC reloadData];
+}
+
+- (void) presentProductController:(id)object {
+    
+    PopupView *pv = [[PopupView alloc] initWithVC:@"ProductVC" andData:nil onVC:self.drillDownController];
+    pv.delegate = self;
+    pv.closeAction = @selector(loginBoxClosed);
+    [self.drillDownController.view addSubview:pv];
+
+}
 
 #pragma mark - BFCategoryVCDelegate 
-- (void)didTapCellAtIndex:(NSInteger)index tableViewIndex:(NSInteger)tableViewIndex {
-    
-    if (tableViewIndex < kMaxCategoryLevels) {
-        [self pushCategoryController:++tableViewIndex];
+- (void)didTapCellWithObject:(id)object tableViewIndex:(NSInteger)tableViewIndex {
 
+    // Push a CategoryVC?
+    if (tableViewIndex < BFCategoryProduct) {
+        [self presentCategoryController:++tableViewIndex object:object];
     }
+    // Push a ProductVC
+    else {
+        
+        
+    }
+
 }
 
 #ifdef DEBUG
 #pragma mark - Admin
 - (void)runAdmin {
     
-    [[BFClientAPI sharedAPI] processCategoriesFromCSV];
+//    [[BFClientAPI sharedAPI] processCategoriesFromCSV];
     
 }
 

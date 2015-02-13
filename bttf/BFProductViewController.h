@@ -14,5 +14,7 @@
 
 @property (nonatomic, strong) NSArray* objects;
 
+@property (nonatomic, strong) id parentObject;
+
 
 @end

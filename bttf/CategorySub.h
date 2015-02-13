@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <Mantle/Mantle.h>
+#import "CategoryAbstract.h"
 
 @class CategoryMain;
 
-@interface CategorySub : MTLModel <MTLJSONSerializing>
+@interface CategorySub : CategoryAbstract <MTLJSONSerializing>
 
 @property (nonatomic) NSString* objectId;
 @property (nonatomic) NSString* name;
-@property (nonatomic) CategoryMain* categoryMain;
+@property (nonatomic) NSString* categoryMain;
 
 @end

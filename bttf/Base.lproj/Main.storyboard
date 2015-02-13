@@ -76,7 +76,7 @@
         <!--Product View Controller-->
         <scene sceneID="kPZ-gX-EER">
             <objects>
-                <viewController id="XOI-f9-Xm4" customClass="BFProductViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProductVC" id="XOI-f9-Xm4" customClass="BFProductViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Xg7-hk-BW6"/>
                         <viewControllerLayoutGuide type="bottom" id="xjp-nP-Qpx"/>
@@ -154,7 +154,7 @@
                     <view key="view" contentMode="scaleToFill" id="vuc-YS-xvq">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.96470588239999999" green="0.71372549019999998" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="Hd8-qb-tf0"/>
                     <nil key="simulatedTopBarMetrics"/>

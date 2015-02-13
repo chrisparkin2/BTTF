@@ -21,8 +21,8 @@
 @property (nonatomic) NSString* name;
 @property (nonatomic) NSNumber* price;
 @property (nonatomic) NSString* supplier;
-@property (nonatomic) CategoryMain* categoryMain;
-@property (nonatomic) CategorySub* categorySub;
-@property (nonatomic) CategoryProduct* categoryProduct;
+@property (nonatomic) NSString* categoryMain;
+@property (nonatomic) NSString* categorySub;
+@property (nonatomic) NSString* categoryProduct;
 
 @end
