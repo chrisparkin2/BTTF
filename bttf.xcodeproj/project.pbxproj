@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		845108FE1A8BFFCB00CAF176 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 845108FD1A8BFFCB00CAF176 /* Product.m */; };
+		845108FE1A8BFFCB00CAF176 /* UserProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 845108FD1A8BFFCB00CAF176 /* UserProduct.m */; };
 		845109011A8C04A900CAF176 /* BFProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109001A8C04A900CAF176 /* BFProductTableViewCell.m */; };
 		845109041A8C173C00CAF176 /* CategorySub.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109031A8C173C00CAF176 /* CategorySub.m */; };
 		845109071A8C174800CAF176 /* CategoryProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109061A8C174800CAF176 /* CategoryProduct.m */; };
 		8451090B1A8C194F00CAF176 /* categories.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8451090A1A8C194F00CAF176 /* categories.csv */; };
 		846101421A8D733B00B4C3FD /* CategoryAbstract.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101411A8D733B00B4C3FD /* CategoryAbstract.m */; };
+		846101451A8D7F6200B4C3FD /* BFAddItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101441A8D7F6200B4C3FD /* BFAddItemTableViewCell.m */; };
+		846101471A8D844500B4C3FD /* AddProduct.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846101461A8D844500B4C3FD /* AddProduct.xib */; };
+		8461014A1A8D85DF00B4C3FD /* BFAddProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101491A8D85DF00B4C3FD /* BFAddProductViewController.m */; };
 		84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */; };
 		848859031A8A82C5004BB75C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859021A8A82C5004BB75C /* main.m */; };
 		848859061A8A82C5004BB75C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859051A8A82C5004BB75C /* AppDelegate.m */; };
@@ -50,8 +53,8 @@
 /* Begin PBXFileReference section */
 		0D2A53FEB50D4C28AD287B35 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		5AF4CDF936F04892B289A082 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		845108FC1A8BFFCB00CAF176 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
-		845108FD1A8BFFCB00CAF176 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
+		845108FC1A8BFFCB00CAF176 /* UserProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProduct.h; sourceTree = "<group>"; };
+		845108FD1A8BFFCB00CAF176 /* UserProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProduct.m; sourceTree = "<group>"; };
 		845108FF1A8C04A900CAF176 /* BFProductTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductTableViewCell.h; sourceTree = "<group>"; };
 		845109001A8C04A900CAF176 /* BFProductTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFProductTableViewCell.m; sourceTree = "<group>"; };
 		845109021A8C173C00CAF176 /* CategorySub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategorySub.h; sourceTree = "<group>"; };
@@ -61,6 +64,11 @@
 		8451090A1A8C194F00CAF176 /* categories.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = categories.csv; sourceTree = "<group>"; };
 		846101401A8D733B00B4C3FD /* CategoryAbstract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryAbstract.h; sourceTree = "<group>"; };
 		846101411A8D733B00B4C3FD /* CategoryAbstract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryAbstract.m; sourceTree = "<group>"; };
+		846101431A8D7F6200B4C3FD /* BFAddItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFAddItemTableViewCell.h; sourceTree = "<group>"; };
+		846101441A8D7F6200B4C3FD /* BFAddItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFAddItemTableViewCell.m; sourceTree = "<group>"; };
+		846101461A8D844500B4C3FD /* AddProduct.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddProduct.xib; sourceTree = "<group>"; };
+		846101481A8D85DF00B4C3FD /* BFAddProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFAddProductViewController.h; sourceTree = "<group>"; };
+		846101491A8D85DF00B4C3FD /* BFAddProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFAddProductViewController.m; sourceTree = "<group>"; };
 		84796C1C1A8BFB0600D83F7A /* BFProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductViewController.h; sourceTree = "<group>"; };
 		84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFProductViewController.m; sourceTree = "<group>"; };
 		848858FD1A8A82C5004BB75C /* bttf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bttf.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,13 +128,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8461014B1A8D85EA00B4C3FD /* Add Product */ = {
+			isa = PBXGroup;
+			children = (
+				846101461A8D844500B4C3FD /* AddProduct.xib */,
+				846101481A8D85DF00B4C3FD /* BFAddProductViewController.h */,
+				846101491A8D85DF00B4C3FD /* BFAddProductViewController.m */,
+			);
+			name = "Add Product";
+			sourceTree = "<group>";
+		};
 		84796C1B1A8BFAEB00D83F7A /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				8461014B1A8D85EA00B4C3FD /* Add Product */,
 				84796C1C1A8BFB0600D83F7A /* BFProductViewController.h */,
 				84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */,
 				845108FF1A8C04A900CAF176 /* BFProductTableViewCell.h */,
 				845109001A8C04A900CAF176 /* BFProductTableViewCell.m */,
+				846101431A8D7F6200B4C3FD /* BFAddItemTableViewCell.h */,
+				846101441A8D7F6200B4C3FD /* BFAddItemTableViewCell.m */,
 			);
 			name = Product;
 			sourceTree = "<group>";
@@ -221,8 +242,6 @@
 				848859411A8AAF3F004BB75C /* Category */,
 				8488592F1A8A8E4F004BB75C /* User.h */,
 				848859301A8A8E4F004BB75C /* User.m */,
-				845108FC1A8BFFCB00CAF176 /* Product.h */,
-				845108FD1A8BFFCB00CAF176 /* Product.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -258,6 +277,8 @@
 				845109031A8C173C00CAF176 /* CategorySub.m */,
 				845109051A8C174800CAF176 /* CategoryProduct.h */,
 				845109061A8C174800CAF176 /* CategoryProduct.m */,
+				845108FC1A8BFFCB00CAF176 /* UserProduct.h */,
+				845108FD1A8BFFCB00CAF176 /* UserProduct.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -388,6 +409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8488590C1A8A82C5004BB75C /* Main.storyboard in Resources */,
+				846101471A8D844500B4C3FD /* AddProduct.xib in Resources */,
 				8451090B1A8C194F00CAF176 /* categories.csv in Resources */,
 				848859501A8B1A88004BB75C /* LoginScreen.xib in Resources */,
 				848859561A8B1B02004BB75C /* PopupView.xib in Resources */,
@@ -446,8 +468,10 @@
 			files = (
 				84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */,
 				845109041A8C173C00CAF176 /* CategorySub.m in Sources */,
+				846101451A8D7F6200B4C3FD /* BFAddItemTableViewCell.m in Sources */,
 				848859361A8A8E63004BB75C /* APIConnector.m in Sources */,
-				845108FE1A8BFFCB00CAF176 /* Product.m in Sources */,
+				845108FE1A8BFFCB00CAF176 /* UserProduct.m in Sources */,
+				8461014A1A8D85DF00B4C3FD /* BFAddProductViewController.m in Sources */,
 				848859311A8A8E4F004BB75C /* User.m in Sources */,
 				846101421A8D733B00B4C3FD /* CategoryAbstract.m in Sources */,
 				848859061A8A82C5004BB75C /* AppDelegate.m in Sources */,

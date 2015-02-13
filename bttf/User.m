@@ -30,8 +30,8 @@ static User *gInstance;
 #pragma mark MTLJSONSerializing
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"username" : @"username"
-             
+    return @{@"objectId" : @"_id",
+             @"username" : @"username"
              };
 }
 
@@ -45,7 +45,12 @@ static User *gInstance;
 -(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*,NSError*))completion{
     [_apiConnector loginUserWithUsername:username password:password completion:^(NSDictionary *data,NSError*error) {
         _token = data[@"data"][@"token_id"];
+        _objectId = data[@"data"][@"objectId"];
+        _username = data[@"data"][@"username"];
+                
+        
         completion(data,error);
+        
     }];
 }
 
@@ -255,7 +260,8 @@ static User *gInstance;
         gInstance.apiConnector = [[APIConnector alloc] init];
         gInstance.percData = @{}.mutableCopy;
     });
-            
+
+    
     return gInstance;
 }
 

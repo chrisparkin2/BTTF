@@ -54,15 +54,25 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     // BG Color
     switch (self.categoryIndex) {
         case 0:
+        {
             self.tableView.backgroundColor = [UIColor whiteColor];
+            self.view.backgroundColor = [UIColor whiteColor];
+        }
             break;
             
         case 1:
+        {
             self.tableView.backgroundColor = [UIColor lightGrayColor];
+            self.view.backgroundColor = [UIColor lightGrayColor];
+        }
+
             break;
             
         case 2:
+        {
             self.tableView.backgroundColor = [UIColor grayColor];
+            self.view.backgroundColor = [UIColor grayColor];
+        }
             break;
             
         default:
@@ -73,6 +83,13 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     self.tableView.dataSource = self;
     
     [self loadData];
+}
+
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    // This is a hack to get the tableView clear of the navBar -- Due to drillDownController
+    self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
 }
 
 #pragma mark - Data
@@ -101,7 +118,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
         }
             break;
             
-        case BFCategoryProduct:
+        case BFCategorySub:
         {
             NSDictionary* parameters;
             if (self.parentObject) {
@@ -124,14 +141,12 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
         }
             break;
             
-        case BFCategorySub:
+        case BFCategoryProduct:
         {
             NSDictionary* parameters;
             if (self.parentObject) {
-//                NSDictionary *parentJSON = [MTLJSONAdapter JSONDictionaryFromModel:self.parentObject];
                 CategorySub* categorySub = (CategorySub*)self.parentObject;
                 parameters = @{ @"category_sub" : categorySub.objectId };
-//                parameters = @{ @"category_sub" : parentJSON };
             }
 
             [[BFClientAPI sharedAPI] getCategoriesProductWithParameters:parameters withSuccess:^(NSArray *categories) {
@@ -181,9 +196,8 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
 
     CategoryMain* category = self.objects[indexPath.row];
     
-    cell.contentView.backgroundColor = [UIColor redColor];
-    if (self.categoryIndex == 1) cell.contentView.backgroundColor = [UIColor blueColor];
-
+    cell.backgroundColor = [UIColor clearColor];
+    
     cell.textLabel.text = category.name;
     cell.detailTextLabel.text = @"1";
 
@@ -195,11 +209,11 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id object = self.objects[indexPath.row];
-    NSAssert(object,@"No object at indexPath.row");
+    id parentObject = self.objects[indexPath.row];
+    NSAssert(parentObject,@"No parentObject at indexPath.row");
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(didTapCellWithObject:tableViewIndex:)]) {
-        [self.delegate didTapCellWithObject:object tableViewIndex:self.categoryIndex];
+        [self.delegate didTapCellWithObject:parentObject tableViewIndex:self.categoryIndex];
     }
 }
 

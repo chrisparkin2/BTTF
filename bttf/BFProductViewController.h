@@ -7,14 +7,18 @@
 //
 
 #import "BFBaseViewController.h"
+#import "BFCategoryViewController.h"
 
-@interface BFProductViewController : BFBaseViewController
+@protocol BFProductVCDelegate;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@interface BFProductViewController : BFCategoryViewController
 
-@property (nonatomic, strong) NSArray* objects;
+@property (nonatomic, weak) id<BFProductVCDelegate> productDelegate;
+@end
 
-@property (nonatomic, strong) id parentObject;
+@protocol BFProductVCDelegate <NSObject>
 
+- (void)didTapAddNewProduct:(id)parentObject;
 
 @end
+

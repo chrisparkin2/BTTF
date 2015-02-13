@@ -6,19 +6,34 @@
 //  Copyright (c) 2015 bttf. All rights reserved.
 //
 
-#import "Product.h"
+#import "UserProduct.h"
 #import "CategoryMain.h"
 #import "CategorySub.h"
 #import "CategoryProduct.h"
 #import "User.h"
 
-@implementation Product
+@implementation UserProduct
+
+#pragma mark - Logic
+- (instancetype)init {
+    
+    self = [super init];
+    if (self) {
+        _quantity = @(0);
+    }
+    return self;
+}
+
+- (BOOL) isValid {
+    if (!self.userId || !self.price || !self.name || !self.quantity) return NO;
+    return YES;
+}
 
 #pragma mark MTLJSONSerializing
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
     return @{@"objectId" : @"_id",
-             @"user" : @"user",
+             @"userId" : @"user_id",
              @"name" : @"name",
              @"price" : @"price",
              @"supplier" : @"supplier",

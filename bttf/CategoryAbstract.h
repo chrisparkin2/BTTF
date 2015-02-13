@@ -11,7 +11,8 @@
 typedef enum {
     BFCategoryMain,
     BFCategorySub,
-    BFCategoryProduct
+    BFCategoryProduct,
+    BFProduct
 } BFCategoryIndex;
 
 

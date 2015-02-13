@@ -170,8 +170,8 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
         {
             NSError *error = nil;
             NSArray* data = [response objectForKey:@"data"];
-            NSArray *categories = [MTLJSONAdapter modelsOfClass:objectClass fromJSONArray:data error:&error];
-            success(categories);
+            NSArray *objects = [MTLJSONAdapter modelsOfClass:objectClass fromJSONArray:data error:&error];
+            success(objects);
         }
     } failure:^(NSError *error, NSInteger statusCode) {
         if(failure)
@@ -182,11 +182,6 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
 }
 
 #pragma mark - Category
-//- (void)getAllCategoriesWithSuccess:(BFSuccessObjectsBlock)success
-//                          failure:(BFFailureBlock)failure
-//{
-//   }
-
 - (void)getCategoriesMainWithParameters:(NSDictionary *)parameters
         withSuccess:(BFSuccessObjectsBlock)success
          failure:(BFFailureBlock)failure
@@ -233,6 +228,20 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
     [self saveObject:category objectPath:[self categoryProduct] withSuccess:success failure:failure];
 }
 
+#pragma mark - Products
+- (void)getUserProductsWithParameters:(NSDictionary *)parameters
+                            withSuccess:(BFSuccessObjectsBlock)success
+                                failure:(BFFailureBlock)failure
+{
+    [self getObjectsWithParameters:parameters objectClass:UserProduct.class objectPath:[self userProduct] withSuccess:success failure:failure];
+}
+
+- (void)createUserProduct:(UserProduct *)userProduct
+                  withSuccess:(BFSuccessBlock)success
+                      failure:(BFFailureBlock)failure
+{
+    [self saveObject:userProduct objectPath:[self userProduct] withSuccess:success failure:failure];
+}
 
 #pragma mark - Object Paths
 - (NSString*)categoryMain {
@@ -247,28 +256,11 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
     return @"category_product";
 }
 
+- (NSString*)userProduct {
+    return @"user_product";
+}
 
-#pragma mark - Products
-//- (void)getProductsWithParameters:(NSDictionary *)parameters
-//                      withSuccess:(BFSuccessObjectsBlock)success
-//                          failure:(BFFailureBlock)failure
-//{
-//    
-//    [self postPath:[NSString stringWithFormat:@"product/read"] parameters:parameters responseModel:[NSDictionary class] success:^(id response) {
-//        if(success)
-//        {
-//            NSError *error = nil;
-//            NSArray* data = [response objectForKey:@"data"];
-//            NSArray *categories = [MTLJSONAdapter modelsOfClass:CategoryMain.class fromJSONArray:data error:&error];
-//            success(categories);
-//        }
-//    } failure:^(NSError *error, NSInteger statusCode) {
-//        if(failure)
-//        {
-//            failure(error);
-//        }
-//    }];
-//}
+
 
 #ifdef DEBUG
 #pragma mark - Admin

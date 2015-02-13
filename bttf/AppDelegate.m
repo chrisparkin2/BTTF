@@ -9,11 +9,12 @@
 #import "AppDelegate.h"
 #import "SGBDrillDownController.h"
 #import "BFCategoryViewController.h"
+#import "BFProductViewController.h"
 #import "BFClientAPI.h"
 #import "PopupView.h"
 #import "User.h"
 
-@interface AppDelegate () <BFCategoryVCDelegate>
+@interface AppDelegate () <BFCategoryVCDelegate, BFProductVCDelegate>
 
 
 @property (nonatomic, strong) UINavigationController* navController;
@@ -55,21 +56,6 @@
 
     [self presentDrillDownController];
 
-
-    
-//    BFCategory* bfCategory = [BFCategory new];
-//    bfCategory.name = @"Vegetables";
-//
-//    bfCategory.level = @(1);
-//    
-//    [[BFClientAPI sharedAPI] createCategory:bfCategory withSuccess:^{
-//        
-//        
-//    } failure:^(NSError *error) {
-//        
-//        
-//    }];
-
 }
 
 #pragma mark - drillDownController
@@ -79,11 +65,12 @@
     self.drillDownController = drillDownController;
     self.drillDownController.leftPlaceholderController = [UIViewController new];
     self.drillDownController.rightPlaceholderController = [UIViewController new];
+    self.drillDownController.view.backgroundColor = [UIColor whiteColor];
     
-    [self.drillDownController setNavigationBarsHidden:NO];
+    self.drillDownController.leftPlaceholderController.view.backgroundColor = [UIColor clearColor];
+    self.drillDownController.rightPlaceholderController.view.backgroundColor = [UIColor clearColor];
     
-    self.drillDownController.leftPlaceholderController.view.backgroundColor = [UIColor brownColor];
-    self.drillDownController.rightPlaceholderController.view.backgroundColor = [UIColor greenColor];
+   
 
 }
 
@@ -91,9 +78,24 @@
     [self.navController setViewControllers:@[self.drillDownController]];
 //    [self.navController setNavigationBarHidden:NO animated:YES];
     
+    [self.drillDownController setNavigationBarsHidden:NO];
+    self.drillDownController.leftNavigationBar.translucent = NO;
+    self.drillDownController.rightNavigationBar.translucent = NO;
+
+    self.drillDownController.leftControllerWidth = [self leftControllerShortWidth];
+    
     [self pushCategoryController:BFCategoryMain object:nil];
 }
 
+- (CGFloat)leftControllerWideWidth {
+    return [UIScreen mainScreen].bounds.size.width * 0.6;
+}
+
+- (CGFloat)leftControllerShortWidth {
+    return [UIScreen mainScreen].bounds.size.width * 0.4;
+}
+
+#pragma mark categoryController
 - (void) presentCategoryController:(NSInteger)index object:(id)object{
 
     BFCategoryViewController* lastVC = (BFCategoryViewController*)[self.drillDownController.viewControllers lastObject];
@@ -106,12 +108,12 @@
     else {
         [self reloadRightCategoryController:index object:object];
     }
-    
 }
 
 - (void) pushCategoryController:(NSInteger)index object:(id)object{
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
     BFCategoryViewController* categoryVC = (BFCategoryViewController*)[storyboard instantiateViewControllerWithIdentifier:@"CategoryViewController"];
     categoryVC.delegate = self;
     categoryVC.categoryIndex = index;
@@ -127,16 +129,41 @@
     [rightVC reloadData];
 }
 
-- (void) presentProductController:(id)object {
+#pragma mark productController
+- (void) presentProductController:(NSInteger)index object:(id)object{
     
-    PopupView *pv = [[PopupView alloc] initWithVC:@"ProductVC" andData:nil onVC:self.drillDownController];
-    pv.delegate = self;
-    pv.closeAction = @selector(loginBoxClosed);
-    [self.drillDownController.view addSubview:pv];
-
+    BFProductViewController* lastVC = (BFProductViewController*)[self.drillDownController.viewControllers lastObject];
+    
+    // If current vc is last on drilldown stack, then push
+    if (index > lastVC.categoryIndex) {
+        [self pushProductController:index object:object];
+    }
+    // Else push
+    else {
+        [self reloadRightProductController:index object:object];
+    }
 }
 
-#pragma mark - BFCategoryVCDelegate 
+- (void) pushProductController:(NSInteger)index object:(id)object{
+    
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    BFProductViewController* productVC = (BFProductViewController*)[storyboard instantiateViewControllerWithIdentifier:@"ProductVC"];
+    productVC.categoryIndex = index;
+    productVC.parentObject = object;
+    productVC.productDelegate = self;
+    
+    [self.drillDownController pushViewController:productVC animated:YES completion:nil];
+}
+
+- (void) reloadRightProductController:(NSInteger)index object:(id)object{
+    
+    BFProductViewController* rightVC = (BFProductViewController*)[self.drillDownController.viewControllers lastObject];
+    rightVC.parentObject = object;
+    [rightVC reloadData];
+}
+
+#pragma mark - BFCategoryVCDelegate
 - (void)didTapCellWithObject:(id)object tableViewIndex:(NSInteger)tableViewIndex {
 
     // Push a CategoryVC?
@@ -145,10 +172,19 @@
     }
     // Push a ProductVC
     else {
-        
-        
+        [self presentProductController:++tableViewIndex object:object];
     }
 
+}
+
+#pragma mark - BFProductVCDelegate
+- (void)didTapAddNewProduct:(id)object {
+    PopupView *pv = [[PopupView alloc] initWithScreen:@"AddProduct" andData:nil onScreen:self.drillDownController];
+    pv.delegate = self;
+    pv.closeAction = @selector(loginBoxClosed);
+    [self.drillDownController.view addSubview:pv];
+    [self.drillDownController.view bringSubviewToFront:pv];
+    
 }
 
 #ifdef DEBUG

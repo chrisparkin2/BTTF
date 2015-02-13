@@ -11,7 +11,7 @@
 
 @interface User : MTLModel <MTLJSONSerializing>
 
-
+@property (nonatomic) NSString* objectId;
 @property (nonatomic, strong) NSString *username, *token;
 @property (nonatomic, strong) NSMutableDictionary *meatData;
 @property (nonatomic, assign) BOOL firstYieldTestComplete;

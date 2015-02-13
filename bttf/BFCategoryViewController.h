@@ -30,6 +30,6 @@
 
 @protocol BFCategoryVCDelegate <NSObject>
 
-- (void)didTapCellWithObject:(id)object tableViewIndex:(NSInteger)tableViewIndex;
+- (void)didTapCellWithObject:(id)parentObject tableViewIndex:(NSInteger)tableViewIndex;
 
 @end

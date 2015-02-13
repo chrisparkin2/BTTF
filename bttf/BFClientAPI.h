@@ -10,6 +10,7 @@
 #import "CategoryMain.h"
 #import "CategorySub.h"
 #import "CategoryProduct.h"
+#import "UserProduct.h"
 
 
 typedef void(^BFLoginBlock)(NSError* error);
@@ -58,10 +59,13 @@ typedef void (^BFSuccessBlock)();
                   withSuccess:(BFSuccessBlock)success
                       failure:(BFFailureBlock)failure;
 #pragma mark - Products
-- (void)getProductsWithParameters:(NSDictionary *)parameters
-                        withSuccess:(BFSuccessObjectsBlock)success
+- (void)getUserProductsWithParameters:(NSDictionary *)parameters
+                      withSuccess:(BFSuccessObjectsBlock)success
                           failure:(BFFailureBlock)failure;
 
+- (void)createUserProduct:(UserProduct *)userProduct
+              withSuccess:(BFSuccessBlock)success
+                  failure:(BFFailureBlock)failure;
 
 #ifdef DEBUG
 #pragma mark - Admin

@@ -14,15 +14,20 @@
 @class CategoryProduct;
 @class User;
 
-@interface Product : MTLModel <MTLJSONSerializing>
+@interface UserProduct : MTLModel <MTLJSONSerializing>
 
-@property (nonatomic) User* user;
+@property (nonatomic) NSString* userId;
 @property (nonatomic) NSString* objectId;
 @property (nonatomic) NSString* name;
 @property (nonatomic) NSNumber* price;
 @property (nonatomic) NSString* supplier;
+@property (nonatomic) NSNumber* quantity;
 @property (nonatomic) NSString* categoryMain;
 @property (nonatomic) NSString* categorySub;
 @property (nonatomic) NSString* categoryProduct;
+
+
+#pragma mark - Logic
+- (BOOL) isValid;
 
 @end

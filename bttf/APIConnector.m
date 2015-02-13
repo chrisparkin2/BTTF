@@ -80,7 +80,8 @@
         if(error){
             NSLog(@"error logging in user: %@", error);
         }
-        
+                    
+               
         completion(data,error);
     }];
 }
