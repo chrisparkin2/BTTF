@@ -8,11 +8,30 @@
 
 #import "BFBaseViewController.h"
 
+@interface BFBaseViewController ()
+
+@property (nonatomic, strong) NSTimer* networkTimer;
+
+@end
+
 @implementation BFBaseViewController
 
 - (void)awakeFromNib {
     
     [super awakeFromNib];
+
+}
+
+- (void) viewDidLoad {
+    [super viewDidLoad];
+    
+    // Actitivy View
+    self.activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    self.activityView.center = self.view.center;
+    self.activityView.hidesWhenStopped = YES;
+    
+    [self.view addSubview:self.activityView];
+    [self.view bringSubviewToFront:self.activityView];
 
 }
 
@@ -22,7 +41,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - ()
+#pragma mark - Error Handling
 - (void)hasError:(NSError *)error {
     
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
@@ -43,10 +62,27 @@
 }
 
 
+#pragma mark - UIActivityIndicatorView
+- (void)animateActivityIndicatorAndSetTimer {
+    [self.view bringSubviewToFront:self.activityView];
+    [self.activityView startAnimating];
+    
+    // If more than 5 seconds pass, stop waiting for the server to respond
+    self.networkTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(handleNetworkTimeout:) userInfo:nil repeats:NO];
+
+}
+
+- (void)stopActivityIndicatorAndTimer {
+    [self.networkTimer invalidate];
+    
+    [self.activityView stopAnimating];
+}
+
 
 - (void)handleNetworkTimeout:(NSTimer *)aTimer {
     
-    [aTimer invalidate];
+    [self.networkTimer invalidate];
+    self.networkTimer = nil;
     
     NSMutableDictionary* details = [NSMutableDictionary dictionary];
     [details setValue:@"No network connection." forKey:NSLocalizedDescriptionKey];

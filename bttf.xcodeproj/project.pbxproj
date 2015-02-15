@@ -15,8 +15,10 @@
 		846101421A8D733B00B4C3FD /* CategoryAbstract.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101411A8D733B00B4C3FD /* CategoryAbstract.m */; };
 		846101451A8D7F6200B4C3FD /* BFAddItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101441A8D7F6200B4C3FD /* BFAddItemTableViewCell.m */; };
 		846101471A8D844500B4C3FD /* AddProduct.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846101461A8D844500B4C3FD /* AddProduct.xib */; };
-		8461014A1A8D85DF00B4C3FD /* BFAddProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101491A8D85DF00B4C3FD /* BFAddProductViewController.m */; };
+		8461014A1A8D85DF00B4C3FD /* AddProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101491A8D85DF00B4C3FD /* AddProduct.m */; };
 		84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */; };
+		848278C41A90FB3200E568B0 /* UIColor+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 848278C31A90FB3200E568B0 /* UIColor+Extensions.m */; };
+		8488359A1A8DDB5000EDFE7C /* BFConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 848835991A8DDB5000EDFE7C /* BFConstants.m */; };
 		848859031A8A82C5004BB75C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859021A8A82C5004BB75C /* main.m */; };
 		848859061A8A82C5004BB75C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859051A8A82C5004BB75C /* AppDelegate.m */; };
 		8488590C1A8A82C5004BB75C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8488590A1A8A82C5004BB75C /* Main.storyboard */; };
@@ -67,10 +69,14 @@
 		846101431A8D7F6200B4C3FD /* BFAddItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFAddItemTableViewCell.h; sourceTree = "<group>"; };
 		846101441A8D7F6200B4C3FD /* BFAddItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFAddItemTableViewCell.m; sourceTree = "<group>"; };
 		846101461A8D844500B4C3FD /* AddProduct.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddProduct.xib; sourceTree = "<group>"; };
-		846101481A8D85DF00B4C3FD /* BFAddProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFAddProductViewController.h; sourceTree = "<group>"; };
-		846101491A8D85DF00B4C3FD /* BFAddProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFAddProductViewController.m; sourceTree = "<group>"; };
+		846101481A8D85DF00B4C3FD /* AddProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProduct.h; sourceTree = "<group>"; };
+		846101491A8D85DF00B4C3FD /* AddProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProduct.m; sourceTree = "<group>"; };
 		84796C1C1A8BFB0600D83F7A /* BFProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductViewController.h; sourceTree = "<group>"; };
 		84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFProductViewController.m; sourceTree = "<group>"; };
+		848278C21A90FB3200E568B0 /* UIColor+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extensions.h"; sourceTree = "<group>"; };
+		848278C31A90FB3200E568B0 /* UIColor+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extensions.m"; sourceTree = "<group>"; };
+		848835991A8DDB5000EDFE7C /* BFConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFConstants.m; sourceTree = "<group>"; };
+		8488359B1A8DDB5F00EDFE7C /* BFConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFConstants.h; sourceTree = "<group>"; };
 		848858FD1A8A82C5004BB75C /* bttf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bttf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848859011A8A82C5004BB75C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		848859021A8A82C5004BB75C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -132,8 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				846101461A8D844500B4C3FD /* AddProduct.xib */,
-				846101481A8D85DF00B4C3FD /* BFAddProductViewController.h */,
-				846101491A8D85DF00B4C3FD /* BFAddProductViewController.m */,
+				846101481A8D85DF00B4C3FD /* AddProduct.h */,
+				846101491A8D85DF00B4C3FD /* AddProduct.m */,
 			);
 			name = "Add Product";
 			sourceTree = "<group>";
@@ -150,6 +156,15 @@
 				846101441A8D7F6200B4C3FD /* BFAddItemTableViewCell.m */,
 			);
 			name = Product;
+			sourceTree = "<group>";
+		};
+		848278C11A90FB0800E568B0 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				848278C21A90FB3200E568B0 /* UIColor+Extensions.h */,
+				848278C31A90FB3200E568B0 /* UIColor+Extensions.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		848858F41A8A82C5004BB75C = {
@@ -175,6 +190,7 @@
 		848858FF1A8A82C5004BB75C /* bttf */ = {
 			isa = PBXGroup;
 			children = (
+				848278C11A90FB0800E568B0 /* Categories */,
 				848859571A8B1BC6004BB75C /* Sidd */,
 				848859321A8A8E53004BB75C /* Managers */,
 				848859281A8A8C4D004BB75C /* Models */,
@@ -182,6 +198,8 @@
 				848859261A8A8C3C004BB75C /* View Controllers */,
 				848859041A8A82C5004BB75C /* AppDelegate.h */,
 				848859051A8A82C5004BB75C /* AppDelegate.m */,
+				848835991A8DDB5000EDFE7C /* BFConstants.m */,
+				8488359B1A8DDB5F00EDFE7C /* BFConstants.h */,
 				8488590A1A8A82C5004BB75C /* Main.storyboard */,
 				8488590D1A8A82C5004BB75C /* Images.xcassets */,
 				8488590F1A8A82C5004BB75C /* LaunchScreen.xib */,
@@ -377,6 +395,7 @@
 				TargetAttributes = {
 					848858FC1A8A82C5004BB75C = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = X2ZH23CYYJ;
 					};
 					848859151A8A82C5004BB75C = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -471,15 +490,17 @@
 				846101451A8D7F6200B4C3FD /* BFAddItemTableViewCell.m in Sources */,
 				848859361A8A8E63004BB75C /* APIConnector.m in Sources */,
 				845108FE1A8BFFCB00CAF176 /* UserProduct.m in Sources */,
-				8461014A1A8D85DF00B4C3FD /* BFAddProductViewController.m in Sources */,
+				8461014A1A8D85DF00B4C3FD /* AddProduct.m in Sources */,
 				848859311A8A8E4F004BB75C /* User.m in Sources */,
 				846101421A8D733B00B4C3FD /* CategoryAbstract.m in Sources */,
 				848859061A8A82C5004BB75C /* AppDelegate.m in Sources */,
+				8488359A1A8DDB5000EDFE7C /* BFConstants.m in Sources */,
 				8488592D1A8A8CF3004BB75C /* BFBaseViewController.m in Sources */,
 				8488593D1A8A9DD6004BB75C /* BFCategoryTableViewCell.m in Sources */,
 				848859551A8B1B02004BB75C /* PopupView.m in Sources */,
 				845109071A8C174800CAF176 /* CategoryProduct.m in Sources */,
 				8488595E1A8B1BD4004BB75C /* ScreenNavigation.m in Sources */,
+				848278C41A90FB3200E568B0 /* UIColor+Extensions.m in Sources */,
 				8488594F1A8B1A88004BB75C /* LoginScreen.m in Sources */,
 				848859471A8AAFC0004BB75C /* CategoryMain.m in Sources */,
 				848859031A8A82C5004BB75C /* main.m in Sources */,
@@ -611,9 +632,12 @@
 			baseConfigurationReference = 0D2A53FEB50D4C28AD287B35 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = bttf/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -622,9 +646,12 @@
 			baseConfigurationReference = 0D2A53FEB50D4C28AD287B35 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = bttf/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

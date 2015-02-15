@@ -20,10 +20,10 @@
              };
 }
 
-+ (NSValueTransformer *)categoryMainJSONTransformer
-{
-    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryMain.class];
-}
+//+ (NSValueTransformer *)categoryMainJSONTransformer
+//{
+//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryMain.class];
+//}
 
 
 @end

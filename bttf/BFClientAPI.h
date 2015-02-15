@@ -18,8 +18,6 @@ typedef void(^BFSuccessObjectsBlock)(NSArray *objects);
 typedef void (^BFFailureBlock)(NSError* error);
 typedef void (^BFSuccessBlock)();
 
-//typedef void (^InstagramTagsBlock)(NSArray *tags, InstagramPaginationInfo *paginationInfo);
-
 @interface BFClientAPI : NSObject
 
 //- (instancetype)initWithBaseURL:(NSString *)baseURL;
@@ -29,10 +27,6 @@ typedef void (^BFSuccessBlock)();
  */
 + (BFClientAPI *)sharedAPI;
 
-///**
-// Fetches topics. Array of @c NPTopic objects.
-// */
-//- (NSURLSessionDataTask *)fetchTopicsOnSuccess:(void (^)(NSURLSessionDataTask *task, NSArray *topics))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
 
 #pragma mark - Category
 - (void)getCategoriesMainWithParameters:(NSDictionary *)parameters
@@ -47,9 +41,9 @@ typedef void (^BFSuccessBlock)();
                                withSuccess:(BFSuccessObjectsBlock)success
                                    failure:(BFFailureBlock)failure;
 
-- (void)createCategory:(CategoryMain *)category
-            withSuccess:(BFSuccessBlock)success
-               failure:(BFFailureBlock)failure;
+- (void)createCategoryMain:(CategoryMain *)category
+               withSuccess:(BFSuccessBlock)success
+                   failure:(BFFailureBlock)failure;
 
 - (void)createCategorySub:(CategorySub *)category
               withSuccess:(BFSuccessBlock)success

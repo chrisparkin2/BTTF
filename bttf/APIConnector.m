@@ -15,6 +15,21 @@
 
 @implementation APIConnector
 
+#pragma mark - Singleton
+
++ (APIConnector *)sharedAPI
+{
+    static APIConnector *sharedClientAPI;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedClientAPI = [[APIConnector alloc] init];
+        
+    });
+    
+    return sharedClientAPI;
+}
+
 -(void)updateMeat:(NSDictionary*)meatData WithCompletion:(void(^)(NSDictionary*))completion{
     [self makeRequestAtUrl:[self meatUpdateUrl]
                       post:YES
@@ -84,6 +99,23 @@
                
         completion(data,error);
     }];
+}
+
+-(void)becomeUser:(User*)user completion:(void(^)(NSDictionary*, NSError*))completion{
+    
+    NSDictionary *JSONDictionary = [MTLJSONAdapter JSONDictionaryFromModel:user];
+
+    [self makeRequestAtUrl:[self userBecomeUrl]
+                      post:YES
+                      data:JSONDictionary
+                completion:^(NSDictionary *data, NSError *error) {
+                    if(error){
+                        NSLog(@"error becoming in user: %@", error);
+                    }
+                    
+                    
+                    completion(data,error);
+                }];
 }
 
 -(void)makeRequestAtUrl:(NSString*)urlStr post:(BOOL)post data:(NSDictionary*)data completion:(void(^)(NSDictionary*, NSError*))completion{
@@ -161,6 +193,9 @@
 
 -(NSString*)userLoginUrl{
     return [NSString stringWithFormat:@"%@/user/login", API_URL];
+}
+-(NSString*)userBecomeUrl{
+    return [NSString stringWithFormat:@"%@/user/become", API_URL];
 }
 
 -(NSString*)meatReadUrl{

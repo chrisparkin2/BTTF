@@ -101,6 +101,13 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
                      parameters:params
                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
                             NSDictionary *responseDictionary = (NSDictionary *)responseObject;
+                            
+                            if ([[responseObject objectForKey:@"status"] isEqual:@(200)]) {
+                                
+                                NSString* message = [responseObject objectForKey:@"message"];
+                                failure([self errorWithMessage:message],[[operation response] statusCode]);
+                            }
+                            
                             success(responseDictionary);
                         }
                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -228,7 +235,7 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
     [self saveObject:category objectPath:[self categoryProduct] withSuccess:success failure:failure];
 }
 
-#pragma mark - Products
+#pragma mark - UserProduct
 - (void)getUserProductsWithParameters:(NSDictionary *)parameters
                             withSuccess:(BFSuccessObjectsBlock)success
                                 failure:(BFFailureBlock)failure
@@ -260,7 +267,14 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
     return @"user_product";
 }
 
+#pragma mark - Error
+- (NSError*)errorWithMessage:(NSString*)message {
+    
+    NSMutableDictionary* details = [NSMutableDictionary dictionary];
+    [details setValue:message forKey:NSLocalizedDescriptionKey];
+    return [NSError errorWithDomain:@"network" code:200 userInfo:details];
 
+}
 
 #ifdef DEBUG
 #pragma mark - Admin

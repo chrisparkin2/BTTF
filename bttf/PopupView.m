@@ -41,10 +41,11 @@
         [dataAppend setObject:self forKey:@"popup_vc"];
         [_screenNavigation startWithScreen:screenName data:dataAppend animated:NO];
         
-        Screen *inputCutDataScreen = ((Screen*)_screenNavigation.viewControllers[0]);
-        _screenNavigation.view.frame = inputCutDataScreen.view.frame;
+        Screen *screen = ((Screen*)_screenNavigation.viewControllers[0]);
+        _screenNavigation.view.frame = screen.view.frame;
         
         [_contentView addSubview:_screenNavigation.view];
+        [_contentView bringSubviewToFront:_screenNavigation.view];
         
         
     }

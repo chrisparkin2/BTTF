@@ -9,6 +9,8 @@
 #import "BFBaseViewController.h"
 #import "BFCategoryViewController.h"
 
+@class UserProduct;
+
 @protocol BFProductVCDelegate;
 
 @interface BFProductViewController : BFCategoryViewController
@@ -19,6 +21,7 @@
 @protocol BFProductVCDelegate <NSObject>
 
 - (void)didTapAddNewProduct:(id)parentObject;
+- (void)didTapProduct:(UserProduct*)userProduct parentObject:(id)parentObject;
 
 @end
 

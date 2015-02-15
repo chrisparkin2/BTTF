@@ -8,6 +8,7 @@
 
 #import "User.h"
 #import "APIConnector.h"
+#import "BFConstants.h"
 
 #define TEST_MODE_NEW 1
 #define TEST_MODE_SAVE 2
@@ -21,7 +22,7 @@ static User *gInstance;
 @interface User ()
 
 @property (nonatomic, strong) NSMutableDictionary *percData;
-@property (nonatomic, strong) APIConnector *apiConnector;
+//@property (nonatomic, strong) APIConnector *apiConnector;
 
 @end
 
@@ -36,23 +37,62 @@ static User *gInstance;
 }
 
 -(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*,NSError*))completion{
-    [_apiConnector createUserWithUsername:username password:password email:email completion:^(NSDictionary *data,NSError*error) {
+    [[APIConnector sharedAPI] createUserWithUsername:username password:password email:email completion:^(NSDictionary *data,NSError*error) {
         _token = data[@"data"][@"token_id"];
         completion(data,error);
     }];
 }
 
 -(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*,NSError*))completion{
-    [_apiConnector loginUserWithUsername:username password:password completion:^(NSDictionary *data,NSError*error) {
+    
+    
+    [[APIConnector sharedAPI] loginUserWithUsername:username password:password completion:^(NSDictionary *data,NSError*error) {
         _token = data[@"data"][@"token_id"];
         _objectId = data[@"data"][@"objectId"];
         _username = data[@"data"][@"username"];
-                
+        
+        // Save in NSUserDefaults
+        NSData *dataToArchive = [NSKeyedArchiver archivedDataWithRootObject:[User sharedInstance]];
+        [[NSUserDefaults standardUserDefaults] setObject:dataToArchive forKey:kBFUserDefaultsCurrentUserKey];
         
         completion(data,error);
         
     }];
 }
+
+-(void)becomeUserWithCompletion:(void(^)(NSDictionary*,NSError*))completion{
+    
+    // Check NSUserDefaults
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kBFUserDefaultsCurrentUserKey];
+    User *user = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    if (user) {
+        
+        [[APIConnector sharedAPI] becomeUser:user completion:^(NSDictionary *data,NSError*error) {
+            
+            if (data) {
+                _token = data[@"data"][@"token_id"];
+                _objectId = data[@"data"][@"objectId"];
+                _username = data[@"data"][@"username"];
+                
+                completion(data,error);
+            }
+            else {
+                completion(nil,nil);
+            }
+           
+            
+        }];
+    }
+    else {
+        completion(nil,nil);
+    }
+    
+}
+
+
+
+
 
 
 -(void)setTotalWeight{
@@ -98,7 +138,7 @@ static User *gInstance;
                          error:NULL];
     
     NSString *percStr = [[NSString alloc] initWithData:percPlist encoding:NSUTF8StringEncoding];
-    [_apiConnector updateMeat:@{
+    [[APIConnector sharedAPI] updateMeat:@{
                                 @"meat_data" : meatStr,
                                 @"perc_data" : percStr
                                 }
@@ -114,7 +154,7 @@ static User *gInstance;
 }
 
 -(void)readMeatFromCloud:(void(^)(void))success failure:(void(^)(NSString*))failure{
-    [_apiConnector readMeatWithCompletion:^(NSDictionary *data) {
+    [[APIConnector sharedAPI] readMeatWithCompletion:^(NSDictionary *data) {
         int statusCode = ((NSNumber*)data[@"status"]).intValue;
         if(statusCode == 100){
             _meatData = [NSPropertyListSerialization
@@ -143,11 +183,11 @@ static User *gInstance;
 }
 
 -(void)writePercDataToFile{
-    [_apiConnector writeDictionaryToFile:_percData withName:@"perc_data"];
+    [[APIConnector sharedAPI] writeDictionaryToFile:_percData withName:@"perc_data"];
 }
 
 -(void)writeMeatDataToFile{
-    [_apiConnector writeDictionaryToFile:_meatData withName:@"meat_data"];
+    [[APIConnector sharedAPI] writeDictionaryToFile:_meatData withName:@"meat_data"];
 }
 
 -(NSDictionary*)getPercData{
@@ -155,12 +195,12 @@ static User *gInstance;
 }
 
 -(NSDictionary*)returnUserLoginData{
-    NSDictionary *userData = [_apiConnector readDictionaryFromFile:@"user_login_data"];
+    NSDictionary *userData = [[APIConnector sharedAPI] readDictionaryFromFile:@"user_login_data"];
     return userData;
 }
 
 -(void)writeUserLoginData:(NSDictionary*)userData{
-    [_apiConnector writeDictionaryToFile:userData withName:@"user_login_data"];
+    [[APIConnector sharedAPI] writeDictionaryToFile:userData withName:@"user_login_data"];
 }
 
 #pragma -mark Meat Conversion
@@ -204,7 +244,7 @@ static User *gInstance;
 }
 
 -(BOOL)loadMeatFromFile{
-    _meatData = [_apiConnector readDictionaryFromFile:@"meat_data"].mutableCopy;
+    _meatData = [[APIConnector sharedAPI] readDictionaryFromFile:@"meat_data"].mutableCopy;
     _meatData = (NSMutableDictionary *)CFBridgingRelease(CFPropertyListCreateDeepCopy(kCFAllocatorDefault, (CFDictionaryRef)_meatData, kCFPropertyListMutableContainers));
     if (!_meatData) {
         _meatData = @{
@@ -216,7 +256,7 @@ static User *gInstance;
                                            @"sheep" : @{}.mutableCopy,
                                            @"goat" : @{}.mutableCopy
                                            }.mutableCopy;
-        [_apiConnector writeDictionaryToFile:_meatData withName:@"meat_data"];
+        [[APIConnector sharedAPI] writeDictionaryToFile:_meatData withName:@"meat_data"];
         
     } else{
         _totalWeight = [self generateTotal:_meatData];
@@ -227,7 +267,7 @@ static User *gInstance;
 }
 
 -(BOOL)loadPercsFromFile{
-    _percData = [_apiConnector readDictionaryFromFile:@"perc_data"].mutableCopy;
+    _percData = [[APIConnector sharedAPI] readDictionaryFromFile:@"perc_data"].mutableCopy;
     _firstYieldTestComplete = _percData && _percData.allKeys.count > 0  && [self checkIfFilled:_percData];
     return _firstYieldTestComplete;
 }
@@ -257,7 +297,7 @@ static User *gInstance;
     dispatch_once(&onceToken, ^{
         gInstance = [[User alloc] init];
         
-        gInstance.apiConnector = [[APIConnector alloc] init];
+//        gInstance.apiConnector = [[APIConnector alloc] init];
         gInstance.percData = @{}.mutableCopy;
     });
 

@@ -17,10 +17,10 @@
 
 -(void)startWithScreen:(NSString *)screenName data:(NSDictionary*)data animated:(BOOL)animated{
     
-    
     Screen *screen = [(Screen*)[NSClassFromString(screenName) alloc] initWithData:data nibName:screenName bundle:NULL];
-    
     [self pushViewController:screen animated:animated];
+    
+    
 }
 
 -(void)popToStart{

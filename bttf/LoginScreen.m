@@ -1,4 +1,4 @@
-//
+    //
 //  LoginScreen.m
 //  BackToTheFarm
 //
@@ -10,7 +10,7 @@
 #import "PopupView.h"
 #import "User.h"
 
-@interface LoginScreen ()
+@interface LoginScreen () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -35,9 +35,9 @@
 
     
     self.navigationController.navigationBar.topItem.title = @"Login/Signup";
-    if(![self connected]){
-    //    [self showDialogWithTitle:@"Cannot Reach" andMessage:@"Connect to internet"];
-    }
+//    if(![self connected]){
+//    //    [self showDialogWithTitle:@"Cannot Reach" andMessage:@"Connect to internet"];
+//    }
 }
 - (IBAction)switchAction:(id)sender {
     UISwitch *lsSwitch = (UISwitch*)sender;
@@ -184,10 +184,20 @@
     }
 }
 
--(BOOL)connected{
-    NSURL *scriptUrl = [NSURL URLWithString:@"http://apps.wegenerlabs.com/hi.html"];
-    NSData *data = [NSData dataWithContentsOfURL:scriptUrl];
-    return data;
+#pragma - mark TextField Delegate Methods
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
 }
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [self resignFirstResponder];
+}
+//-(BOOL)connected{
+//    NSURL *scriptUrl = [NSURL URLWithString:@"http://apps.wegenerlabs.com/hi.html"];
+//    NSData *data = [NSData dataWithContentsOfURL:scriptUrl];
+//    return data;
+//}
 
 @end

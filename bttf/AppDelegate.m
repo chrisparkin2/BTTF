@@ -13,6 +13,7 @@
 #import "BFClientAPI.h"
 #import "PopupView.h"
 #import "User.h"
+#import "UIColor+Extensions.h"
 
 @interface AppDelegate () <BFCategoryVCDelegate, BFProductVCDelegate>
 
@@ -32,9 +33,31 @@
     self.welcomeViewController = [self.navController.viewControllers objectAtIndex:0];
     [self.navController setNavigationBarHidden:YES animated:NO];
 
-    [self showLogin];
+    [[User sharedInstance] becomeUserWithCompletion:^(NSDictionary *data, NSError *error) {
+        
+        if (!data) {
+            [self showLogin];
+            return;
+        }
+        
+        [self proceedToMainInterface];        
+    }];
+    
     
     return YES;
+}
+
+-(void)proceedToMainInterface {
+    
+    [self runAdmin];
+    
+    
+    // Present the main interface
+    [self setupDrillDownController];
+    
+    [self presentDrillDownController];
+
+    
 }
 
 #pragma mark - Login
@@ -47,15 +70,8 @@
 }
 
 -(void)loginBoxClosed {
-    
-    [self runAdmin];
-    
-    
-    // Present the main interface
-    [self setupDrillDownController];
-
-    [self presentDrillDownController];
-
+    [self proceedToMainInterface];
+   
 }
 
 #pragma mark - drillDownController
@@ -76,11 +92,12 @@
 
 - (void)presentDrillDownController {
     [self.navController setViewControllers:@[self.drillDownController]];
-//    [self.navController setNavigationBarHidden:NO animated:YES];
     
     [self.drillDownController setNavigationBarsHidden:NO];
     self.drillDownController.leftNavigationBar.translucent = NO;
     self.drillDownController.rightNavigationBar.translucent = NO;
+//    [self.drillDownController.leftNavigationBar setBarTintColor:[UIColor colorMustard]];
+//    [self.drillDownController.rightNavigationBar setBarTintColor:[UIColor colorMustard]];
 
     self.drillDownController.leftControllerWidth = [self leftControllerShortWidth];
     
@@ -178,15 +195,31 @@
 }
 
 #pragma mark - BFProductVCDelegate
-- (void)didTapAddNewProduct:(id)object {
-    PopupView *pv = [[PopupView alloc] initWithScreen:@"AddProduct" andData:nil onScreen:self.drillDownController];
+- (void)didTapAddNewProduct:(id)parentObject {
+    NSDictionary* data = @{ @"parentObject" : parentObject };
+    PopupView *pv = [[PopupView alloc] initWithScreen:@"AddProduct" andData:data onScreen:nil];
     pv.delegate = self;
-    pv.closeAction = @selector(loginBoxClosed);
+    pv.closeAction = @selector(addProductBoxClosed);
     [self.drillDownController.view addSubview:pv];
     [self.drillDownController.view bringSubviewToFront:pv];
-    
 }
 
+- (void)didTapProduct:(UserProduct*)userProduct parentObject:(id)parentObject {
+    NSDictionary* data = @{ @"parentObject" : parentObject,
+                            @"userProduct" : userProduct };
+    
+    PopupView *pv = [[PopupView alloc] initWithScreen:@"AddProduct" andData:data onScreen:nil];
+    pv.delegate = self;
+    pv.closeAction = @selector(addProductBoxClosed);
+    [self.drillDownController.view addSubview:pv];
+    [self.drillDownController.view bringSubviewToFront:pv];
+}
+
+
+
+-(void)addProductBoxClosed {
+    
+}
 #ifdef DEBUG
 #pragma mark - Admin
 - (void)runAdmin {

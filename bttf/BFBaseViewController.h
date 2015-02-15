@@ -10,6 +10,7 @@
 
 @interface BFBaseViewController : UIViewController
 
+@property (nonatomic, strong) UIActivityIndicatorView* activityView;
 
 - (void)hasError:(NSError *)error;
 - (void)hasErrorWithLocalizedDescription:(NSString*)localizedDescription;
@@ -17,4 +18,9 @@
 - (void)handleNetworkTimeout:(NSTimer *)aTimer;
 
 - (void) backButtonAction:(id)sender;
+
+#pragma mark - UIActivityIndicatorView
+- (void)animateActivityIndicatorAndSetTimer;
+- (void)stopActivityIndicatorAndTimer;
+
 @end

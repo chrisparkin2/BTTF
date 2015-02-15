@@ -9,7 +9,9 @@
 #import "BFCategoryViewController.h"
 #import "BFCategoryTableViewCell.h"
 #import "CategoryMain.h"
+#import "CategoryProduct.h"
 #import "BFClientAPI.h"
+#import "BFConstants.h"
 
 static NSString *const CategoryCellIdentifier = @"CategoryCell";
 
@@ -29,6 +31,16 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     }
     return self;
 }
+
+
+- (NSArray*) objects {
+    if (!_objects) {
+        _objects = [NSArray new];
+    }
+    return _objects;
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -82,8 +94,20 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
+    self.activityView.center = self.tableView.center;
+    
+    // This will remove extra separators from tableview
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
     [self loadData];
 }
+
+- (void) viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+}
+
 
 -(void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -95,6 +119,9 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
 #pragma mark - Data
 - (void) loadData {
     
+    [self animateActivityIndicatorAndSetTimer];
+    
+      
     NSLog(@"self.categoryIndex = %ld",(long)self.categoryIndex);
     
     __weak __typeof(self) weakSelf = self;
@@ -105,13 +132,15 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
             
             [[BFClientAPI sharedAPI] getCategoriesMainWithParameters:nil withSuccess:^(NSArray *categories) {
                 
+                [self stopActivityIndicatorAndTimer];
+                
                 __strong __typeof(weakSelf) strongSelf = weakSelf;
                 
                 strongSelf.objects = categories;
                 [strongSelf objectsDidLoad];
                 
             } failure:^(NSError *error) {
-                
+                [self stopActivityIndicatorAndTimer];
                 NSLog(@"error = %@",error);
                 
             }];
@@ -127,14 +156,15 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
             }
            
             [[BFClientAPI sharedAPI] getCategoriesSubWithParameters:parameters withSuccess:^(NSArray *categories) {
-                
+                [self stopActivityIndicatorAndTimer];
+
                 __strong __typeof(weakSelf) strongSelf = weakSelf;
                 
                 strongSelf.objects = categories;
                 [strongSelf objectsDidLoad];
                 
             } failure:^(NSError *error) {
-                
+                [self stopActivityIndicatorAndTimer];
                 NSLog(@"error = %@",error);
                 
             }];
@@ -150,14 +180,16 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
             }
 
             [[BFClientAPI sharedAPI] getCategoriesProductWithParameters:parameters withSuccess:^(NSArray *categories) {
-                
+                [self stopActivityIndicatorAndTimer];
+
                 __strong __typeof(weakSelf) strongSelf = weakSelf;
                 
                 strongSelf.objects = categories;
                 [strongSelf objectsDidLoad];
                 
             } failure:^(NSError *error) {
-                
+                [self stopActivityIndicatorAndTimer];
+
                 NSLog(@"error = %@",error);
                 
             }];
@@ -226,5 +258,6 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
      Pass the selected object to the new view controller.
 }
 */
+
 
 @end

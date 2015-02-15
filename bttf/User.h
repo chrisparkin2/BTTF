@@ -20,6 +20,7 @@
 
 -(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*,NSError*))completion;
 -(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*,NSError*))completion;
+-(void)becomeUserWithCompletion:(void(^)(NSDictionary*,NSError*))completion;
 -(NSDictionary*)returnUserLoginData;
 -(void)writeUserLoginData:(NSDictionary*)userData;
 -(void)syncMeatWeightSuccess:(void(^)(void))success failure:(void(^)(NSString*))failure;

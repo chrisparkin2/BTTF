@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BFBaseViewController.h"
 
-@interface Screen : UIViewController
+@interface Screen : BFBaseViewController
 
 @property (nonatomic, strong) NSDictionary *passedData;
 @property (nonatomic, assign) BOOL breakpoint;

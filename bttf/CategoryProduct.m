@@ -23,15 +23,15 @@
              };
 }
 
-+ (NSValueTransformer *)categoryMainJSONTransformer
-{
-    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryMain.class];
-}
-
-+ (NSValueTransformer *)categorySubJSONTransformer
-{
-    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategorySub.class];
-}
+//+ (NSValueTransformer *)categoryMainJSONTransformer
+//{
+//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryMain.class];
+//}
+//
+//+ (NSValueTransformer *)categorySubJSONTransformer
+//{
+//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategorySub.class];
+//}
 
 
 

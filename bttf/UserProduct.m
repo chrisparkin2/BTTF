@@ -19,13 +19,13 @@
     
     self = [super init];
     if (self) {
-        _quantity = @(0);
+        _quantityBulk = @(0);
     }
     return self;
 }
 
 - (BOOL) isValid {
-    if (!self.userId || !self.price || !self.name || !self.quantity) return NO;
+    if (!self.userId || !self.price || !self.name || !self.quantityBulk) return NO;
     return YES;
 }
 
@@ -37,31 +37,34 @@
              @"name" : @"name",
              @"price" : @"price",
              @"supplier" : @"supplier",
-             @"categoryMain" : @"_category_main",
-             @"categorySub" : @"_category_sub",
-             @"categoryProduct" : @"_category_product"
+             @"quantityBulk" : @"quantity_bulk",
+             @"quantityPerCase" : @"quantity_per_case",
+             @"quantityUnits" : @"quantity_units",
+             @"categoryMain" : @"category_main",
+             @"categorySub" : @"category_sub",
+             @"categoryProduct" : @"category_product"
              };
 }
 
-+ (NSValueTransformer *)categoryMainJSONTransformer
-{
-    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryMain.class];
-}
-
-+ (NSValueTransformer *)categorySubJSONTransformer
-{
-    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategorySub.class];
-}
-
-+ (NSValueTransformer *)categoryProductJSONTransformer
-{
-    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryProduct.class];
-}
-
-+ (NSValueTransformer *)userJSONTransformer
-{
-    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:User.class];
-}
+//+ (NSValueTransformer *)categoryMainJSONTransformer
+//{
+//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryMain.class];
+//}
+//
+//+ (NSValueTransformer *)categorySubJSONTransformer
+//{
+//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategorySub.class];
+//}
+//
+//+ (NSValueTransformer *)categoryProductJSONTransformer
+//{
+//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryProduct.class];
+//}
+//
+//+ (NSValueTransformer *)userJSONTransformer
+//{
+//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:User.class];
+//}
 
 
 @end
