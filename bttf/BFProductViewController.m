@@ -132,8 +132,9 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    cell.textLabel.text = userProduct.name;
-    cell.detailTextLabel.text = [userProduct.quantityUnits stringValue];
+    cell.productLabel.text = userProduct.name;
+    cell.quantityLabel.text = [userProduct.quantityUnits stringValue];
+    cell.supplierLabel.text = userProduct.supplier;
     
     return cell;
 }

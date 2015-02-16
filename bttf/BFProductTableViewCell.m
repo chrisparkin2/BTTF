@@ -8,6 +8,10 @@
 
 #import "BFProductTableViewCell.h"
 
+@interface BFProductTableViewCell ()
+
+@end
+
 @implementation BFProductTableViewCell
 
 - (void)awakeFromNib {
