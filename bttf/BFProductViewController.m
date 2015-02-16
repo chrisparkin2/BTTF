@@ -33,7 +33,17 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"Your Products";
+    // Nav Title
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    label.numberOfLines = 1;
+    label.font = [UIFont boldSystemFontOfSize:20.0f];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    label.text = @"Your Products";
+    [label sizeToFit];
+    self.navigationItem.titleView = label;
+
     self.view.backgroundColor = self.tableView.backgroundColor;
     
     self.activityView.center = self.tableView.center;
@@ -45,8 +55,8 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
     self.view.backgroundColor = [UIColor colorMustard];
     
     // This will remove extra separators from tableview
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; 
-
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
     
     [self loadData];
 }
@@ -109,6 +119,7 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
                                                                             forIndexPath:indexPath];
         
         cell.backgroundColor = [UIColor clearColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
     }
@@ -119,7 +130,8 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
     UserProduct* userProduct = self.objects[indexPath.row];
     
     cell.backgroundColor = [UIColor clearColor];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     cell.textLabel.text = userProduct.name;
     cell.detailTextLabel.text = [userProduct.quantityUnits stringValue];
     

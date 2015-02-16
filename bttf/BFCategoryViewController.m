@@ -46,22 +46,30 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     [super viewDidLoad];
     
     // Nav Title
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    label.numberOfLines = 1;
+    label.font = [UIFont boldSystemFontOfSize:20.0f];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
     switch (self.categoryIndex) {
         case 0:
-            self.navigationItem.title = @"Select Main Category";
+            label.text = @"Select Main Category";
             break;
             
         case 1:
-            self.navigationItem.title = @"Select Sub Category";
+            label.text = @"Select Sub Category";
             break;
             
         case 2:
-            self.navigationItem.title = @"Select Product Category";
+            label.text = @"Select Product Category";
             break;
             
         default:
             break;
     }
+    [label sizeToFit];
+    self.navigationItem.titleView = label;
     
     // BG Color
     switch (self.categoryIndex) {
@@ -120,9 +128,6 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
 - (void) loadData {
     
     [self animateActivityIndicatorAndSetTimer];
-    
-      
-    NSLog(@"self.categoryIndex = %ld",(long)self.categoryIndex);
     
     __weak __typeof(self) weakSelf = self;
     
