@@ -12,6 +12,7 @@
 #import "CategoryProduct.h"
 #import "BFClientAPI.h"
 #import "BFConstants.h"
+#import "UIColor+Extensions.h"
 
 static NSString *const CategoryCellIdentifier = @"CategoryCell";
 
@@ -75,8 +76,8 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     switch (self.categoryIndex) {
         case 0:
         {
-            self.tableView.backgroundColor = [UIColor whiteColor];
-            self.view.backgroundColor = [UIColor whiteColor];
+            self.tableView.backgroundColor = [UIColor colorFog];
+            self.view.backgroundColor = [UIColor colorFog];
         }
             break;
             

@@ -106,23 +106,8 @@
     self.drillDownController.leftNavigationBar.translucent = NO;
     self.drillDownController.rightNavigationBar.translucent = NO;
     [self.drillDownController.leftNavigationBar setTintColor:[UIColor colorSalmon]];
-//    if([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
-//    {
-//        [[UINavigationBar appearance] setTitleTextAttributes:
-//         @{
-//           NSForegroundColorAttributeName: [UIColor blackColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:20.0f]
-//           }];
-//    }
-//    else
-//    {
-//        [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:20.0f], NSFontAttributeName, nil]];
-//        
-//        CGFloat verticalOffset = 0;
-//        [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:verticalOffset forBarMetrics:UIBarMetricsDefault];
-//    }
-    
-    //    [self.drillDownController.leftNavigationBar setBarTintColor:[UIColor colorMustard]];
-    //    [self.drillDownController.rightNavigationBar setBarTintColor:[UIColor colorMustard]];
+//    [self.drillDownController.leftNavigationBar setBarTintColor:[UIColor colorFog]];
+//    [self.drillDownController.rightNavigationBar setBarTintColor:[UIColor colorFog]];
     
     
     self.drillDownController.leftControllerWidth = [self leftControllerShortWidth];
@@ -250,7 +235,7 @@
 #pragma mark - Admin
 - (void)runAdmin {
     
-    [[BFClientAPI sharedAPI] processCategoriesFromCSV];
+//    [[BFClientAPI sharedAPI] processCategoriesFromCSV];
     
 }
 
