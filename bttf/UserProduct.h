@@ -25,9 +25,9 @@
 @property (nonatomic) NSNumber* quantityPerCase;
 @property (nonatomic) NSNumber* quantityUnits;
 
-@property (nonatomic) NSString* categoryMain;
-@property (nonatomic) NSString* categorySub;
-@property (nonatomic) NSString* categoryProduct;
+@property (nonatomic) NSString* categoryMainId;
+@property (nonatomic) NSString* categorySubId;
+@property (nonatomic) NSString* categoryProductId;
 
 
 #pragma mark - Logic
@@ -35,8 +35,8 @@
 
 
 #pragma mark - Keys
-+ (NSString*)categoryMainKey;
-+ (NSString*)categorySubKey;
-+ (NSString*)categoryProductKey;
++ (NSString*)categoryMainIdKey;
++ (NSString*)categorySubIdKey;
++ (NSString*)categoryProductIdKey;
 
 @end

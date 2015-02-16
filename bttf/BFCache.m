@@ -49,12 +49,12 @@
 
 
 #pragma mark - Main
-- (NSMutableArray*)objectsForClass:(Class)class {
+- (NSArray*)objectsForClass:(Class)class {
     NSMutableArray* objects;
     NSDictionary *attributes = [self attributesForApp];
     if (attributes) objects = [attributes objectForKey:NSStringFromClass(class)];
     
-    if (objects) return objects;
+    if (objects) return [objects copy];
     
     return nil;
 }
@@ -68,56 +68,12 @@
     
 }
 
-#pragma mark - Categories
-- (NSMutableArray*)categoriesMain {
-    NSMutableArray* categoriesMain;
-    NSDictionary *attributes = [self attributesForApp];
-    if (attributes) categoriesMain = [attributes objectForKey:[BFCache categoriesMainKey]];
-
-    if (categoriesMain) return categoriesMain;
-    
-    return nil;
-}
-- (void)setCategoriesMain:(NSMutableArray*)categoriesMain {
-    if (categoriesMain) {
-        NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForApp]];
-        [attributes setObject:categoriesMain forKey:[BFCache categoriesMainKey]];
-        [self setAttributesForApp:attributes];
+- (void)addObject:(id)object forClass:(Class)class {
+    NSMutableArray* objects = [[self objectsForClass:class] mutableCopy];
+    if (objects && [object isKindOfClass:class]) {
+        [objects addObject:object];
     }
-}
-
-- (NSMutableArray*)categoriesSub {
-    NSMutableArray* categoriesSub;
-    NSDictionary *attributes = [self attributesForApp];
-    if (attributes) categoriesSub = [attributes objectForKey:[BFCache categoriesSubKey]];
-    
-    if (categoriesSub) return categoriesSub;
-    
-    return nil;
-}
-- (void)setCategoriesSub:(NSMutableArray*)categoriesSub {
-    if (categoriesSub) {
-        NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForApp]];
-        [attributes setObject:categoriesSub forKey:[BFCache categoriesSubKey]];
-        [self setAttributesForApp:attributes];
-    }
-}
-
-- (NSMutableArray*)categoriesProduct {
-    NSMutableArray* categoriesProduct;
-    NSDictionary *attributes = [self attributesForApp];
-    if (attributes) categoriesProduct = [attributes objectForKey:[BFCache categoriesProductKey]];
-    
-    if (categoriesProduct) return categoriesProduct;
-    
-    return nil;
-}
-- (void)setCategoriesProduct:(NSMutableArray*)categoriesProduct {
-    if (categoriesProduct) {
-        NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForApp]];
-        [attributes setObject:categoriesProduct forKey:[BFCache categoriesProductKey]];
-        [self setAttributesForApp:attributes];
-    }
+    [self setObjects:objects forClass:class];
 }
 
 
@@ -126,17 +82,6 @@
     return [NSString stringWithFormat:@"app"];
 }
 
-+ (NSString *)categoriesMainKey {
-    return [NSString stringWithFormat:@"categoriesMain"];
-}
-
-+ (NSString *)categoriesSubKey {
-    return [NSString stringWithFormat:@"categoriesSub"];
-}
-
-+ (NSString *)categoriesProductKey {
-    return [NSString stringWithFormat:@"categoriesProduct"];
-}
 
 
 #pragma mark - ()

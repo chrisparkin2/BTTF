@@ -11,8 +11,8 @@
 #import "User.h"
 #import "BFCache.h"
 
-NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
-//NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
+//NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
+NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 
 
 #define kData @"data"
@@ -143,6 +143,7 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
 
 #pragma mark - Base Operations
 - (void)saveObject:(id)object
+       objectClass:(Class)objectClass
         objectPath:(NSString*)objectPath
                withSuccess:(BFSuccessBlock)success
                    failure:(BFFailureBlock)failure
@@ -154,6 +155,9 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
     [self postPath:path parameters:JSONDictionary responseModel:[NSDictionary class] success:^(id response) {
         if(success)
         {
+            // Add to cache
+            [[BFCache sharedCache] addObject:object forClass:objectClass];
+        
             success();
         }
     } failure:^(NSError *error, NSInteger statusCode) {
@@ -262,21 +266,21 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
         withSuccess:(BFSuccessBlock)success
             failure:(BFFailureBlock)failure
 {
-    [self saveObject:category objectPath:[self categoryMain] withSuccess:success failure:failure];
+    [self saveObject:category objectClass:CategoryMain.class objectPath:[self categoryMain]  withSuccess:success failure:failure];
 }
 
 - (void)createCategorySub:(CategorySub *)category
                withSuccess:(BFSuccessBlock)success
                    failure:(BFFailureBlock)failure
 {
-    [self saveObject:category objectPath:[self categorySub] withSuccess:success failure:failure];
+    [self saveObject:category objectClass:CategorySub.class objectPath:[self categorySub] withSuccess:success failure:failure];
 }
 
 - (void)createCategoryProduct:(CategoryProduct *)category
               withSuccess:(BFSuccessBlock)success
                   failure:(BFFailureBlock)failure
 {
-    [self saveObject:category objectPath:[self categoryProduct] withSuccess:success failure:failure];
+    [self saveObject:category objectClass:CategoryProduct.class objectPath:[self categoryProduct] withSuccess:success failure:failure];
 }
 
 #pragma mark - UserProduct
@@ -291,7 +295,7 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
                   withSuccess:(BFSuccessBlock)success
                       failure:(BFFailureBlock)failure
 {
-    [self saveObject:userProduct objectPath:[self userProduct] withSuccess:success failure:failure];
+    [self saveObject:userProduct objectClass:UserProduct.class objectPath:[self userProduct] withSuccess:success failure:failure];
 }
 
 #pragma mark - Object Paths
@@ -436,13 +440,13 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
 
                 CategorySub* categorySub = [CategorySub new];
                 categorySub.name = lines[1];
-                categorySub.categoryMain = categoryMain;
+                categorySub.categoryMainId = categoryMain.objectId;
                 if([self hasCategoryName:lines[1] categories:categoriesSub]) categorySub = [self hasCategoryName:lines[1] categories:categoriesSub];
                 
                 CategoryProduct* categoryProduct = [CategoryProduct new];
                 categoryProduct.name = lines[2];
-                categoryProduct.categoryMain = categoryMain;
-                categoryProduct.categorySub = categorySub;
+                categoryProduct.categoryMainId = categoryMain.objectId;
+                categoryProduct.categorySubId = categorySub.objectId;
                 if([self hasCategoryName:lines[2] categories:categoriesProduct]) categoryProduct = [self hasCategoryName:lines[2] categories:categoriesProduct];
 
 
@@ -461,50 +465,48 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
         // Save these concurrently within each category, but serially overall
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{ // 1
 
-            dispatch_group_t groupMain = dispatch_group_create();
-            
-            NSArray* categoriesMainToSaveArray = [categoriesMainToSave allObjects];
-            [categoriesMainToSaveArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                
-                dispatch_group_enter(groupMain);
-                CategoryMain* main = (CategoryMain*)obj;
-                [[BFClientAPI sharedAPI] createCategoryMain:main withSuccess:^{
-                    dispatch_group_leave(groupMain);
-
-                } failure:^(NSError *error) {
-                    NSLog(@"error = %@",error);
-                    dispatch_group_leave(groupMain);
-
-                }];
-            }];
-            dispatch_group_wait(groupMain, DISPATCH_TIME_FOREVER); // 5
-
-            
-            
-            
-            // Save all the categories
-            dispatch_group_t groupSub = dispatch_group_create();
-            
-            NSArray* categoriesSubToSaveArray = [categoriesSubToSave allObjects];
-            [categoriesSubToSaveArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                dispatch_group_enter(groupSub);
-                CategorySub* sub = (CategorySub*)obj;
-                [[BFClientAPI sharedAPI] createCategorySub:sub withSuccess:^{
-                    dispatch_group_leave(groupSub);
-
-                } failure:^(NSError *error) {
-                    NSLog(@"error = %@",error);
-                    dispatch_group_leave(groupSub);
-
-                }];
-                
-            }];
-            dispatch_group_wait(groupSub, DISPATCH_TIME_FOREVER); // 5
+//            dispatch_group_t groupMain = dispatch_group_create();
+//            
+//            NSArray* categoriesMainToSaveArray = [categoriesMainToSave allObjects];
+//            [categoriesMainToSaveArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//                
+//                dispatch_group_enter(groupMain);
+//                CategoryMain* main = (CategoryMain*)obj;
+//                [[BFClientAPI sharedAPI] createCategoryMain:main withSuccess:^{
+//                    dispatch_group_leave(groupMain);
 //
-            
-            
-            
+//                } failure:^(NSError *error) {
+//                    NSLog(@"error = %@",error);
+//                    dispatch_group_leave(groupMain);
+//
+//                }];
+//            }];
+//            dispatch_group_wait(groupMain, DISPATCH_TIME_FOREVER); // 5
 
+            
+            
+            
+//            // Save all the categories
+//            dispatch_group_t groupSub = dispatch_group_create();
+//            
+//            NSArray* categoriesSubToSaveArray = [categoriesSubToSave allObjects];
+//            [categoriesSubToSaveArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//                dispatch_group_enter(groupSub);
+//                CategorySub* sub = (CategorySub*)obj;
+//                [[BFClientAPI sharedAPI] createCategorySub:sub withSuccess:^{
+//                    dispatch_group_leave(groupSub);
+//
+//                } failure:^(NSError *error) {
+//                    NSLog(@"error = %@",error);
+//                    dispatch_group_leave(groupSub);
+//
+//                }];
+//                
+//            }];
+//            dispatch_group_wait(groupSub, DISPATCH_TIME_FOREVER); // 5
+//
+//            
+//
             dispatch_group_t groupProduct = dispatch_group_create();
 
             NSArray* categoriesProductToSaveArray = [categoriesProductToSave allObjects];

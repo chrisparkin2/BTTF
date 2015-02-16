@@ -16,14 +16,14 @@
 {
     return @{@"objectId" : @"_id",
              @"name" : @"name",
-             @"categoryMain" : @"_category_main"
+             @"categoryMainId" : @"_category_main_id"
              };
 }
 
 
 #pragma mark - Keys
-+ (NSString*)categoryMainKey {
-    return @"categoryMain";
++ (NSString*)categoryMainIdKey {
+    return @"categoryMainId";
 }
 
 //+ (NSValueTransformer *)categoryMainJSONTransformer

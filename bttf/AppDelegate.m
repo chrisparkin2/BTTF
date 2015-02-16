@@ -250,7 +250,7 @@
 #pragma mark - Admin
 - (void)runAdmin {
     
-//    [[BFClientAPI sharedAPI] processCategoriesFromCSV];
+    [[BFClientAPI sharedAPI] processCategoriesFromCSV];
     
 }
 

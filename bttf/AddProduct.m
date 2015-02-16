@@ -151,7 +151,7 @@ typedef enum {
     
     // Set all the fields
     CategoryProduct* categoryProduct = (CategoryProduct*)self.parentObject;
-    self.userProduct.categoryProduct = categoryProduct.objectId;
+    self.userProduct.categoryProductId = categoryProduct.objectId;
     
     self.userProduct.name = [self.productNameLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     self.userProduct.supplier = [self.supplerNameLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];

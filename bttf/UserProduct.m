@@ -40,21 +40,21 @@
              @"quantityBulk" : @"quantity_bulk",
              @"quantityPerCase" : @"quantity_per_case",
              @"quantityUnits" : @"quantity_units",
-             @"categoryMain" : @"_category_main",
-             @"categorySub" : @"_category_sub",
-             @"categoryProduct" : @"_category_product"
+             @"categoryMainId" : @"_category_main_id",
+             @"categorySubId" : @"_category_sub_id",
+             @"categoryProductId" : @"_category_product_id"
              };
 }
 
 #pragma mark - Keys
-+ (NSString*)categoryMainKey {
-    return @"categoryMain";
++ (NSString*)categoryMainIdIdKey {
+    return @"categoryMainId";
 }
-+ (NSString*)categorySubKey {
-    return @"categorySub";
++ (NSString*)categorySubIdKey {
+    return @"categorySubId";
 }
-+ (NSString*)categoryProductKey {
-    return @"categoryProduct";
++ (NSString*)categoryProductIdKey {
+    return @"categoryProductId";
 }
 
 
