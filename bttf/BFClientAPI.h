@@ -28,6 +28,10 @@ typedef void (^BFSuccessBlock)();
 + (BFClientAPI *)sharedAPI;
 
 
+#pragma mark - Preload
+- (void)preloadGenericData;
+- (void)preloadUserSpecificData;
+
 #pragma mark - Category
 - (void)getCategoriesMainWithParameters:(NSDictionary *)parameters
                       withSuccess:(BFSuccessObjectsBlock)success

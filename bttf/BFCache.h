@@ -15,6 +15,10 @@
 
 - (void)clear;
 
+#pragma mark - Main
+- (NSMutableArray*)objectsForClass:(Class)class;
+- (void)setObjects:(NSArray*)objects forClass:(Class)class;
+
 #pragma mark - Categories
 - (NSMutableArray*)categoriesMain;
 - (void)setCategoriesMain:(NSMutableArray*)categoriesMain;

@@ -66,8 +66,8 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
     if (self.parentObject) {
     
         CategoryProduct* categoryProduct = (CategoryProduct*)self.parentObject;
-        parameters = @{ @"category_product" : categoryProduct.objectId,
-                        @"user_id" : [User sharedInstance].objectId
+        parameters = @{ @"categoryProduct" : categoryProduct.objectId,
+                        @"userId" : [User sharedInstance].objectId
                         };
     }
     __weak __typeof(self) weakSelf = self;

@@ -34,7 +34,7 @@
     [self.navController setNavigationBarHidden:YES animated:NO];
     
     // Preload non-user specific data
-    
+    [[BFClientAPI sharedAPI] preloadGenericData];
 
     // Login
     [self showLogin];
@@ -58,6 +58,8 @@
     
     [self runAdmin];
     
+    // Preload user specific data
+    [[BFClientAPI sharedAPI] preloadUserSpecificData];
     
     // Present the main interface
     [self setupDrillDownController];

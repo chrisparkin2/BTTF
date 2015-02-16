@@ -47,28 +47,26 @@
 }
 
 
-//#pragma mark - App
-//- (NSMutableArray*)allUsers {
-//    
-//    NSMutableArray* users;
-//    
-//    NSDictionary *attributes = [self attributesForApp];
-//    if (attributes) {
-//        users = [attributes objectForKey:[BFCache usersKey]];
-//    }
-//    
-//    if (users) return users;
-//    
-//    return nil;
-//}
-//
-//- (void)setAllUsers:(NSMutableArray*)users {
-//    if (users) {
-//        NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForApp]];
-//        [attributes setObject:users forKey:[BFCache usersKey]];
-//        [self setAttributesForApp:attributes];
-//    }
-//}
+
+#pragma mark - Main
+- (NSMutableArray*)objectsForClass:(Class)class {
+    NSMutableArray* objects;
+    NSDictionary *attributes = [self attributesForApp];
+    if (attributes) objects = [attributes objectForKey:NSStringFromClass(class)];
+    
+    if (objects) return objects;
+    
+    return nil;
+}
+
+- (void)setObjects:(NSArray*)objects forClass:(Class)class {
+    if (objects) {
+        NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:[self attributesForApp]];
+        [attributes setObject:objects forKey:NSStringFromClass(class)];
+        [self setAttributesForApp:attributes];
+    }
+    
+}
 
 #pragma mark - Categories
 - (NSMutableArray*)categoriesMain {

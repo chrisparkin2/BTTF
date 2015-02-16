@@ -40,9 +40,9 @@
              @"quantityBulk" : @"quantity_bulk",
              @"quantityPerCase" : @"quantity_per_case",
              @"quantityUnits" : @"quantity_units",
-             @"categoryMain" : @"category_main",
-             @"categorySub" : @"category_sub",
-             @"categoryProduct" : @"category_product"
+             @"categoryMain" : @"_category_main",
+             @"categorySub" : @"_category_sub",
+             @"categoryProduct" : @"_category_product"
              };
 }
 

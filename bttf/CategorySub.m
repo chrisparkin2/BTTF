@@ -16,7 +16,7 @@
 {
     return @{@"objectId" : @"_id",
              @"name" : @"name",
-             @"categoryMain" : @"category_main"
+             @"categoryMain" : @"_category_main"
              };
 }
 

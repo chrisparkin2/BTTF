@@ -171,6 +171,15 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
                         withSuccess:(BFSuccessObjectsBlock)success
                             failure:(BFFailureBlock)failure
 {
+    
+    // Check if cached
+    if ([[BFCache sharedCache] objectsForClass:[objectClass class]]) {
+        NSArray* objects = [self filteredObjects:[[BFCache sharedCache] objectsForClass:[objectClass class]] parameters:parameters];
+        success(objects);
+        return;
+    }
+    
+    // Service call
     NSString* path = [NSString stringWithFormat:@"%@/read",objectPath];
     
     NSDictionary* parametersJSON = [self JSONKeysFromObjectKeys:parameters objectClass:objectClass];
@@ -181,6 +190,9 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
             NSError *error = nil;
             NSArray* data = [response objectForKey:@"data"];
             NSArray *objects = [MTLJSONAdapter modelsOfClass:objectClass fromJSONArray:data error:&error];
+            
+            
+            // callback
             success(objects);
         }
     } failure:^(NSError *error, NSInteger statusCode) {
@@ -191,15 +203,38 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
     }];
 }
 
+
+#pragma mark - Preload
+- (void)preloadGenericData {
+
+}
+
+- (void)preloadUserSpecificData {
+    // need user token for access
+    [self getCategoriesMainWithParameters:nil withSuccess:^(NSArray *objects) {
+        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryMain class]];
+    } failure:nil];
+    
+    [self getCategoriesSubWithParameters:nil withSuccess:^(NSArray *objects) {
+        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategorySub class]];
+    } failure:nil];
+    
+    [self getCategoriesProductWithParameters:nil withSuccess:^(NSArray *objects) {
+        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryProduct class]];
+    } failure:nil];
+    
+    
+    NSDictionary* parameters = @{ @"userId" : [User sharedInstance].objectId };
+    [self getUserProductsWithParameters:parameters withSuccess:^(NSArray *objects) {
+        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[UserProduct class]];
+    } failure:nil];
+}
+
 #pragma mark - Category
 - (void)getCategoriesMainWithParameters:(NSDictionary *)parameters
         withSuccess:(BFSuccessObjectsBlock)success
          failure:(BFFailureBlock)failure
 {
-    // Check if cached
-    if ([[BFCache sharedCache] categoriesMain]) {
-        [self categoriesMainFromCache:parameters];
-    }
     
     [self getObjectsWithParameters:parameters objectClass:CategoryMain.class objectPath:[self categoryMain] withSuccess:success failure:failure];
 }
@@ -209,8 +244,6 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
                                 failure:(BFFailureBlock)failure
 {
     
-    
-    
     [self getObjectsWithParameters:parameters objectClass:CategorySub.class objectPath:[self categorySub] withSuccess:success failure:failure];
 }
 
@@ -218,6 +251,8 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
                             withSuccess:(BFSuccessObjectsBlock)success
                                 failure:(BFFailureBlock)failure
 {
+    
+
     [self getObjectsWithParameters:parameters objectClass:CategoryProduct.class objectPath:[self categoryProduct] withSuccess:success failure:failure];
 }
 
@@ -301,11 +336,24 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
 
 
 #pragma mark - Cache
-- (NSArray*)categoriesMainFromCache:(NSDictionary*)parameters {
+- (NSArray*)filteredObjects:(NSArray*)objects parameters:(NSDictionary*)parameters {
     
-    NSArray* categoriesMain = [[BFCache sharedCache] categoriesMain];
-    NSMutableArray* categoriesMainFiltered = [[NSMutableArray alloc] initWithCapacity:categoriesMain.count];
-    categoriesMain 
+    // TODO: This filtering process will not work for parameters that aren't simple equality predicates
+    
+    // Enumerate predicates
+    __block NSMutableArray* predicates = [[NSMutableArray alloc] initWithCapacity:parameters.count];;
+    [parameters enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K like %@", key, obj];
+        [predicates addObject:predicate];
+    }];
+    NSPredicate* combinedPredicates = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+    
+
+    // Apply
+    NSArray *filtered = [objects filteredArrayUsingPredicate:combinedPredicates];
+    
+    
+    return  filtered;
 }
 
 #ifdef DEBUG

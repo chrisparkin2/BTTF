@@ -17,8 +17,8 @@
 {
     return @{@"objectId" : @"_id",
              @"name" : @"name",
-             @"categoryMain" : @"category_main",
-             @"categorySub" : @"category_sub"
+             @"categoryMain" : @"_category_main",
+             @"categorySub" : @"_category_sub"
 
              };
 }
@@ -29,6 +29,7 @@
 }
 + (NSString*)categorySubKey {
     return @"categorySub";
+
 }
 
 //+ (NSValueTransformer *)categoryMainJSONTransformer
