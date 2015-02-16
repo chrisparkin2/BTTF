@@ -27,22 +27,29 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    
     // Setup view
     self.navController = (UINavigationController*)self.window.rootViewController;
     self.welcomeViewController = [self.navController.viewControllers objectAtIndex:0];
     [self.navController setNavigationBarHidden:YES animated:NO];
-
-    [[User sharedInstance] becomeUserWithCompletion:^(NSDictionary *data, NSError *error) {
-        
-        if (!data) {
-            [self showLogin];
-            return;
-        }
-        
-        [self proceedToMainInterface];        
-    }];
     
+    // Preload non-user specific data
+    
+
+    // Login
+    [self showLogin];
+//    [[User sharedInstance] becomeUserWithCompletion:^(NSDictionary *data, NSError *error) {
+//        
+//        if (!data) {
+//            [self showLogin];
+//            return;
+//        }
+//        
+//        [self proceedToMainInterface];        
+//    }];
+    
+    
+
     
     return YES;
 }
@@ -98,7 +105,9 @@
     self.drillDownController.rightNavigationBar.translucent = NO;
 //    [self.drillDownController.leftNavigationBar setBarTintColor:[UIColor colorMustard]];
 //    [self.drillDownController.rightNavigationBar setBarTintColor:[UIColor colorMustard]];
-
+    
+    [self.drillDownController.leftNavigationBar setTintColor:[UIColor colorSalmon]];
+    
     self.drillDownController.leftControllerWidth = [self leftControllerShortWidth];
     
     [self pushCategoryController:BFCategoryMain object:nil];

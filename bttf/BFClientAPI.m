@@ -9,6 +9,7 @@
 #import "BFClientAPI.h"
 #import "AFNetworking.h"
 #import "User.h"
+#import "BFCache.h"
 
 NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
 //NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
@@ -172,7 +173,9 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
 {
     NSString* path = [NSString stringWithFormat:@"%@/read",objectPath];
     
-    [self postPath:path parameters:parameters responseModel:[NSDictionary class] success:^(id response) {
+    NSDictionary* parametersJSON = [self JSONKeysFromObjectKeys:parameters objectClass:objectClass];
+    
+    [self postPath:path parameters:parametersJSON responseModel:[NSDictionary class] success:^(id response) {
         if(success)
         {
             NSError *error = nil;
@@ -193,6 +196,11 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
         withSuccess:(BFSuccessObjectsBlock)success
          failure:(BFFailureBlock)failure
 {
+    // Check if cached
+    if ([[BFCache sharedCache] categoriesMain]) {
+        [self categoriesMainFromCache:parameters];
+    }
+    
     [self getObjectsWithParameters:parameters objectClass:CategoryMain.class objectPath:[self categoryMain] withSuccess:success failure:failure];
 }
 
@@ -200,6 +208,7 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
                             withSuccess:(BFSuccessObjectsBlock)success
                                 failure:(BFFailureBlock)failure
 {
+    
     
     
     [self getObjectsWithParameters:parameters objectClass:CategorySub.class objectPath:[self categorySub] withSuccess:success failure:failure];
@@ -267,6 +276,20 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
     return @"user_product";
 }
 
+#pragma mark - Utils
+- (NSDictionary*)JSONKeysFromObjectKeys:(NSDictionary*)objectKeys objectClass:(Class)objectClass {
+    // Convert object keys to JSON keys
+    MTLJSONAdapter* jsonAdapter = [[MTLJSONAdapter alloc] initWithModel:[objectClass new]];
+    NSMutableDictionary* keysJSON = [[NSMutableDictionary alloc] initWithCapacity:objectKeys.count];
+    [objectKeys enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSString* keyJSON = [jsonAdapter JSONKeyPathForPropertyKey:key];
+        [keysJSON setValue:obj forKey:keyJSON];
+    }];
+    
+    return [keysJSON copy];
+}
+
+
 #pragma mark - Error
 - (NSError*)errorWithMessage:(NSString*)message {
     
@@ -274,6 +297,15 @@ NSString *const API_URL = @"https://1f70d9e9.ngrok.com/";
     [details setValue:message forKey:NSLocalizedDescriptionKey];
     return [NSError errorWithDomain:@"network" code:200 userInfo:details];
 
+}
+
+
+#pragma mark - Cache
+- (NSArray*)categoriesMainFromCache:(NSDictionary*)parameters {
+    
+    NSArray* categoriesMain = [[BFCache sharedCache] categoriesMain];
+    NSMutableArray* categoriesMainFiltered = [[NSMutableArray alloc] initWithCapacity:categoriesMain.count];
+    categoriesMain 
 }
 
 #ifdef DEBUG

@@ -67,8 +67,8 @@
     [self.view bringSubviewToFront:self.activityView];
     [self.activityView startAnimating];
     
-    // If more than 5 seconds pass, stop waiting for the server to respond
-    self.networkTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(handleNetworkTimeout:) userInfo:nil repeats:NO];
+    // If more than 10 seconds pass, stop waiting for the server to respond
+    self.networkTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(handleNetworkTimeout:) userInfo:nil repeats:NO];
 
 }
 

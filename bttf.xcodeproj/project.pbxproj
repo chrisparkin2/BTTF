@@ -18,6 +18,7 @@
 		8461014A1A8D85DF00B4C3FD /* AddProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101491A8D85DF00B4C3FD /* AddProduct.m */; };
 		84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */; };
 		848278C41A90FB3200E568B0 /* UIColor+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 848278C31A90FB3200E568B0 /* UIColor+Extensions.m */; };
+		848278C71A91033400E568B0 /* BFCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 848278C61A91033400E568B0 /* BFCache.m */; };
 		8488359A1A8DDB5000EDFE7C /* BFConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 848835991A8DDB5000EDFE7C /* BFConstants.m */; };
 		848859031A8A82C5004BB75C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859021A8A82C5004BB75C /* main.m */; };
 		848859061A8A82C5004BB75C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859051A8A82C5004BB75C /* AppDelegate.m */; };
@@ -75,6 +76,8 @@
 		84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFProductViewController.m; sourceTree = "<group>"; };
 		848278C21A90FB3200E568B0 /* UIColor+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extensions.h"; sourceTree = "<group>"; };
 		848278C31A90FB3200E568B0 /* UIColor+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extensions.m"; sourceTree = "<group>"; };
+		848278C51A91033400E568B0 /* BFCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFCache.h; sourceTree = "<group>"; };
+		848278C61A91033400E568B0 /* BFCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFCache.m; sourceTree = "<group>"; };
 		848835991A8DDB5000EDFE7C /* BFConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFConstants.m; sourceTree = "<group>"; };
 		8488359B1A8DDB5F00EDFE7C /* BFConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFConstants.h; sourceTree = "<group>"; };
 		848858FD1A8A82C5004BB75C /* bttf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bttf.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,8 +193,8 @@
 		848858FF1A8A82C5004BB75C /* bttf */ = {
 			isa = PBXGroup;
 			children = (
-				848278C11A90FB0800E568B0 /* Categories */,
 				848859571A8B1BC6004BB75C /* Sidd */,
+				848278C11A90FB0800E568B0 /* Categories */,
 				848859321A8A8E53004BB75C /* Managers */,
 				848859281A8A8C4D004BB75C /* Models */,
 				848859271A8A8C49004BB75C /* Views */,
@@ -267,6 +270,8 @@
 		848859321A8A8E53004BB75C /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				848278C51A91033400E568B0 /* BFCache.h */,
+				848278C61A91033400E568B0 /* BFCache.m */,
 				848859481A8AB080004BB75C /* BFClientAPI.h */,
 				848859491A8AB080004BB75C /* BFClientAPI.m */,
 			);
@@ -486,6 +491,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */,
+				848278C71A91033400E568B0 /* BFCache.m in Sources */,
 				845109041A8C173C00CAF176 /* CategorySub.m in Sources */,
 				846101451A8D7F6200B4C3FD /* BFAddItemTableViewCell.m in Sources */,
 				848859361A8A8E63004BB75C /* APIConnector.m in Sources */,

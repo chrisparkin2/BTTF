@@ -23,6 +23,14 @@
              };
 }
 
+#pragma mark - Keys
++ (NSString*)categoryMainKey {
+    return @"categoryMain";
+}
++ (NSString*)categorySubKey {
+    return @"categorySub";
+}
+
 //+ (NSValueTransformer *)categoryMainJSONTransformer
 //{
 //    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryMain.class];

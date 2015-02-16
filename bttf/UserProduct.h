@@ -33,4 +33,10 @@
 #pragma mark - Logic
 - (BOOL) isValid;
 
+
+#pragma mark - Keys
++ (NSString*)categoryMainKey;
++ (NSString*)categorySubKey;
++ (NSString*)categoryProductKey;
+
 @end

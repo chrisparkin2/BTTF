@@ -152,7 +152,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
             NSDictionary* parameters;
             if (self.parentObject) {
                 CategoryMain* categoryMain = (CategoryMain*)self.parentObject;
-                parameters = @{ @"category_main" : categoryMain.objectId };
+                parameters = @{ [CategorySub categoryMainKey] : categoryMain.objectId };
             }
            
             [[BFClientAPI sharedAPI] getCategoriesSubWithParameters:parameters withSuccess:^(NSArray *categories) {
@@ -176,7 +176,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
             NSDictionary* parameters;
             if (self.parentObject) {
                 CategorySub* categorySub = (CategorySub*)self.parentObject;
-                parameters = @{ @"category_sub" : categorySub.objectId };
+                parameters = @{ [CategoryProduct categorySubKey] : categorySub.objectId };
             }
 
             [[BFClientAPI sharedAPI] getCategoriesProductWithParameters:parameters withSuccess:^(NSArray *categories) {

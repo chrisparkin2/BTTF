@@ -18,4 +18,7 @@
 @property (nonatomic) NSString* name;
 @property (nonatomic) NSString* categoryMain;
 
+#pragma mark - Keys
++ (NSString*)categoryMainKey;
+
 @end
