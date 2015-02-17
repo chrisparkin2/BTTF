@@ -25,12 +25,14 @@
     
     if(self){
         _mainView = [[NSBundle mainBundle] loadNibNamed:@"PopupView" owner:self options:nil][0];
+        _mainView.frame = [UIScreen mainScreen].bounds;
         CGRect frame = _mainView.frame;
         float totalHeight = [UIScreen mainScreen].bounds.size.height;
         float totalWidth = [UIScreen mainScreen].bounds.size.width;
         frame.origin.x = (totalWidth - frame.size.width)/2.0f;
         frame.origin.y = (totalHeight - frame.size.height)/2.0f;
         self.frame = frame;
+        
         
         [self addSubview:_mainView];
         _screenNavigation = [[ScreenNavigation alloc] init];

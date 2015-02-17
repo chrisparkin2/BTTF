@@ -140,6 +140,17 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
 }
 
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Add Product Cell
+    if (indexPath.row == self.objects.count) {
+        return 50;
+    }
+    // Product Cell
+    else {
+        return 70;
+    }
+}
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

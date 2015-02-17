@@ -38,6 +38,8 @@
 
     // Login
     [self showLogin];
+    
+    // TODO: Trying to create persistant login
 //    [[User sharedInstance] becomeUserWithCompletion:^(NSDictionary *data, NSError *error) {
 //        
 //        if (!data) {
@@ -56,7 +58,9 @@
 
 -(void)proceedToMainInterface {
     
+#ifdef DEBUG
     [self runAdmin];
+#endif
     
     // Preload user specific data
     [[BFClientAPI sharedAPI] preloadUserSpecificData];
