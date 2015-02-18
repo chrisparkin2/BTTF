@@ -227,6 +227,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
         if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryProduct class]];
     } failure:nil];
     
+    NSLog(@"[User sharedInstance] = %@",[User sharedInstance]);
     
     NSDictionary* parameters = @{ @"userId" : [User sharedInstance].objectId };
     [self getUserProductsWithParameters:parameters withSuccess:^(NSArray *objects) {

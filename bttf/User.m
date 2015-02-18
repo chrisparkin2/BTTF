@@ -39,12 +39,13 @@ static User *gInstance;
 -(void)createUserWithUsername:(NSString*)username password:(NSString*)password email:(NSString*)email completion:(void(^)(NSDictionary*,NSError*))completion{
     [[APIConnector sharedAPI] createUserWithUsername:username password:password email:email completion:^(NSDictionary *data,NSError*error) {
         _token = data[@"data"][@"token_id"];
+        _objectId = data[@"data"][@"objectId"];
+        _username = data[@"data"][@"username"];
         completion(data,error);
     }];
 }
 
 -(void)loginUserWithUsername:(NSString*)username password:(NSString*)password completion:(void(^)(NSDictionary*,NSError*))completion{
-    
     
     [[APIConnector sharedAPI] loginUserWithUsername:username password:password completion:^(NSDictionary *data,NSError*error) {
         _token = data[@"data"][@"token_id"];
