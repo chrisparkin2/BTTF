@@ -15,7 +15,6 @@
 
 @interface CategoryProduct : CategoryAbstract <MTLJSONSerializing>
 
-
 @property (nonatomic) NSString* objectId;
 @property (nonatomic) NSString* name;
 @property (nonatomic) NSString* categoryMainId;

@@ -107,6 +107,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
                                 
                                 NSString* message = [responseObject objectForKey:@"message"];
                                 failure([self errorWithMessage:message],[[operation response] statusCode]);
+                                return;
                             }
                             
                             success(responseDictionary);
@@ -142,7 +143,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 }
 
 #pragma mark - Base Operations
-- (void)saveObject:(id)object
+- (void)createObject:(id)object
        objectClass:(Class)objectClass
         objectPath:(NSString*)objectPath
                withSuccess:(BFSuccessBlock)success
@@ -158,6 +159,32 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
             // Add to cache
             [[BFCache sharedCache] addObject:object forClass:objectClass];
         
+            success();
+        }
+    } failure:^(NSError *error, NSInteger statusCode) {
+        if(failure)
+        {
+            failure(error);
+        }
+    }];
+}
+
+- (void)updateObject:(id)object
+         objectClass:(Class)objectClass
+          objectPath:(NSString*)objectPath
+         withSuccess:(BFSuccessBlock)success
+             failure:(BFFailureBlock)failure
+{
+    NSDictionary *JSONDictionary = [MTLJSONAdapter JSONDictionaryFromModel:object];
+    
+    NSString* path = [NSString stringWithFormat:@"%@/update",objectPath];
+    
+    [self postPath:path parameters:JSONDictionary responseModel:[NSDictionary class] success:^(id response) {
+        if(success)
+        {
+            // Reinsert in to cache
+            [[BFCache sharedCache] updateObject:object forClass:objectClass];
+            
             success();
         }
     } failure:^(NSError *error, NSInteger statusCode) {
@@ -226,9 +253,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
     [self getCategoriesProductWithParameters:nil withSuccess:^(NSArray *objects) {
         if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryProduct class]];
     } failure:nil];
-    
-    NSLog(@"[User sharedInstance] = %@",[User sharedInstance]);
-    
+        
     NSDictionary* parameters = @{ @"userId" : [User sharedInstance].objectId };
     [self getUserProductsWithParameters:parameters withSuccess:^(NSArray *objects) {
         if (objects) [[BFCache sharedCache] setObjects:objects forClass:[UserProduct class]];
@@ -267,21 +292,21 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
         withSuccess:(BFSuccessBlock)success
             failure:(BFFailureBlock)failure
 {
-    [self saveObject:category objectClass:CategoryMain.class objectPath:[self categoryMain]  withSuccess:success failure:failure];
+    [self createObject:category objectClass:CategoryMain.class objectPath:[self categoryMain]  withSuccess:success failure:failure];
 }
 
 - (void)createCategorySub:(CategorySub *)category
                withSuccess:(BFSuccessBlock)success
                    failure:(BFFailureBlock)failure
 {
-    [self saveObject:category objectClass:CategorySub.class objectPath:[self categorySub] withSuccess:success failure:failure];
+    [self createObject:category objectClass:CategorySub.class objectPath:[self categorySub] withSuccess:success failure:failure];
 }
 
 - (void)createCategoryProduct:(CategoryProduct *)category
               withSuccess:(BFSuccessBlock)success
                   failure:(BFFailureBlock)failure
 {
-    [self saveObject:category objectClass:CategoryProduct.class objectPath:[self categoryProduct] withSuccess:success failure:failure];
+    [self createObject:category objectClass:CategoryProduct.class objectPath:[self categoryProduct] withSuccess:success failure:failure];
 }
 
 #pragma mark - UserProduct
@@ -296,7 +321,14 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
                   withSuccess:(BFSuccessBlock)success
                       failure:(BFFailureBlock)failure
 {
-    [self saveObject:userProduct objectClass:UserProduct.class objectPath:[self userProduct] withSuccess:success failure:failure];
+    [self createObject:userProduct objectClass:UserProduct.class objectPath:[self userProduct] withSuccess:success failure:failure];
+}
+
+- (void)updateUserProduct:(UserProduct *)userProduct
+              withSuccess:(BFSuccessBlock)success
+                  failure:(BFFailureBlock)failure
+{
+    [self updateObject:userProduct objectClass:UserProduct.class objectPath:[self userProduct] withSuccess:success failure:failure];
 }
 
 #pragma mark - Object Paths

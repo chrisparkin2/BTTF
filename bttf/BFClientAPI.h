@@ -66,6 +66,10 @@ typedef void (^BFSuccessBlock)();
               withSuccess:(BFSuccessBlock)success
                   failure:(BFFailureBlock)failure;
 
+- (void)updateUserProduct:(UserProduct *)userProduct
+              withSuccess:(BFSuccessBlock)success
+                  failure:(BFFailureBlock)failure;
+
 #ifdef DEBUG
 #pragma mark - Admin
 - (void)processCategoriesFromCSV;

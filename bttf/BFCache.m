@@ -76,6 +76,18 @@
     [self setObjects:objects forClass:class];
 }
 
+- (void)updateObject:(id)object forClass:(Class)class {
+    NSMutableArray* objects = [[self objectsForClass:class] mutableCopy];
+    if (objects && [object isKindOfClass:class]) {
+        [[self objectsForClass:class] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isEqual:object]) {
+                [objects replaceObjectAtIndex:idx withObject:object];
+            }
+        }];
+    }
+    [self setObjects:objects forClass:class];
+}
+
 
 #pragma mark - Keys
 + (NSString *)keyForApp {

@@ -19,5 +19,6 @@
 - (NSArray*)objectsForClass:(Class)class;
 - (void)setObjects:(NSArray*)objects forClass:(Class)class;
 - (void)addObject:(id)object forClass:(Class)class;
+- (void)updateObject:(id)object forClass:(Class)class;
 
 @end

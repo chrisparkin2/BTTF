@@ -19,7 +19,6 @@
              @"name" : @"name",
              @"categoryMainId" : @"_category_main_id",
              @"categorySubId" : @"_category_sub_id"
-
              };
 }
 

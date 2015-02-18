@@ -203,6 +203,7 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
     }];
     if (foundObject) {
         self.objects = [mutableObjects copy];
+        [self.tableView reloadData];
         return;
     }
     

@@ -16,6 +16,7 @@
 		846101451A8D7F6200B4C3FD /* BFAddItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101441A8D7F6200B4C3FD /* BFAddItemTableViewCell.m */; };
 		846101471A8D844500B4C3FD /* AddProduct.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846101461A8D844500B4C3FD /* AddProduct.xib */; };
 		8461014A1A8D85DF00B4C3FD /* AddProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 846101491A8D85DF00B4C3FD /* AddProduct.m */; };
+		846D349B1A95360900754E06 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D349A1A95360900754E06 /* User.m */; };
 		84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */; };
 		848278C41A90FB3200E568B0 /* UIColor+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 848278C31A90FB3200E568B0 /* UIColor+Extensions.m */; };
 		848278C71A91033400E568B0 /* BFCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 848278C61A91033400E568B0 /* BFCache.m */; };
@@ -27,7 +28,6 @@
 		848859111A8A82C5004BB75C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8488590F1A8A82C5004BB75C /* LaunchScreen.xib */; };
 		8488591D1A8A82C5004BB75C /* bttfTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488591C1A8A82C5004BB75C /* bttfTests.m */; };
 		8488592D1A8A8CF3004BB75C /* BFBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859291A8A8CF3004BB75C /* BFBaseViewController.m */; };
-		848859311A8A8E4F004BB75C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859301A8A8E4F004BB75C /* User.m */; };
 		848859361A8A8E63004BB75C /* APIConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859351A8A8E63004BB75C /* APIConnector.m */; };
 		848859391A8A9665004BB75C /* BFCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848859381A8A9665004BB75C /* BFCategoryViewController.m */; };
 		8488593D1A8A9DD6004BB75C /* BFCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488593C1A8A9DD6004BB75C /* BFCategoryTableViewCell.m */; };
@@ -84,6 +84,7 @@
 		846101461A8D844500B4C3FD /* AddProduct.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddProduct.xib; sourceTree = "<group>"; };
 		846101481A8D85DF00B4C3FD /* AddProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProduct.h; sourceTree = "<group>"; };
 		846101491A8D85DF00B4C3FD /* AddProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProduct.m; sourceTree = "<group>"; };
+		846D349A1A95360900754E06 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		84796C1C1A8BFB0600D83F7A /* BFProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductViewController.h; sourceTree = "<group>"; };
 		84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFProductViewController.m; sourceTree = "<group>"; };
 		848278C21A90FB3200E568B0 /* UIColor+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extensions.h"; sourceTree = "<group>"; };
@@ -106,7 +107,6 @@
 		848859291A8A8CF3004BB75C /* BFBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFBaseViewController.m; sourceTree = "<group>"; };
 		8488592A1A8A8CF3004BB75C /* BFBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFBaseViewController.h; sourceTree = "<group>"; };
 		8488592F1A8A8E4F004BB75C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		848859301A8A8E4F004BB75C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		848859341A8A8E63004BB75C /* APIConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIConnector.h; sourceTree = "<group>"; };
 		848859351A8A8E63004BB75C /* APIConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIConnector.m; sourceTree = "<group>"; };
 		848859371A8A9665004BB75C /* BFCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFCategoryViewController.h; sourceTree = "<group>"; };
@@ -288,7 +288,7 @@
 			children = (
 				848859411A8AAF3F004BB75C /* Category */,
 				8488592F1A8A8E4F004BB75C /* User.h */,
-				848859301A8A8E4F004BB75C /* User.m */,
+				846D349A1A95360900754E06 /* User.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -553,8 +553,8 @@
 				848859361A8A8E63004BB75C /* APIConnector.m in Sources */,
 				845108FE1A8BFFCB00CAF176 /* UserProduct.m in Sources */,
 				8461014A1A8D85DF00B4C3FD /* AddProduct.m in Sources */,
-				848859311A8A8E4F004BB75C /* User.m in Sources */,
 				846101421A8D733B00B4C3FD /* CategoryAbstract.m in Sources */,
+				846D349B1A95360900754E06 /* User.m in Sources */,
 				848859061A8A82C5004BB75C /* AppDelegate.m in Sources */,
 				8488359A1A8DDB5000EDFE7C /* BFConstants.m in Sources */,
 				8488592D1A8A8CF3004BB75C /* BFBaseViewController.m in Sources */,
