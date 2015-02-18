@@ -8,8 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "AddProduct.h"
+
+@interface AddProduct (tests)
+
+@property (weak, nonatomic) IBOutlet UITextField *quantityBulkTextField;
+@property (weak, nonatomic) IBOutlet UITextField *quantityPerCaseTextField;
+@property (weak, nonatomic) IBOutlet UITextField *quantityUnitsTextField;
+
+- (void)calculateUnits;
+
+@end
 
 @interface bttfTests : XCTestCase
+
+@property (nonatomic, strong) AddProduct* addProductVC;
 
 @end
 
@@ -17,7 +30,9 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+
+    self.addProductVC = [AddProduct new];
+    [self.addProductVC loadView];
 }
 
 - (void)tearDown {
@@ -25,16 +40,25 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
-}
+- (void)testCalculateUnits {
+    
+    // positive values
+    self.addProductVC.quantityBulkTextField.text = @"2";
+    self.addProductVC.quantityPerCaseTextField.text = @"24";
+    
+    [self.addProductVC calculateUnits];
+    
+    XCTAssertEqualObjects(self.addProductVC.quantityUnitsTextField.text, @"48", @"calculateUnits not equal 2*24=48");
+    
+    // 0 value
+    self.addProductVC.quantityBulkTextField.text = @"0";
+    self.addProductVC.quantityPerCaseTextField.text = @"24";
+    
+    [self.addProductVC calculateUnits];
+    
+    XCTAssertEqualObjects(self.addProductVC.quantityUnitsTextField.text, @"0", @"calculateUnits not equal 0*24=0");
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
 }
 
 @end
+

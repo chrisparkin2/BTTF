@@ -13,10 +13,11 @@
 #import "UserProduct.h"
 
 
-typedef void(^BFLoginBlock)(NSError* error);
-typedef void(^BFSuccessObjectsBlock)(NSArray *objects);
+typedef void (^BFLoginBlock)(NSError* error);
+typedef void (^BFSuccessObjectsBlock)(NSArray *objects);
 typedef void (^BFFailureBlock)(NSError* error);
 typedef void (^BFSuccessBlock)();
+
 
 @interface BFClientAPI : NSObject
 
@@ -62,6 +63,10 @@ typedef void (^BFSuccessBlock)();
                           failure:(BFFailureBlock)failure;
 
 - (void)createUserProduct:(UserProduct *)userProduct
+              withSuccess:(BFSuccessBlock)success
+                  failure:(BFFailureBlock)failure;
+
+- (void)updateUserProduct:(UserProduct *)userProduct
               withSuccess:(BFSuccessBlock)success
                   failure:(BFFailureBlock)failure;
 

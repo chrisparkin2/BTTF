@@ -12,5 +12,5 @@
 
 + (UIColor *)colorMustard;
 + (UIColor *)colorSalmon;
-
++ (UIColor *)colorFog;
 @end

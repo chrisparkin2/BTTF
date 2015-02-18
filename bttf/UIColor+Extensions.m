@@ -19,4 +19,8 @@
     return [UIColor colorWithRed:255/255.0 green:92/255.0 blue:73/255.0 alpha:1];
 }
 
++ (UIColor *)colorFog {
+    return [UIColor colorWithRed:238/255.0 green:234/255.0 blue:230/255.0 alpha:1];
+}
+
 @end

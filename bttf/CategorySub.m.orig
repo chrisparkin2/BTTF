@@ -16,7 +16,11 @@
 {
     return @{@"objectId" : @"_id",
              @"name" : @"name",
+<<<<<<< HEAD
+             @"categoryMain" : @"_category_main_id"
+=======
              @"categoryMainId" : @"_category_main_id"
+>>>>>>> new_branch_name
              };
 }
 

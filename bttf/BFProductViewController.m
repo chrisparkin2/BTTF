@@ -76,7 +76,7 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
     if (self.parentObject) {
     
         CategoryProduct* categoryProduct = (CategoryProduct*)self.parentObject;
-        parameters = @{ @"categoryProduct" : categoryProduct.objectId,
+        parameters = @{ @"categoryProductId" : categoryProduct.objectId,
                         @"userId" : [User sharedInstance].objectId
                         };
     }
@@ -140,6 +140,17 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
 }
 
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Add Product Cell
+    if (indexPath.row == self.objects.count) {
+        return 50;
+    }
+    // Product Cell
+    else {
+        return 70;
+    }
+}
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -192,6 +203,7 @@ static NSString *const AddItemCellIdentifier = @"AddItemCell";
     }];
     if (foundObject) {
         self.objects = [mutableObjects copy];
+        [self.tableView reloadData];
         return;
     }
     

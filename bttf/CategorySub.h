@@ -16,9 +16,9 @@
 
 @property (nonatomic) NSString* objectId;
 @property (nonatomic) NSString* name;
-@property (nonatomic) NSString* categoryMain;
+@property (nonatomic) NSString* categoryMainId;
 
 #pragma mark - Keys
-+ (NSString*)categoryMainKey;
++ (NSString*)categoryMainIdKey;
 
 @end

@@ -10,8 +10,8 @@
 #import "User.h"
 
 
-#define API_URL @"https://1f70d9e9.ngrok.com"
-//#define API_URL @"http://backtothefarm.herokuapp.com"
+//#define API_URL @"https://1f70d9e9.ngrok.com"
+#define API_URL @"http://backtothefarm.herokuapp.com"
 
 @implementation APIConnector
 

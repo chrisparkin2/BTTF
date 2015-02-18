@@ -12,6 +12,7 @@
 #import "BFClientAPI.h"
 #import "BFConstants.h"
 #import "PopupView.h"
+#import "User.h"
 
 typedef enum {
     BFAddProductTextFieldProduct,
@@ -75,6 +76,73 @@ typedef enum {
         
         self.quantityUnitsTextField.text = [@(total) stringValue];
     }
+}
+
+- (void)createNewUserProduct {
+    
+    // Create new
+    self.userProduct = [UserProduct new];
+    
+    
+    // Populate with data from view
+    self.userProduct = [self setUserProductFields:self.userProduct];
+    
+    // Save
+    [self.activityView startAnimating];
+    [[BFClientAPI sharedAPI] createUserProduct:self.userProduct withSuccess:^{
+        [self.activityView stopAnimating];
+        
+        NSDictionary* userInfo = @{ kBFNotificationInfoUserProductKey : self.userProduct };
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBFNotificationCenterDidUpdateUserProductKey object:nil userInfo:userInfo];
+        
+        PopupView *pv = self.passedData[@"popup_vc"];
+        [pv closeBox:nil];
+        
+    } failure:^(NSError *error) {
+        [self.activityView stopAnimating];
+        [self hasError:error];
+    }];
+
+}
+
+- (void)saveExistingUserProduct {
+    
+    // Populate with data from view
+    self.userProduct = [self setUserProductFields:self.userProduct];
+    
+    // Save
+    [self.activityView startAnimating];
+    [[BFClientAPI sharedAPI] updateUserProduct:self.userProduct withSuccess:^{
+        [self.activityView stopAnimating];
+        
+        NSDictionary* userInfo = @{ kBFNotificationInfoUserProductKey : self.userProduct };
+        [[NSNotificationCenter defaultCenter] postNotificationName:kBFNotificationCenterDidUpdateUserProductKey object:nil userInfo:userInfo];
+        
+        PopupView *pv = self.passedData[@"popup_vc"];
+        [pv closeBox:nil];
+        
+    } failure:^(NSError *error) {
+        [self.activityView stopAnimating];
+        [self hasError:error];
+    }];
+
+
+}
+
+- (UserProduct*)setUserProductFields:(UserProduct*)userProduct {
+    // Set all the fields
+    CategoryProduct* categoryProduct = (CategoryProduct*)self.parentObject;
+    userProduct.categoryProductId = categoryProduct.objectId;
+    
+    userProduct.name = [self.productNameLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    userProduct.supplier = [self.supplerNameLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    userProduct.price = @([[self.priceLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
+    userProduct.quantityBulk = @([[self.quantityBulkTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
+    userProduct.quantityPerCase = @([[self.quantityPerCaseTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
+    userProduct.quantityUnits = @([[self.quantityUnitsTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
+    userProduct.userId = [User sharedInstance].objectId;
+
+    return userProduct;
 }
 
 #pragma - mark TextField Delegate Methods
@@ -146,38 +214,18 @@ typedef enum {
     [self calculateUnits];
 
     // Create new if not already set
-    if (!self.userProduct) self.userProduct = [UserProduct new];
-    
-    
-    // Set all the fields
-    CategoryProduct* categoryProduct = (CategoryProduct*)self.parentObject;
-    self.userProduct.categoryProduct = categoryProduct.objectId;
-    
-    self.userProduct.name = [self.productNameLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    self.userProduct.supplier = [self.supplerNameLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    self.userProduct.price = @([[self.priceLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
-    self.userProduct.quantityBulk = @([[self.quantityBulkTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
-    self.userProduct.quantityPerCase = @([[self.quantityPerCaseTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
-    self.userProduct.quantityUnits = @([[self.quantityUnitsTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
-    
-    
-    
-    // Save
-    [self.activityView startAnimating];
-    [[BFClientAPI sharedAPI] createUserProduct:self.userProduct withSuccess:^{
-        [self.activityView stopAnimating];
+    if (!self.userProduct) {
+        [self createNewUserProduct];
+    }
+    else {
+        [self saveExistingUserProduct];
+    }
         
-        NSDictionary* userInfo = @{ kBFNotificationInfoUserProductKey : self.userProduct };
-        [[NSNotificationCenter defaultCenter] postNotificationName:kBFNotificationCenterDidUpdateUserProductKey object:nil userInfo:userInfo];
-        
-        PopupView *pv = self.passedData[@"popup_vc"];
-        [pv closeBox:nil];
 
-    } failure:^(NSError *error) {
-        [self.activityView stopAnimating];
-        [self hasError:error];
-    }];
+    
+
 }
+
 
 - (IBAction)didTapCancel:(id)sender {
     PopupView *pv = self.passedData[@"popup_vc"];

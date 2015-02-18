@@ -12,6 +12,7 @@
 #import "CategoryProduct.h"
 #import "BFClientAPI.h"
 #import "BFConstants.h"
+#import "UIColor+Extensions.h"
 
 static NSString *const CategoryCellIdentifier = @"CategoryCell";
 
@@ -75,8 +76,8 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     switch (self.categoryIndex) {
         case 0:
         {
-            self.tableView.backgroundColor = [UIColor whiteColor];
-            self.view.backgroundColor = [UIColor whiteColor];
+            self.tableView.backgroundColor = [UIColor colorFog];
+            self.view.backgroundColor = [UIColor colorFog];
         }
             break;
             
@@ -157,7 +158,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
             NSDictionary* parameters;
             if (self.parentObject) {
                 CategoryMain* categoryMain = (CategoryMain*)self.parentObject;
-                parameters = @{ [CategorySub categoryMainKey] : categoryMain.objectId };
+                parameters = @{ [CategorySub categoryMainIdKey] : categoryMain.objectId };
             }
            
             [[BFClientAPI sharedAPI] getCategoriesSubWithParameters:parameters withSuccess:^(NSArray *categories) {
@@ -181,7 +182,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
             NSDictionary* parameters;
             if (self.parentObject) {
                 CategorySub* categorySub = (CategorySub*)self.parentObject;
-                parameters = @{ [CategoryProduct categorySubKey] : categorySub.objectId };
+                parameters = @{ [CategoryProduct categorySubIdKey] : categorySub.objectId };
             }
 
             [[BFClientAPI sharedAPI] getCategoriesProductWithParameters:parameters withSuccess:^(NSArray *categories) {
