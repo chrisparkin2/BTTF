@@ -89,10 +89,12 @@ typedef enum {
     
     // Save
     [self.activityView startAnimating];
-    [[BFClientAPI sharedAPI] createUserProduct:self.userProduct withSuccess:^{
+    [self.view bringSubviewToFront:self.activityView];
+    [[BFClientAPI sharedAPI] createUserProduct:self.userProduct withSuccess:^(id objectUpdated) {
+        
         [self.activityView stopAnimating];
         
-        NSDictionary* userInfo = @{ kBFNotificationInfoUserProductKey : self.userProduct };
+        NSDictionary* userInfo = @{ kBFNotificationInfoUserProductKey : objectUpdated };
         [[NSNotificationCenter defaultCenter] postNotificationName:kBFNotificationCenterDidUpdateUserProductKey object:nil userInfo:userInfo];
         
         PopupView *pv = self.passedData[@"popup_vc"];
@@ -112,7 +114,8 @@ typedef enum {
     
     // Save
     [self.activityView startAnimating];
-    [[BFClientAPI sharedAPI] updateUserProduct:self.userProduct withSuccess:^{
+    [self.view bringSubviewToFront:self.activityView];
+    [[BFClientAPI sharedAPI] updateUserProduct:self.userProduct withSuccess:^(id objectUpdated) {
         [self.activityView stopAnimating];
         
         NSDictionary* userInfo = @{ kBFNotificationInfoUserProductKey : self.userProduct };

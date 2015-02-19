@@ -45,7 +45,7 @@
 - (void)hasError:(NSError *)error {
     
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
-                                                      message:[NSString stringWithFormat:@"%@ - %@",[error localizedDescription],[error localizedFailureReason]]
+                                                      message:[NSString stringWithFormat:@"%@",[error localizedDescription]]
                                                      delegate:nil
                                             cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
                                             otherButtonTitles:nil];

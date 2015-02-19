@@ -146,7 +146,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 - (void)createObject:(id)object
        objectClass:(Class)objectClass
         objectPath:(NSString*)objectPath
-               withSuccess:(BFSuccessBlock)success
+               withSuccess:(BFSuccessObjectBlock)success
                    failure:(BFFailureBlock)failure
 {
     NSDictionary *JSONDictionary = [MTLJSONAdapter JSONDictionaryFromModel:object];
@@ -156,10 +156,14 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
     [self postPath:path parameters:JSONDictionary responseModel:[NSDictionary class] success:^(id response) {
         if(success)
         {
+            NSDictionary* data = [response objectForKey:kData];
+            NSError* error = nil;
+            id objectReturned = [MTLJSONAdapter modelOfClass:objectClass fromJSONDictionary:data error:&error];
+            
             // Add to cache
-            [[BFCache sharedCache] addObject:object forClass:objectClass];
+            [[BFCache sharedCache] addObject:objectReturned forClass:objectClass];
         
-            success();
+            success(objectReturned);
         }
     } failure:^(NSError *error, NSInteger statusCode) {
         if(failure)
@@ -172,7 +176,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 - (void)updateObject:(id)object
          objectClass:(Class)objectClass
           objectPath:(NSString*)objectPath
-         withSuccess:(BFSuccessBlock)success
+         withSuccess:(BFSuccessObjectBlock)success
              failure:(BFFailureBlock)failure
 {
     NSDictionary *JSONDictionary = [MTLJSONAdapter JSONDictionaryFromModel:object];
@@ -185,7 +189,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
             // Reinsert in to cache
             [[BFCache sharedCache] updateObject:object forClass:objectClass];
             
-            success();
+            success(object);
         }
     } failure:^(NSError *error, NSInteger statusCode) {
         if(failure)
@@ -289,21 +293,21 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 
 
 - (void)createCategoryMain:(CategoryMain *)category
-        withSuccess:(BFSuccessBlock)success
+        withSuccess:(BFSuccessObjectBlock)success
             failure:(BFFailureBlock)failure
 {
     [self createObject:category objectClass:CategoryMain.class objectPath:[self categoryMain]  withSuccess:success failure:failure];
 }
 
 - (void)createCategorySub:(CategorySub *)category
-               withSuccess:(BFSuccessBlock)success
+               withSuccess:(BFSuccessObjectBlock)success
                    failure:(BFFailureBlock)failure
 {
     [self createObject:category objectClass:CategorySub.class objectPath:[self categorySub] withSuccess:success failure:failure];
 }
 
 - (void)createCategoryProduct:(CategoryProduct *)category
-              withSuccess:(BFSuccessBlock)success
+              withSuccess:(BFSuccessObjectBlock)success
                   failure:(BFFailureBlock)failure
 {
     [self createObject:category objectClass:CategoryProduct.class objectPath:[self categoryProduct] withSuccess:success failure:failure];
@@ -318,14 +322,14 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 }
 
 - (void)createUserProduct:(UserProduct *)userProduct
-                  withSuccess:(BFSuccessBlock)success
+                  withSuccess:(BFSuccessObjectBlock)success
                       failure:(BFFailureBlock)failure
 {
     [self createObject:userProduct objectClass:UserProduct.class objectPath:[self userProduct] withSuccess:success failure:failure];
 }
 
 - (void)updateUserProduct:(UserProduct *)userProduct
-              withSuccess:(BFSuccessBlock)success
+              withSuccess:(BFSuccessObjectBlock)success
                   failure:(BFFailureBlock)failure
 {
     [self updateObject:userProduct objectClass:UserProduct.class objectPath:[self userProduct] withSuccess:success failure:failure];
@@ -388,8 +392,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 
     // Apply
     NSArray *filtered = [objects filteredArrayUsingPredicate:combinedPredicates];
-    
-    
+
     return  filtered;
 }
 
@@ -547,7 +550,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
                 dispatch_group_enter(groupProduct);
 
                 CategoryProduct* product = (CategoryProduct*)obj;
-                [[BFClientAPI sharedAPI] createCategoryProduct:product withSuccess:^{
+                [[BFClientAPI sharedAPI] createCategoryProduct:product withSuccess:^(id object) {
                     dispatch_group_leave(groupProduct);
 
                 } failure:^(NSError *error) {

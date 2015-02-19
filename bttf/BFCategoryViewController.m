@@ -156,10 +156,14 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
         case BFCategorySub:
         {
             NSDictionary* parameters;
-            if (self.parentObject) {
-                CategoryMain* categoryMain = (CategoryMain*)self.parentObject;
-                parameters = @{ [CategorySub categoryMainIdKey] : categoryMain.objectId };
+            if (!self.parentObject) {
+                [self hasErrorWithLocalizedDescription:@"Something went wrong. Please go back and try again"];
+                return;
             }
+            
+            CategoryMain* categoryMain = (CategoryMain*)self.parentObject;
+            parameters = @{ [CategorySub categoryMainIdKey] : categoryMain.objectId };
+
            
             [[BFClientAPI sharedAPI] getCategoriesSubWithParameters:parameters withSuccess:^(NSArray *categories) {
                 [self stopActivityIndicatorAndTimer];
@@ -180,10 +184,13 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
         case BFCategoryProduct:
         {
             NSDictionary* parameters;
-            if (self.parentObject) {
-                CategorySub* categorySub = (CategorySub*)self.parentObject;
-                parameters = @{ [CategoryProduct categorySubIdKey] : categorySub.objectId };
+            if (!self.parentObject) {
+                [self hasErrorWithLocalizedDescription:@"Something went wrong. Please go back andtry again"];
+                return;
             }
+            
+            CategorySub* categorySub = (CategorySub*)self.parentObject;
+            parameters = @{ [CategoryProduct categorySubIdKey] : categorySub.objectId };
 
             [[BFClientAPI sharedAPI] getCategoriesProductWithParameters:parameters withSuccess:^(NSArray *categories) {
                 [self stopActivityIndicatorAndTimer];
@@ -214,9 +221,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
 }
 
 - (void)objectsDidLoad {
-    
     [self.tableView reloadData];
-    
 }
 
 
@@ -237,7 +242,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     cell.backgroundColor = [UIColor clearColor];
     
     cell.textLabel.text = category.name;
-    cell.detailTextLabel.text = @"1";
+//    cell.detailTextLabel.text = @"1";
 
     return cell;
 }
@@ -247,11 +252,11 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id parentObject = self.objects[indexPath.row];
-    NSAssert(parentObject,@"No parentObject at indexPath.row");
+    id newParentObject = self.objects[indexPath.row];
+    NSAssert(newParentObject,@"No parentObject at indexPath.row");
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(didTapCellWithObject:tableViewIndex:)]) {
-        [self.delegate didTapCellWithObject:parentObject tableViewIndex:self.categoryIndex];
+        [self.delegate didTapCellWithObject:newParentObject tableViewIndex:self.categoryIndex];
     }
 }
 

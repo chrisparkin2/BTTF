@@ -16,7 +16,7 @@
 typedef void (^BFLoginBlock)(NSError* error);
 typedef void (^BFSuccessObjectsBlock)(NSArray *objects);
 typedef void (^BFFailureBlock)(NSError* error);
-typedef void (^BFSuccessBlock)();
+typedef void (^BFSuccessObjectBlock)(id object);
 
 
 @interface BFClientAPI : NSObject
@@ -47,15 +47,15 @@ typedef void (^BFSuccessBlock)();
                                    failure:(BFFailureBlock)failure;
 
 - (void)createCategoryMain:(CategoryMain *)category
-               withSuccess:(BFSuccessBlock)success
+               withSuccess:(BFSuccessObjectBlock)success
                    failure:(BFFailureBlock)failure;
 
 - (void)createCategorySub:(CategorySub *)category
-              withSuccess:(BFSuccessBlock)success
+              withSuccess:(BFSuccessObjectBlock)success
                   failure:(BFFailureBlock)failure;
 
 - (void)createCategoryProduct:(CategoryProduct *)category
-                  withSuccess:(BFSuccessBlock)success
+                  withSuccess:(BFSuccessObjectBlock)success
                       failure:(BFFailureBlock)failure;
 #pragma mark - Products
 - (void)getUserProductsWithParameters:(NSDictionary *)parameters
@@ -63,11 +63,11 @@ typedef void (^BFSuccessBlock)();
                           failure:(BFFailureBlock)failure;
 
 - (void)createUserProduct:(UserProduct *)userProduct
-              withSuccess:(BFSuccessBlock)success
+              withSuccess:(BFSuccessObjectBlock)success
                   failure:(BFFailureBlock)failure;
 
 - (void)updateUserProduct:(UserProduct *)userProduct
-              withSuccess:(BFSuccessBlock)success
+              withSuccess:(BFSuccessObjectBlock)success
                   failure:(BFFailureBlock)failure;
 
 #ifdef DEBUG
