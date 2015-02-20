@@ -47,6 +47,7 @@
              @"quantityBulk" : @"quantity_bulk",
              @"quantityPerCase" : @"quantity_per_case",
              @"quantityUnits" : @"quantity_units",
+             @"quantityTrigger" : @"quantity_trigger",
              @"categoryMainId" : @"_category_main_id",
              @"categorySubId" : @"_category_sub_id",
              @"categoryProductId" : @"_category_product_id"

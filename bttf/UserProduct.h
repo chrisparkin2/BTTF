@@ -24,6 +24,7 @@
 @property (nonatomic) NSNumber* quantityBulk;
 @property (nonatomic) NSNumber* quantityPerCase;
 @property (nonatomic) NSNumber* quantityUnits;
+@property (nonatomic) NSNumber* quantityTrigger;
 
 @property (nonatomic) NSString* categoryMainId;
 @property (nonatomic) NSString* categorySubId;

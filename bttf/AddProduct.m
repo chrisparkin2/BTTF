@@ -30,6 +30,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UITextField *quantityBulkTextField;
 @property (weak, nonatomic) IBOutlet UITextField *quantityPerCaseTextField;
 @property (weak, nonatomic) IBOutlet UITextField *quantityUnitsTextField;
+@property (weak, nonatomic) IBOutlet UITextField *quantityTriggerTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 - (IBAction)didTapSave:(id)sender;
 - (IBAction)didTapCancel:(id)sender;
@@ -227,13 +228,14 @@ typedef enum {
     
     if (self.productNameLabel.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a product name"]; return; }
     if (self.priceLabel.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a price"]; return; }
-    if (self.quantityBulkTextField.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a bulk quantity"]; return; }
-    if (self.quantityPerCaseTextField.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a quantity per case"]; return; }
     if (self.supplerNameLabel.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a supplier"]; return; }
+    if (self.quantityPerCaseTextField.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a quantity per batch"]; return; }
+    if (self.quantityTriggerTextField.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a trigger"]; return; }
     
     // Calculate units
     [self calculateUnits];
 
+    
     // Create new if not already set
     if (!self.userProduct) {
         [self createNewUserProduct];
