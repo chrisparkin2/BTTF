@@ -29,6 +29,13 @@
     return YES;
 }
 
+- (void)setValuesFromCategoryProduct:(CategoryProduct*)categoryProduct {
+    
+    self.categoryProductId = categoryProduct.objectId;
+    self.categorySubId = categoryProduct.categorySubId;
+    self.categoryMainId = categoryProduct.categoryMainId;
+}
+
 #pragma mark MTLJSONSerializing
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
@@ -59,25 +66,7 @@
 }
 
 
-//+ (NSValueTransformer *)categoryMainJSONTransformer
-//{
-//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryMain.class];
-//}
-//
-//+ (NSValueTransformer *)categorySubJSONTransformer
-//{
-//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategorySub.class];
-//}
-//
-//+ (NSValueTransformer *)categoryProductJSONTransformer
-//{
-//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:CategoryProduct.class];
-//}
-//
-//+ (NSValueTransformer *)userJSONTransformer
-//{
-//    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:User.class];
-//}
+
 
 
 @end

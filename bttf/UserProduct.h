@@ -32,6 +32,7 @@
 
 #pragma mark - Logic
 - (BOOL) isValid;
+- (void) setValuesFromCategoryProduct:(CategoryProduct*)categoryProduct;
 
 
 #pragma mark - Keys

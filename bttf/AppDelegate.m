@@ -39,7 +39,7 @@
     // Login
     [self showLogin];
     
-    // TODO: Trying to create persistant login
+    // TODO: Fix persistant login
 //    [[User sharedInstance] becomeUserWithCompletion:^(NSDictionary *data, NSError *error) {
 //        
 //        if (!data) {
@@ -87,7 +87,7 @@
    
 }
 
-#pragma mark - drillDownController
+#pragma mark - DrillDownController
 - (void)setupDrillDownController {
     
     SGBDrillDownController *drillDownController = [[SGBDrillDownController alloc] init];
@@ -114,6 +114,7 @@
 //    [self.drillDownController.rightNavigationBar setBarTintColor:[UIColor colorFog]];
     
     
+    
     self.drillDownController.leftControllerWidth = [self leftControllerShortWidth];
     
     [self pushCategoryController:BFCategoryMain object:nil];
@@ -127,7 +128,7 @@
     return [UIScreen mainScreen].bounds.size.width * 0.4;
 }
 
-#pragma mark categoryController
+#pragma mark CategoryController
 - (void) presentCategoryController:(NSInteger)index object:(id)object{
 
     BFCategoryViewController* lastVC = (BFCategoryViewController*)[self.drillDownController.viewControllers lastObject];
@@ -161,7 +162,7 @@
     [rightVC reloadData];
 }
 
-#pragma mark productController
+#pragma mark ProductController
 - (void) presentProductController:(NSInteger)index object:(id)object{
     
     BFProductViewController* lastVC = (BFProductViewController*)[self.drillDownController.viewControllers lastObject];
@@ -239,7 +240,6 @@
 #pragma mark - Admin
 - (void)runAdmin {
     
-//    [[BFClientAPI sharedAPI] processCategoriesFromCSV];
     
 }
 

@@ -18,3 +18,7 @@ NSString *const kBFNotificationCenterDidUpdateUserProductKey                    
 
 #pragma mark NSNotificationCenter UserInfoKeys
 NSString *const kBFNotificationInfoUserProductKey = @"userProduct";
+
+
+#pragma mark - Images
+NSString *const kBFOrderIcon = @"order_icon.png";

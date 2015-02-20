@@ -40,11 +40,14 @@ typedef enum {
 
 -(void)setup{
     
-    self.navigationController.navigationBar.topItem.title = @"Add Product";
-    
     self.parentObject = self.passedData[@"parentObject"];
     self.userProduct = self.passedData[@"userProduct"];
     
+    NSAssert([self.parentObject isKindOfClass:[CategoryProduct class]], @"Parent Object must be class CategoryProduct");
+
+    // Set navTitle
+    NSString* navTitle = self.userProduct ?  @"Update Product" : @"Add Product";    
+    self.navigationController.navigationBar.topItem.title = navTitle;
 }
 
 - (void)viewDidLoad {
@@ -56,15 +59,7 @@ typedef enum {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // Pre-populate fields
-    if (self.userProduct) {
-        self.productNameLabel.text = self.userProduct.name;
-        self.supplerNameLabel.text = self.userProduct.supplier;
-        self.priceLabel.text = [self.userProduct.price stringValue];
-        self.quantityBulkTextField.text = [self.userProduct.quantityBulk stringValue];
-        self.quantityPerCaseTextField.text = [self.userProduct.quantityPerCase stringValue];
-        self.quantityUnitsTextField.text = [self.userProduct.quantityUnits stringValue];
-    }
+    [self prePopulateFields];
 }
 
 #pragma mark - Data
@@ -82,10 +77,16 @@ typedef enum {
     
     // Create new
     self.userProduct = [UserProduct new];
-    
-    
-    // Populate with data from view
-    self.userProduct = [self setUserProductFields:self.userProduct];
+
+    // Populate with data from categoryProduct parent
+    if ([self.parentObject isKindOfClass:[CategoryProduct class]]) {
+        [self.userProduct setValuesFromCategoryProduct:self.parentObject];
+    }
+
+    // Populate with data from textFields
+    if ([self setUserProductValuesFromTextFields:self.userProduct]) {
+        self.userProduct = [self setUserProductValuesFromTextFields:self.userProduct];
+    }
     
     // Save
     [self.activityView startAnimating];
@@ -110,8 +111,11 @@ typedef enum {
 - (void)saveExistingUserProduct {
     
     // Populate with data from view
-    self.userProduct = [self setUserProductFields:self.userProduct];
+    if ([self setUserProductValuesFromTextFields:self.userProduct]) {
+        self.userProduct = [self setUserProductValuesFromTextFields:self.userProduct];
+    }
     
+
     // Save
     [self.activityView startAnimating];
     [self.view bringSubviewToFront:self.activityView];
@@ -132,10 +136,9 @@ typedef enum {
 
 }
 
-- (UserProduct*)setUserProductFields:(UserProduct*)userProduct {
-    // Set all the fields
-    CategoryProduct* categoryProduct = (CategoryProduct*)self.parentObject;
-    userProduct.categoryProductId = categoryProduct.objectId;
+
+- (UserProduct*)setUserProductValuesFromTextFields:(UserProduct*)userProduct {
+    
     
     userProduct.name = [self.productNameLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     userProduct.supplier = [self.supplerNameLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -146,6 +149,20 @@ typedef enum {
     userProduct.userId = [User sharedInstance].objectId;
 
     return userProduct;
+}
+
+- (void)prePopulateFields {
+    
+    // Pre-populate fields
+    if (self.userProduct) {
+        self.productNameLabel.text = self.userProduct.name;
+        self.supplerNameLabel.text = self.userProduct.supplier;
+        self.priceLabel.text = [self.userProduct.price stringValue];
+        self.quantityBulkTextField.text = [self.userProduct.quantityBulk stringValue];
+        self.quantityPerCaseTextField.text = [self.userProduct.quantityPerCase stringValue];
+        self.quantityUnitsTextField.text = [self.userProduct.quantityUnits stringValue];
+    }
+
 }
 
 #pragma - mark TextField Delegate Methods
@@ -212,6 +229,7 @@ typedef enum {
     if (self.priceLabel.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a price"]; return; }
     if (self.quantityBulkTextField.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a bulk quantity"]; return; }
     if (self.quantityPerCaseTextField.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a quantity per case"]; return; }
+    if (self.supplerNameLabel.text.length <= 0) { [self hasErrorWithLocalizedDescription:@"Please enter a supplier"]; return; }
     
     // Calculate units
     [self calculateUnits];
