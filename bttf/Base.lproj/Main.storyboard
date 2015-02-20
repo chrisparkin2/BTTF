@@ -191,10 +191,10 @@
             </objects>
             <point key="canvasLocation" x="2335" y="177"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Nav Controller-->
         <scene sceneID="Y78-A2-UV2">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9kM-Kq-ve4" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9kM-Kq-ve4" customClass="BFNavController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>

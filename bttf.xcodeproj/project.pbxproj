@@ -21,6 +21,9 @@
 		846D34A31A97DA4B00754E06 /* order_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 846D34A01A97DA4B00754E06 /* order_icon@2x.png */; };
 		846D34A41A97DA4B00754E06 /* order_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 846D34A11A97DA4B00754E06 /* order_icon@3x.png */; };
 		846D34A71A97ECFB00754E06 /* Supplier.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D34A61A97ECFB00754E06 /* Supplier.m */; };
+		846D34AD1A97FB3700754E06 /* BFNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D34AC1A97FB3700754E06 /* BFNavController.m */; };
+		846D34B01A97FE3700754E06 /* BFProductDrillDownController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D34AF1A97FE3700754E06 /* BFProductDrillDownController.m */; };
+		846D34B71A9800E600754E06 /* SGBDrillDownController+Setup.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D34B61A9800E600754E06 /* SGBDrillDownController+Setup.m */; };
 		84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */; };
 		848278C41A90FB3200E568B0 /* UIColor+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 848278C31A90FB3200E568B0 /* UIColor+Extensions.m */; };
 		848278C71A91033400E568B0 /* BFCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 848278C61A91033400E568B0 /* BFCache.m */; };
@@ -94,6 +97,12 @@
 		846D34A11A97DA4B00754E06 /* order_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "order_icon@3x.png"; path = "resources/order_icon@3x.png"; sourceTree = "<group>"; };
 		846D34A51A97ECFB00754E06 /* Supplier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Supplier.h; sourceTree = "<group>"; };
 		846D34A61A97ECFB00754E06 /* Supplier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Supplier.m; sourceTree = "<group>"; };
+		846D34AB1A97FB3700754E06 /* BFNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFNavController.h; sourceTree = "<group>"; };
+		846D34AC1A97FB3700754E06 /* BFNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFNavController.m; sourceTree = "<group>"; };
+		846D34AE1A97FE3700754E06 /* BFProductDrillDownController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductDrillDownController.h; sourceTree = "<group>"; };
+		846D34AF1A97FE3700754E06 /* BFProductDrillDownController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFProductDrillDownController.m; sourceTree = "<group>"; };
+		846D34B51A9800E600754E06 /* SGBDrillDownController+Setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SGBDrillDownController+Setup.h"; sourceTree = "<group>"; };
+		846D34B61A9800E600754E06 /* SGBDrillDownController+Setup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SGBDrillDownController+Setup.m"; sourceTree = "<group>"; };
 		84796C1C1A8BFB0600D83F7A /* BFProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductViewController.h; sourceTree = "<group>"; };
 		84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFProductViewController.m; sourceTree = "<group>"; };
 		848278C21A90FB3200E568B0 /* UIColor+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extensions.h"; sourceTree = "<group>"; };
@@ -188,6 +197,17 @@
 				846D34A11A97DA4B00754E06 /* order_icon@3x.png */,
 			);
 			name = Icons;
+			sourceTree = "<group>";
+		};
+		846D34B11A98001300754E06 /* DrillDownController (sliding nav) */ = {
+			isa = PBXGroup;
+			children = (
+				846D34AE1A97FE3700754E06 /* BFProductDrillDownController.h */,
+				846D34AF1A97FE3700754E06 /* BFProductDrillDownController.m */,
+				846D34B51A9800E600754E06 /* SGBDrillDownController+Setup.h */,
+				846D34B61A9800E600754E06 /* SGBDrillDownController+Setup.m */,
+			);
+			name = "DrillDownController (sliding nav)";
 			sourceTree = "<group>";
 		};
 		84796C1B1A8BFAEB00D83F7A /* Product */ = {
@@ -287,11 +307,14 @@
 		848859261A8A8C3C004BB75C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				846D34B11A98001300754E06 /* DrillDownController (sliding nav) */,
 				84796C1B1A8BFAEB00D83F7A /* Product */,
 				8488594B1A8B1A7E004BB75C /* Login */,
 				8488593A1A8A9DBA004BB75C /* Category */,
 				848859291A8A8CF3004BB75C /* BFBaseViewController.m */,
 				8488592A1A8A8CF3004BB75C /* BFBaseViewController.h */,
+				846D34AB1A97FB3700754E06 /* BFNavController.h */,
+				846D34AC1A97FB3700754E06 /* BFNavController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -572,6 +595,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */,
+				846D34AD1A97FB3700754E06 /* BFNavController.m in Sources */,
 				848278C71A91033400E568B0 /* BFCache.m in Sources */,
 				845109041A8C173C00CAF176 /* CategorySub.m in Sources */,
 				846101451A8D7F6200B4C3FD /* BFAddItemTableViewCell.m in Sources */,
@@ -584,11 +608,13 @@
 				846D34A71A97ECFB00754E06 /* Supplier.m in Sources */,
 				8488359A1A8DDB5000EDFE7C /* BFConstants.m in Sources */,
 				8488592D1A8A8CF3004BB75C /* BFBaseViewController.m in Sources */,
+				846D34B01A97FE3700754E06 /* BFProductDrillDownController.m in Sources */,
 				8488593D1A8A9DD6004BB75C /* BFCategoryTableViewCell.m in Sources */,
 				848859551A8B1B02004BB75C /* PopupView.m in Sources */,
 				845109071A8C174800CAF176 /* CategoryProduct.m in Sources */,
 				8488595E1A8B1BD4004BB75C /* ScreenNavigation.m in Sources */,
 				848278C41A90FB3200E568B0 /* UIColor+Extensions.m in Sources */,
+				846D34B71A9800E600754E06 /* SGBDrillDownController+Setup.m in Sources */,
 				8488594F1A8B1A88004BB75C /* LoginScreen.m in Sources */,
 				848859471A8AAFC0004BB75C /* CategoryMain.m in Sources */,
 				848859031A8A82C5004BB75C /* main.m in Sources */,

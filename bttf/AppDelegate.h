@@ -12,6 +12,9 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+#ifdef DEBUG
+- (void)runAdmin;
+#endif
 
 @end
 
