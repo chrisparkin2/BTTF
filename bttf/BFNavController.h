@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class BFProductDrillDownController;
+@class BFOrderDrillDownController;
 
 @interface BFNavController : UINavigationController
 
 @property (nonatomic, strong) UIViewController* welcomeViewController;
 @property (nonatomic, strong) BFProductDrillDownController* productDrillDownController;
-
+@property (nonatomic, strong) BFOrderDrillDownController* orderDrillDownController;
 @end

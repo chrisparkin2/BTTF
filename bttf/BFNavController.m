@@ -9,13 +9,14 @@
 #import "BFNavController.h"
 #import "SGBDrillDownController.h"
 #import "SGBDrillDownController+Setup.h"
-#import "PopupView.h"
 #import "BFProductDrillDownController.h"
+#import "BFOrderDrillDownController.h"
+#import "PopupView.h"
 #import "BFClientAPI.h"
 #import "UIColor+Extensions.h"
 
 
-@interface BFNavController () 
+@interface BFNavController () <BFProductDrillDownDelegate, BFOrderDrillDownDelegate>
 
 @end
 
@@ -56,6 +57,7 @@
     
     // Present the main interface
     self.productDrillDownController = [[BFProductDrillDownController alloc] init];
+    self.productDrillDownController.delegate = self;
     [self.productDrillDownController bf_Setup];
     
     [self presentProductDrillDownController];
@@ -92,10 +94,31 @@
     
     self.productDrillDownController.leftControllerWidth = [self leftControllerShortWidth];
     
-//    [self.productDrillDownController pushCategoryController:BFCategoryMain object:nil];
-    
     [self.productDrillDownController presentCategoryController:BFCategoryMain object:nil];
     
+    
+}
+
+- (void)presentOrderDrillDownController {
+    
+    // Present the main interface
+    if (!self.orderDrillDownController) {
+        self.orderDrillDownController = [[BFOrderDrillDownController alloc] init];
+        [self.orderDrillDownController bf_Setup];
+        self.orderDrillDownController.delegate = self;
+    }
+    
+    [self setViewControllers:@[self.orderDrillDownController]];
+    
+    [self.orderDrillDownController setNavigationBarsHidden:NO];
+    self.orderDrillDownController.leftNavigationBar.translucent = NO;
+    self.orderDrillDownController.rightNavigationBar.translucent = NO;
+    [self.orderDrillDownController.leftNavigationBar setTintColor:[UIColor colorSalmon]];
+    
+    
+    self.orderDrillDownController.leftControllerWidth = [self leftControllerShortWidth];
+
+    [self.orderDrillDownController presentSupplierController];
     
 }
 
@@ -106,6 +129,22 @@
 - (CGFloat)leftControllerShortWidth {
     return [UIScreen mainScreen].bounds.size.width * 0.4;
 }
+
+#pragma mark - BFProductDrillDown Delegate 
+- (void)didTapOrderButton {
+    
+    [self presentOrderDrillDownController];
+    
+    
+}
+
+#pragma mark - BFOrderDrillDown Delegate
+- (void)didTapProductButton {
+    
+    [self presentProductDrillDownController];
+
+}
+
 
 
 

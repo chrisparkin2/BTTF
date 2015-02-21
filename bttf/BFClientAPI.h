@@ -57,7 +57,7 @@ typedef void (^BFSuccessObjectBlock)(id object);
 - (void)createCategoryProduct:(CategoryProduct *)category
                   withSuccess:(BFSuccessObjectBlock)success
                       failure:(BFFailureBlock)failure;
-#pragma mark - Products
+#pragma mark UserProducts
 - (void)getUserProductsWithParameters:(NSDictionary *)parameters
                       withSuccess:(BFSuccessObjectsBlock)success
                           failure:(BFFailureBlock)failure;
@@ -69,6 +69,11 @@ typedef void (^BFSuccessObjectBlock)(id object);
 - (void)updateUserProduct:(UserProduct *)userProduct
               withSuccess:(BFSuccessObjectBlock)success
                   failure:(BFFailureBlock)failure;
+
+#pragma mark Suppliers
+- (void)getSuppliersWithParameters:(NSDictionary *)parameters
+                       withSuccess:(BFSuccessObjectsBlock)success
+                           failure:(BFFailureBlock)failure;
 
 #ifdef DEBUG
 #pragma mark - Admin

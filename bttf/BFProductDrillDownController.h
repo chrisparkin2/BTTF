@@ -8,10 +8,19 @@
 
 #import "SGBDrillDownController.h"
 
+@protocol BFProductDrillDownDelegate;
+
 @interface BFProductDrillDownController : SGBDrillDownController
 
-//- (void) pushCategoryController:(NSInteger)index object:(id)object;
 - (void) presentCategoryController:(NSInteger)index object:(id)object;
 - (void) presentProductController:(NSInteger)index object:(id)object;
+
+@property (nonatomic, weak) id<BFProductDrillDownDelegate> delegate;
+
+@end
+
+@protocol BFProductDrillDownDelegate <NSObject>
+
+- (void)didTapOrderButton;
 
 @end

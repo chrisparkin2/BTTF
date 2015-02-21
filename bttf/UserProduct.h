@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <Mantle/Mantle.h>
 
+typedef enum {
+    BFOrderStatusOK,
+    BFOrderStatusLow,
+    BFOrderStatusCritical
+} BFOrderStatusIndex;
+
+
 @class CategoryMain;
 @class CategorySub;
 @class CategoryProduct;
@@ -34,11 +41,13 @@
 #pragma mark - Logic
 - (BOOL) isValid;
 - (void) setValuesFromCategoryProduct:(CategoryProduct*)categoryProduct;
-
+- (BOOL) updateBatches:(NSInteger)update;
+- (BFOrderStatusIndex) orderStatus;
 
 #pragma mark - Keys
 + (NSString*)categoryMainIdKey;
 + (NSString*)categorySubIdKey;
 + (NSString*)categoryProductIdKey;
++ (NSString*)supplierKey;
 
 @end

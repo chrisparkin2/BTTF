@@ -44,8 +44,6 @@ typedef enum {
     self.parentObject = self.passedData[@"parentObject"];
     self.userProduct = self.passedData[@"userProduct"];
     
-    NSAssert([self.parentObject isKindOfClass:[CategoryProduct class]], @"Parent Object must be class CategoryProduct");
-
     // Set navTitle
     NSString* navTitle = self.userProduct ?  @"Update Product" : @"Add Product";    
     self.navigationController.navigationBar.topItem.title = navTitle;

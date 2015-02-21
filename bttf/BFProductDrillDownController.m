@@ -14,13 +14,13 @@
 
 @interface BFProductDrillDownController () <BFCategoryVCDelegate, BFProductVCDelegate>
 
+- (void)didTapOrderButton:(id)sender;
 
 @end
 
 @implementation BFProductDrillDownController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -28,8 +28,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) setLeftNavigationItem:(NSInteger)index {
+    // Left bar button (defaults to "back" when there's a hidden leftViewController (see SGBDrillDownController)
+    if (index == BFCategoryMain) {
+        
+        UIBarButtonItem* leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Orders" style:UIBarButtonItemStylePlain target:self action:@selector(didTapOrderButton:)];
+        self.leftViewController.navigationItem.leftBarButtonItem = leftBarButton;
+
+    }
+}
+
 #pragma mark CategoryController
 - (void) presentCategoryController:(NSInteger)index object:(id)object{
+    
     
     BFCategoryViewController* lastVC = (BFCategoryViewController*)[self.viewControllers lastObject];
     
@@ -52,7 +63,12 @@
     categoryVC.categoryIndex = index;
     categoryVC.parentObject = object;
     
-    [self pushViewController:categoryVC animated:YES completion:nil];
+    [self pushViewController:categoryVC animated:YES completion:^{
+        
+        // Set the navigation item
+        [self setLeftNavigationItem:index];
+
+    }];
 }
 
 - (void) reloadRightCategoryController:(NSInteger)index object:(id)object{
@@ -136,4 +152,13 @@
 -(void)addProductBoxClosed {
     
 }
+
+#pragma mark - Actions
+- (void)didTapOrderButton:(id)sender {
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didTapOrderButton)]) {
+        [self.delegate didTapOrderButton];
+    }
+}
+
 @end

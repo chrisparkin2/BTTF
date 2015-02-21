@@ -28,7 +28,6 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     self = [super initWithCoder:coder];
     if (self) {
         
-        
     }
     return self;
 }
@@ -45,6 +44,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     
     // Nav Title
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -54,15 +54,15 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
     switch (self.categoryIndex) {
-        case 0:
+        case BFCategoryMain:
             label.text = @"Select Main Category";
             break;
             
-        case 1:
+        case BFCategorySub:
             label.text = @"Select Sub Category";
             break;
             
-        case 2:
+        case BFCategoryProduct:
             label.text = @"Select Product Category";
             break;
             
@@ -74,14 +74,14 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     
     // BG Color
     switch (self.categoryIndex) {
-        case 0:
+        case BFCategoryMain:
         {
             self.tableView.backgroundColor = [UIColor colorFog];
             self.view.backgroundColor = [UIColor colorFog];
         }
             break;
             
-        case 1:
+        case BFCategorySub:
         {
             self.tableView.backgroundColor = [UIColor lightGrayColor];
             self.view.backgroundColor = [UIColor lightGrayColor];
@@ -89,7 +89,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
 
             break;
             
-        case 2:
+        case BFCategoryProduct:
         {
             self.tableView.backgroundColor = [UIColor grayColor];
             self.view.backgroundColor = [UIColor grayColor];
@@ -121,7 +121,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
 -(void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    // This is a hack to get the tableView clear of the navBar -- Due to drillDownController
+    // This is to get the tableView clear of the navBar -- Due to drillDownController
     self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
 }
 
@@ -242,7 +242,6 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     cell.backgroundColor = [UIColor clearColor];
     
     cell.textLabel.text = category.name;
-//    cell.detailTextLabel.text = @"1";
 
     return cell;
 }
@@ -260,15 +259,6 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     }
 }
 
-/*
-#pragma mark - Navigation
-
- In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-     Get the new view controller using [segue destinationViewController].
-     Pass the selected object to the new view controller.
-}
-*/
 
 
 @end

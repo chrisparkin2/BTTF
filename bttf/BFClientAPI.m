@@ -239,30 +239,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 }
 
 
-#pragma mark - Preload
-- (void)preloadGenericData {
 
-}
-
-- (void)preloadUserSpecificData {
-    // need user token for access
-    [self getCategoriesMainWithParameters:nil withSuccess:^(NSArray *objects) {
-        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryMain class]];
-    } failure:nil];
-    
-    [self getCategoriesSubWithParameters:nil withSuccess:^(NSArray *objects) {
-        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategorySub class]];
-    } failure:nil];
-    
-    [self getCategoriesProductWithParameters:nil withSuccess:^(NSArray *objects) {
-        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryProduct class]];
-    } failure:nil];
-        
-    NSDictionary* parameters = @{ @"userId" : [User sharedInstance].objectId };
-    [self getUserProductsWithParameters:parameters withSuccess:^(NSArray *objects) {
-        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[UserProduct class]];
-    } failure:nil];
-}
 
 #pragma mark - Category
 - (void)getCategoriesMainWithParameters:(NSDictionary *)parameters
@@ -313,7 +290,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
     [self createObject:category objectClass:CategoryProduct.class objectPath:[self categoryProduct] withSuccess:success failure:failure];
 }
 
-#pragma mark - UserProduct
+#pragma mark UserProduct
 - (void)getUserProductsWithParameters:(NSDictionary *)parameters
                             withSuccess:(BFSuccessObjectsBlock)success
                                 failure:(BFFailureBlock)failure
@@ -335,6 +312,17 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
     [self updateObject:userProduct objectClass:UserProduct.class objectPath:[self userProduct] withSuccess:success failure:failure];
 }
 
+#pragma mark Suppliers
+- (void)getSuppliersWithParameters:(NSDictionary *)parameters
+                          withSuccess:(BFSuccessObjectsBlock)success
+                              failure:(BFFailureBlock)failure
+
+{
+
+    success([self supplierNamesFromUserProducts]);
+}
+
+
 #pragma mark - Object Paths
 - (NSString*)categoryMain {
     return @"category_main";
@@ -352,6 +340,31 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
     return @"user_product";
 }
 
+#pragma mark - Preload
+- (void)preloadGenericData {
+    
+}
+
+- (void)preloadUserSpecificData {
+    // need user token for access
+    [self getCategoriesMainWithParameters:nil withSuccess:^(NSArray *objects) {
+        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryMain class]];
+    } failure:nil];
+    
+    [self getCategoriesSubWithParameters:nil withSuccess:^(NSArray *objects) {
+        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategorySub class]];
+    } failure:nil];
+    
+    [self getCategoriesProductWithParameters:nil withSuccess:^(NSArray *objects) {
+        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryProduct class]];
+    } failure:nil];
+    
+    NSDictionary* parameters = @{ @"userId" : [User sharedInstance].objectId };
+    [self getUserProductsWithParameters:parameters withSuccess:^(NSArray *objects) {
+        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[UserProduct class]];
+    } failure:nil];
+}
+
 #pragma mark - Utils
 - (NSDictionary*)JSONKeysFromObjectKeys:(NSDictionary*)objectKeys objectClass:(Class)objectClass {
     // Convert object keys to JSON keys
@@ -363,6 +376,16 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
     }];
     
     return [keysJSON copy];
+}
+
+- (NSArray*)supplierNamesFromUserProducts {
+    
+    NSArray* userProducts = [[BFCache sharedCache] objectsForClass:[UserProduct class]];
+    NSArray* supplierNames = [userProducts valueForKey:@"supplier"];
+    NSSet* supplierSet = [NSSet setWithArray:supplierNames];
+    
+    return  [supplierSet allObjects];
+    
 }
 
 

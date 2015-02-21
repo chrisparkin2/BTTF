@@ -11,6 +11,7 @@
 #import "CategorySub.h"
 #import "CategoryProduct.h"
 #import "User.h"
+#import "BFClientAPI.h"
 
 @implementation UserProduct
 
@@ -36,6 +37,30 @@
     self.categoryMainId = categoryProduct.categoryMainId;
 }
 
+- (BOOL)updateBatches:(NSInteger)update {
+    
+    // Don't allow negative batches
+    NSInteger newBatches = [self.quantityBulk integerValue] + update;
+    if (newBatches < 0) return NO;
+    
+    // Set new batch quantity
+    self.quantityBulk = @(newBatches);
+    
+    // Update total units
+    NSInteger unitsToAdd = update * [self.quantityPerCase integerValue];
+    self.quantityUnits = @([self.quantityUnits integerValue] + unitsToAdd);
+    
+    return YES;
+}
+
+- (BFOrderStatusIndex) orderStatus {
+    if ([self.quantityUnits integerValue] <= [self.quantityTrigger integerValue]) {
+        return BFOrderStatusCritical;
+    }
+    else return BFOrderStatusOK;
+}
+
+
 #pragma mark MTLJSONSerializing
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
@@ -56,7 +81,7 @@
 
 
 #pragma mark - Keys
-+ (NSString*)categoryMainIdIdKey {
++ (NSString*)categoryMainIdKey {
     return @"categoryMainId";
 }
 + (NSString*)categorySubIdKey {
@@ -64,6 +89,10 @@
 }
 + (NSString*)categoryProductIdKey {
     return @"categoryProductId";
+}
+
++ (NSString*)supplierKey {
+    return @"supplier";
 }
 
 
