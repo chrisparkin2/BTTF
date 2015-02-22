@@ -15,6 +15,7 @@ typedef enum {
     BFOrderStatusCritical
 } BFOrderStatusIndex;
 
+#define defaultTrigger 5
 
 @class CategoryMain;
 @class CategorySub;
@@ -43,6 +44,7 @@ typedef enum {
 - (void) setValuesFromCategoryProduct:(CategoryProduct*)categoryProduct;
 - (BOOL) updateBatches:(NSInteger)update;
 - (BFOrderStatusIndex) orderStatus;
++ (NSInteger)defaultQuantityTrigger;
 
 #pragma mark - Keys
 + (NSString*)categoryMainIdKey;

@@ -9,6 +9,7 @@
 #import "BFOrderDrillDownController.h"
 #import "BFSupplierViewController.h"
 #import "BFOrdersViewController.h"
+#import "UIColor+Extensions.h"
 #import "PopupView.h"
 #import "UserProduct.h"
 
@@ -21,13 +22,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
 }
 
 - (void) setLeftNavigationItem {
     // Left bar button (defaults to "back" when there's a hidden leftViewController (see SGBDrillDownController)
     if ([self.leftViewController isKindOfClass:[BFSupplierViewController class]]) {
         
-        UIBarButtonItem* leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Products" style:UIBarButtonItemStylePlain target:self action:@selector(didTapProductButton:)];
+        UIBarButtonItem* leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"< Products" style:UIBarButtonItemStylePlain target:self action:@selector(didTapProductButton:)];
+        [leftBarButton setTitleTextAttributes:@{
+                                             NSFontAttributeName: [UIFont boldSystemFontOfSize:20.0f],
+                                             NSForegroundColorAttributeName: [UIColor colorSalmon]
+                                             } forState:UIControlStateNormal];
         self.leftViewController.navigationItem.leftBarButtonItem = leftBarButton;
         
     }

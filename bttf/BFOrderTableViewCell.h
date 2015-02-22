@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *rightArrow;
 @property (weak, nonatomic) IBOutlet UIButton *leftArrow;
 
-
 - (void)setOrderStatus:(BFOrderStatusIndex)orderStatus;
 
 - (IBAction)didTapEditButton:(id)sender;

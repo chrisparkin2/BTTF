@@ -13,6 +13,7 @@
 #import "User.h"
 #import "BFClientAPI.h"
 
+
 @implementation UserProduct
 
 #pragma mark - Logic
@@ -21,6 +22,7 @@
     self = [super init];
     if (self) {
         _quantityBulk = @(0);
+        _quantityTrigger = @(defaultTrigger);
     }
     return self;
 }
@@ -60,6 +62,9 @@
     else return BFOrderStatusOK;
 }
 
++ (NSInteger)defaultQuantityTrigger {
+    return defaultTrigger;
+}
 
 #pragma mark MTLJSONSerializing
 + (NSDictionary *)JSONKeyPathsByPropertyKey

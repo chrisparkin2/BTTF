@@ -55,14 +55,7 @@
     // Preload user specific data
     [[BFClientAPI sharedAPI] preloadUserSpecificData];
     
-    // Present the main interface
-    self.productDrillDownController = [[BFProductDrillDownController alloc] init];
-    self.productDrillDownController.delegate = self;
-    [self.productDrillDownController bf_Setup];
-    
     [self presentProductDrillDownController];
-    
-    
 }
 
 #pragma mark - Login
@@ -80,17 +73,20 @@
 }
 
 #pragma mark - DrillDownController
-
 - (void)presentProductDrillDownController {
-    [self setViewControllers:@[self.productDrillDownController]];
+    
+    if (!self.productDrillDownController) {
+        self.productDrillDownController = [[BFProductDrillDownController alloc] init];
+        self.productDrillDownController.delegate = self;
+        [self.productDrillDownController bf_Setup];
+    }
+    
+    [self showProductDrillDownController];
     
     [self.productDrillDownController setNavigationBarsHidden:NO];
     self.productDrillDownController.leftNavigationBar.translucent = NO;
     self.productDrillDownController.rightNavigationBar.translucent = NO;
     [self.productDrillDownController.leftNavigationBar setTintColor:[UIColor colorSalmon]];
-    //    [self.drillDownController.leftNavigationBar setBarTintColor:[UIColor colorFog]];
-    //    [self.drillDownController.rightNavigationBar setBarTintColor:[UIColor colorFog]];
-
     
     self.productDrillDownController.leftControllerWidth = [self leftControllerShortWidth];
     
@@ -99,27 +95,45 @@
     
 }
 
+- (void)showProductDrillDownController {
+
+    if (!self.productDrillDownController) {
+        [self presentProductDrillDownController];
+        return;
+    }
+
+    [self setViewControllers:@[self.productDrillDownController]];
+}
+
+
 - (void)presentOrderDrillDownController {
     
-    // Present the main interface
     if (!self.orderDrillDownController) {
         self.orderDrillDownController = [[BFOrderDrillDownController alloc] init];
         [self.orderDrillDownController bf_Setup];
         self.orderDrillDownController.delegate = self;
     }
     
-    [self setViewControllers:@[self.orderDrillDownController]];
+    [self showOrderDrillDownController];
     
     [self.orderDrillDownController setNavigationBarsHidden:NO];
     self.orderDrillDownController.leftNavigationBar.translucent = NO;
     self.orderDrillDownController.rightNavigationBar.translucent = NO;
     [self.orderDrillDownController.leftNavigationBar setTintColor:[UIColor colorSalmon]];
     
-    
     self.orderDrillDownController.leftControllerWidth = [self leftControllerShortWidth];
 
     [self.orderDrillDownController presentSupplierController];
+}
+
+- (void)showOrderDrillDownController {
     
+    if (!self.orderDrillDownController) {
+        [self presentOrderDrillDownController];
+        return;
+    }
+
+    [self setViewControllers:@[self.orderDrillDownController]];
 }
 
 - (CGFloat)leftControllerWideWidth {
@@ -132,17 +146,12 @@
 
 #pragma mark - BFProductDrillDown Delegate 
 - (void)didTapOrderButton {
-    
-    [self presentOrderDrillDownController];
-    
-    
+    [self showOrderDrillDownController];
 }
 
 #pragma mark - BFOrderDrillDown Delegate
 - (void)didTapProductButton {
-    
-    [self presentProductDrillDownController];
-
+    [self showProductDrillDownController];
 }
 
 

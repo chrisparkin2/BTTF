@@ -185,7 +185,7 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
         {
             NSDictionary* parameters;
             if (!self.parentObject) {
-                [self hasErrorWithLocalizedDescription:@"Something went wrong. Please go back andtry again"];
+                [self hasErrorWithLocalizedDescription:@"Something went wrong. Please go back and try again"];
                 return;
             }
             

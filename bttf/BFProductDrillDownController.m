@@ -9,6 +9,7 @@
 #import "BFProductDrillDownController.h"
 #import "BFCategoryViewController.h"
 #import "BFProductViewController.h"
+#import "UIColor+Extensions.h"
 #import "PopupView.h"
 #import "BFClientAPI.h"
 
@@ -32,16 +33,18 @@
     // Left bar button (defaults to "back" when there's a hidden leftViewController (see SGBDrillDownController)
     if (index == BFCategoryMain) {
         
-        UIBarButtonItem* leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Orders" style:UIBarButtonItemStylePlain target:self action:@selector(didTapOrderButton:)];
+        UIBarButtonItem* leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"< Orders" style:UIBarButtonItemStylePlain target:self action:@selector(didTapOrderButton:)];
+        [leftBarButton setTitleTextAttributes:@{
+                                                NSFontAttributeName: [UIFont boldSystemFontOfSize:20.0f],
+                                                NSForegroundColorAttributeName: [UIColor colorSalmon]
+                                                } forState:UIControlStateNormal];
         self.leftViewController.navigationItem.leftBarButtonItem = leftBarButton;
-
     }
 }
 
 #pragma mark CategoryController
 - (void) presentCategoryController:(NSInteger)index object:(id)object{
-    
-    
+
     BFCategoryViewController* lastVC = (BFCategoryViewController*)[self.viewControllers lastObject];
     
     // If current vc is last on drilldown stack, then push

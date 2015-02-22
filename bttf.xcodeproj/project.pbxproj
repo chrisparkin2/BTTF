@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840D1DF51A995CC20063B786 /* BFSubmitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D1DF41A995CC20063B786 /* BFSubmitTableViewCell.m */; };
 		845108FE1A8BFFCB00CAF176 /* UserProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 845108FD1A8BFFCB00CAF176 /* UserProduct.m */; };
 		845109011A8C04A900CAF176 /* BFProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109001A8C04A900CAF176 /* BFProductTableViewCell.m */; };
 		845109041A8C173C00CAF176 /* CategorySub.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109031A8C173C00CAF176 /* CategorySub.m */; };
@@ -83,6 +84,8 @@
 /* Begin PBXFileReference section */
 		0D2A53FEB50D4C28AD287B35 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		5AF4CDF936F04892B289A082 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		840D1DF31A995CC10063B786 /* BFSubmitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFSubmitTableViewCell.h; sourceTree = "<group>"; };
+		840D1DF41A995CC20063B786 /* BFSubmitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFSubmitTableViewCell.m; sourceTree = "<group>"; };
 		845108FC1A8BFFCB00CAF176 /* UserProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProduct.h; sourceTree = "<group>"; };
 		845108FD1A8BFFCB00CAF176 /* UserProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProduct.m; sourceTree = "<group>"; };
 		845108FF1A8C04A900CAF176 /* BFProductTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductTableViewCell.h; sourceTree = "<group>"; };
@@ -252,6 +255,8 @@
 				846D34C11A981C2600754E06 /* BFOrdersViewController.m */,
 				846D34C31A981F8D00754E06 /* BFOrderTableViewCell.h */,
 				846D34C41A981F8D00754E06 /* BFOrderTableViewCell.m */,
+				840D1DF31A995CC10063B786 /* BFSubmitTableViewCell.h */,
+				840D1DF41A995CC20063B786 /* BFSubmitTableViewCell.m */,
 			);
 			name = Orders;
 			sourceTree = "<group>";
@@ -660,6 +665,7 @@
 				848859061A8A82C5004BB75C /* AppDelegate.m in Sources */,
 				846D34BA1A98046E00754E06 /* BFOrderDrillDownController.m in Sources */,
 				846D34A71A97ECFB00754E06 /* Supplier.m in Sources */,
+				840D1DF51A995CC20063B786 /* BFSubmitTableViewCell.m in Sources */,
 				8488359A1A8DDB5000EDFE7C /* BFConstants.m in Sources */,
 				846D34C21A981C2600754E06 /* BFOrdersViewController.m in Sources */,
 				8488592D1A8A8CF3004BB75C /* BFBaseViewController.m in Sources */,

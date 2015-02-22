@@ -7,6 +7,7 @@
 //
 
 #import "BFOrderTableViewCell.h"
+#import "UIColor+Extensions.h"
 
 @implementation BFOrderTableViewCell
 
@@ -28,7 +29,10 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+    
 }
+
+
 
 - (void)setOrderStatus:(BFOrderStatusIndex)orderStatus {
     

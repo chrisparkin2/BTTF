@@ -145,6 +145,7 @@ typedef enum {
     userProduct.quantityBulk = @([[self.quantityBulkTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
     userProduct.quantityPerCase = @([[self.quantityPerCaseTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
     userProduct.quantityUnits = @([[self.quantityUnitsTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
+    userProduct.quantityTrigger = @([[self.quantityTriggerTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] floatValue]);
     userProduct.userId = [User sharedInstance].objectId;
 
     return userProduct;
@@ -157,9 +158,13 @@ typedef enum {
         self.productNameLabel.text = self.userProduct.name;
         self.supplerNameLabel.text = self.userProduct.supplier;
         self.priceLabel.text = [self.userProduct.price stringValue];
+        self.quantityTriggerTextField.text = [self.userProduct.quantityTrigger stringValue];
         self.quantityBulkTextField.text = [self.userProduct.quantityBulk stringValue];
         self.quantityPerCaseTextField.text = [self.userProduct.quantityPerCase stringValue];
         self.quantityUnitsTextField.text = [self.userProduct.quantityUnits stringValue];
+    }
+    else {
+        self.quantityTriggerTextField.text = [@([UserProduct defaultQuantityTrigger]) stringValue];
     }
 
 }
