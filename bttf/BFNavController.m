@@ -11,8 +11,10 @@
 #import "SGBDrillDownController+Setup.h"
 #import "BFProductDrillDownController.h"
 #import "BFOrderDrillDownController.h"
+#import "BFLogoViewController.h"
 #import "PopupView.h"
 #import "BFClientAPI.h"
+#import "BFConstants.h"
 #import "UIColor+Extensions.h"
 
 
@@ -83,24 +85,19 @@
     
     [self showProductDrillDownController];
     
-    [self.productDrillDownController setNavigationBarsHidden:NO];
-    self.productDrillDownController.leftNavigationBar.translucent = NO;
-    self.productDrillDownController.rightNavigationBar.translucent = NO;
-    [self.productDrillDownController.leftNavigationBar setTintColor:[UIColor colorSalmon]];
-    
     self.productDrillDownController.leftControllerWidth = [self leftControllerShortWidth];
     
     [self.productDrillDownController presentCategoryController:BFCategoryMain object:nil];
     
-    
+    // Add the right logoVC
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    BFLogoViewController* rightLogoVC = (BFLogoViewController*)[storyboard instantiateViewControllerWithIdentifier:@"IconVC"];
+    self.productDrillDownController.rightPlaceholderController = rightLogoVC;
+    rightLogoVC.promptLabel.text = @"Add Products";
+
 }
 
 - (void)showProductDrillDownController {
-
-    if (!self.productDrillDownController) {
-        [self presentProductDrillDownController];
-        return;
-    }
 
     [self setViewControllers:@[self.productDrillDownController]];
 }
@@ -116,23 +113,20 @@
     
     [self showOrderDrillDownController];
     
-    [self.orderDrillDownController setNavigationBarsHidden:NO];
-    self.orderDrillDownController.leftNavigationBar.translucent = NO;
-    self.orderDrillDownController.rightNavigationBar.translucent = NO;
-    [self.orderDrillDownController.leftNavigationBar setTintColor:[UIColor colorSalmon]];
-    
     self.orderDrillDownController.leftControllerWidth = [self leftControllerShortWidth];
-
+    
     [self.orderDrillDownController presentSupplierController];
+    
+    // Add the right logoVC
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    BFLogoViewController* rightLogoVC = (BFLogoViewController*)[storyboard instantiateViewControllerWithIdentifier:@"IconVC"];
+    self.orderDrillDownController.rightPlaceholderController = rightLogoVC;
+    rightLogoVC.promptLabel.text = @"Add Orders";
+
 }
 
 - (void)showOrderDrillDownController {
     
-    if (!self.orderDrillDownController) {
-        [self presentOrderDrillDownController];
-        return;
-    }
-
     [self setViewControllers:@[self.orderDrillDownController]];
 }
 
@@ -146,11 +140,23 @@
 
 #pragma mark - BFProductDrillDown Delegate 
 - (void)didTapOrderButton {
+
+    if (!self.orderDrillDownController) {
+        [self presentOrderDrillDownController];
+        return;
+    }
+
     [self showOrderDrillDownController];
 }
 
 #pragma mark - BFOrderDrillDown Delegate
 - (void)didTapProductButton {
+
+    if (!self.productDrillDownController) {
+        [self presentProductDrillDownController];
+        return;
+    }
+
     [self showProductDrillDownController];
 }
 

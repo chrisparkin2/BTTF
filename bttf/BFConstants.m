@@ -22,3 +22,4 @@ NSString *const kBFNotificationInfoUserProductKey = @"userProduct";
 
 #pragma mark - Images
 NSString *const kBFOrderIcon = @"order_icon.png";
+NSString *const kBFBGIcon = @"iTunesArtwork.png";

@@ -21,3 +21,4 @@ extern NSString *const kBFNotificationInfoUserProductKey;
 
 #pragma mark - Images
 extern NSString *const kBFOrderIcon;
+extern NSString *const kBFBGIcon;

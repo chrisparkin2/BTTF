@@ -25,6 +25,48 @@
             </objects>
             <point key="canvasLocation" x="1019" y="182"/>
         </scene>
+        <!--Logo View Controller-->
+        <scene sceneID="qjG-j7-Wk4">
+            <objects>
+                <viewController storyboardIdentifier="IconVC" id="LDf-3i-eUr" customClass="BFLogoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XBR-Fl-Kch"/>
+                        <viewControllerLayoutGuide type="bottom" id="CNK-DE-dQX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sME-d4-8tk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iTunesArtwork.png" translatesAutoresizingMaskIntoConstraints="NO" id="Uym-Gq-yFc">
+                                <rect key="frame" x="225" y="225" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="Xun-AC-T7q"/>
+                                    <constraint firstAttribute="height" constant="150" id="isQ-E6-VYz"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Prompt" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Cf-YC-bDR">
+                                <rect key="frame" x="239" y="431" width="123" height="43"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Uym-Gq-yFc" secondAttribute="centerX" id="6hB-Ot-JRb"/>
+                            <constraint firstAttribute="centerY" secondItem="Uym-Gq-yFc" secondAttribute="centerY" id="QeO-jd-bJa"/>
+                            <constraint firstItem="2Cf-YC-bDR" firstAttribute="top" secondItem="Uym-Gq-yFc" secondAttribute="bottom" constant="28" id="TSI-GW-yXN"/>
+                            <constraint firstAttribute="centerX" secondItem="2Cf-YC-bDR" secondAttribute="centerX" id="jTo-ws-pN1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="promptLabel" destination="2Cf-YC-bDR" id="3WQ-Em-mc5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zwh-hI-kdA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1013" y="873"/>
+        </scene>
         <!--Category View Controller-->
         <scene sceneID="P6t-gh-dfS">
             <objects>
@@ -228,6 +270,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="7z4-53-TWQ" secondAttribute="trailing" id="0ui-Dz-f1L"/>
+                            <constraint firstItem="7z4-53-TWQ" firstAttribute="top" secondItem="ldP-E3-5xO" secondAttribute="topMargin" id="P35-j9-XNJ"/>
+                            <constraint firstItem="B9o-c1-cUV" firstAttribute="top" secondItem="7z4-53-TWQ" secondAttribute="bottom" id="j9y-K0-tab"/>
                             <constraint firstItem="7z4-53-TWQ" firstAttribute="leading" relation="lessThanOrEqual" secondItem="ldP-E3-5xO" secondAttribute="leadingMargin" id="tSe-qe-c0u"/>
                         </constraints>
                     </view>
@@ -330,7 +374,7 @@
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="100" verticalHuggingPriority="100" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H7P-kU-Dg5">
                                                     <rect key="frame" x="196" y="8" width="20" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                                     <color key="textColor" red="0.93333333330000001" green="0.91764705879999997" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -481,6 +525,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="eTs-cF-CFx" firstAttribute="top" secondItem="Loe-5t-UBa" secondAttribute="topMargin" id="Fxz-6v-X0f"/>
+                            <constraint firstItem="Rg9-pp-qrs" firstAttribute="top" secondItem="eTs-cF-CFx" secondAttribute="bottom" id="Tgx-mW-Wuf"/>
                             <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="eTs-cF-CFx" secondAttribute="trailing" id="eHI-79-1US"/>
                             <constraint firstItem="eTs-cF-CFx" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Loe-5t-UBa" secondAttribute="leadingMargin" id="fLZ-rI-9gC"/>
                         </constraints>
@@ -536,5 +582,6 @@
     </scenes>
     <resources>
         <image name="chevron.png" width="24" height="30"/>
+        <image name="iTunesArtwork.png" width="512" height="512"/>
     </resources>
 </document>

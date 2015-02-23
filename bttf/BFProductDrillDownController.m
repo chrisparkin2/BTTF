@@ -35,7 +35,7 @@
         
         UIBarButtonItem* leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"< Orders" style:UIBarButtonItemStylePlain target:self action:@selector(didTapOrderButton:)];
         [leftBarButton setTitleTextAttributes:@{
-                                                NSFontAttributeName: [UIFont boldSystemFontOfSize:20.0f],
+                                                NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f],
                                                 NSForegroundColorAttributeName: [UIColor colorSalmon]
                                                 } forState:UIControlStateNormal];
         self.leftViewController.navigationItem.leftBarButtonItem = leftBarButton;

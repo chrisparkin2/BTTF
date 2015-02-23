@@ -8,6 +8,7 @@
 
 #import "LoginScreen.h"
 #import "PopupView.h"
+#import "UIColor+Extensions.h"
 #import "User.h"
 
 @interface LoginScreen () <UITextFieldDelegate>
@@ -34,7 +35,12 @@
     _emailTextField.alpha = 0.0f;
 
     
-    self.navigationController.navigationBar.topItem.title = @"Login/Signup";
+    self.navigationController.navigationBar.topItem.title = @"BACK TO THE FARM";
+    self.navigationController.navigationBar.titleTextAttributes = @{
+                                                                    NSFontAttributeName: [UIFont boldSystemFontOfSize:17.0f],
+                                                                    NSForegroundColorAttributeName: [UIColor blackColor]
+                                                                    };
+
 //    if(![self connected]){
 //    //    [self showDialogWithTitle:@"Cannot Reach" andMessage:@"Connect to internet"];
 //    }

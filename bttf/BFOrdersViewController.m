@@ -12,6 +12,7 @@
 #import "UIColor+Extensions.h"
 #import "UserProduct.h"
 #import "BFClientAPI.h"
+#import "BFConstants.h"
 
 static NSString *const OrderCellIdentifier = @"OrderCell";
 static NSString *const OrderHeaderCellIdentifier = @"OrdersHeaderCell";
@@ -39,6 +40,10 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
         _objects = [NSArray new];
     }
     return _objects;
+}
+
+- (void)dealloc {
+      [[NSNotificationCenter defaultCenter] removeObserver:self name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
 }
 
 #pragma mark - Lifecycle
@@ -72,6 +77,14 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
     [self loadData];
     
     
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [self resetBatchCountTracker];
+    
+    [self.tableView reloadData];
 }
 
 -(void)viewDidLayoutSubviews {
@@ -347,6 +360,45 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
         }];
 
     }
+}
+
+#pragma mark - NSNotificationCenter
+- (void) registerForNotifications {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserProduct:) name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
+    
+}
+
+- (void)didUpdateUserProduct:(NSNotification*)notification {
+    
+//    NSDictionary *dict = [notification userInfo];
+//    UserProduct* userProduct = [dict objectForKey:kBFNotificationInfoUserProductKey];
+//    NSMutableArray* mutableObjects = [self.objects mutableCopy];
+//    
+//    // First check if this userProduct exists
+//    __block BOOL foundObject = NO;
+//    [self.objects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        UserProduct* userProductToCheck = (UserProduct*)obj;
+//        if ([userProduct.objectId isEqualToString:userProductToCheck.objectId]) {
+//            [mutableObjects replaceObjectAtIndex:idx withObject:userProduct];
+//            foundObject = YES;
+//            *stop = YES;
+//            return;
+//        }
+//    }];
+//    if (foundObject) {
+//        self.objects = [mutableObjects copy];
+//        [self.tableView reloadData];
+//        return;
+//    }
+//    
+//    
+//    // If not, then add
+//    [mutableObjects addObject:userProduct];
+//    self.objects = [mutableObjects copy];
+    
+    [self.tableView reloadData];
 }
 
 
