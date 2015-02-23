@@ -12,6 +12,7 @@
 #import "CategoryProduct.h"
 #import "User.h"
 #import "BFClientAPI.h"
+#import "BFCache.h"
 
 
 @implementation UserProduct
@@ -64,6 +65,16 @@
 
 + (NSInteger)defaultQuantityTrigger {
     return defaultTrigger;
+}
+
++ (NSInteger)countUserProductsForSupplier:(NSString*)supplier {
+    
+    NSArray* userProducts = [[BFCache sharedCache] objectsForClass:[UserProduct class]];
+    NSPredicate* supplierPredicate = [NSPredicate predicateWithFormat:@"%K like %@", @"supplier", supplier];
+    NSArray* filtered =  [userProducts filteredArrayUsingPredicate:supplierPredicate];
+    
+    
+    return filtered.count;
 }
 
 #pragma mark MTLJSONSerializing

@@ -45,6 +45,7 @@ typedef enum {
 - (BOOL) updateBatches:(NSInteger)update;
 - (BFOrderStatusIndex) orderStatus;
 + (NSInteger)defaultQuantityTrigger;
++ (NSInteger)countUserProductsForSupplier:(NSString*)supplier;
 
 #pragma mark - Keys
 + (NSString*)categoryMainIdKey;

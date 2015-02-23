@@ -9,6 +9,7 @@
 #import "BFSupplierViewController.h"
 #import "UIColor+Extensions.h"
 #import "BFClientAPI.h"
+#import "BFSupplierTableViewCell.h"
 
 static NSString *const SupplierCellIdentifier = @"SupplierCell";
 
@@ -75,11 +76,6 @@ static NSString *const SupplierCellIdentifier = @"SupplierCell";
     
     __weak __typeof(self) weakSelf = self;
     
-//    NSDictionary* parameters;
-//    CategoryMain* categoryMain = (CategoryMain*)self.parentObject;
-//    parameters = @{ [CategorySub categoryMainIdKey] : categoryMain.objectId };
-    
-    
     [[BFClientAPI sharedAPI] getSuppliersWithParameters:nil withSuccess:^(NSArray *categories) {
         
         [self stopActivityIndicatorAndTimer];
@@ -94,10 +90,6 @@ static NSString *const SupplierCellIdentifier = @"SupplierCell";
         NSLog(@"error = %@",error);
         
     }];
-
-    
-    
-    
 }
 
 - (void)reloadData {
@@ -108,6 +100,8 @@ static NSString *const SupplierCellIdentifier = @"SupplierCell";
     [self.tableView reloadData];
 }
 
+
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -116,15 +110,16 @@ static NSString *const SupplierCellIdentifier = @"SupplierCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:SupplierCellIdentifier
+    BFSupplierTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:SupplierCellIdentifier
                                                                          forIndexPath:indexPath];
     
     
     NSString* supplier = self.objects[indexPath.row];
     cell.backgroundColor = [UIColor clearColor];
     
-    cell.textLabel.text = supplier;
-    
+    cell.supplierLabel.text = supplier;
+    cell.countLabel.text = [@([UserProduct countUserProductsForSupplier:supplier]) stringValue];
+        
     return cell;
 }
 

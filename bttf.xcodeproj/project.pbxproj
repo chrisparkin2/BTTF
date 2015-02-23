@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		840D1DF51A995CC20063B786 /* BFSubmitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D1DF41A995CC20063B786 /* BFSubmitTableViewCell.m */; };
 		840D1DF81A9AD20C0063B786 /* BFLogoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D1DF71A9AD20C0063B786 /* BFLogoViewController.m */; };
+		840D1DFB1A9ADCC10063B786 /* BFSupplierTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D1DFA1A9ADCC10063B786 /* BFSupplierTableViewCell.m */; };
 		845108FE1A8BFFCB00CAF176 /* UserProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 845108FD1A8BFFCB00CAF176 /* UserProduct.m */; };
 		845109011A8C04A900CAF176 /* BFProductTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109001A8C04A900CAF176 /* BFProductTableViewCell.m */; };
 		845109041A8C173C00CAF176 /* CategorySub.m in Sources */ = {isa = PBXBuildFile; fileRef = 845109031A8C173C00CAF176 /* CategorySub.m */; };
@@ -89,6 +90,8 @@
 		840D1DF41A995CC20063B786 /* BFSubmitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFSubmitTableViewCell.m; sourceTree = "<group>"; };
 		840D1DF61A9AD20C0063B786 /* BFLogoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFLogoViewController.h; sourceTree = "<group>"; };
 		840D1DF71A9AD20C0063B786 /* BFLogoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFLogoViewController.m; sourceTree = "<group>"; };
+		840D1DF91A9ADCC10063B786 /* BFSupplierTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFSupplierTableViewCell.h; sourceTree = "<group>"; };
+		840D1DFA1A9ADCC10063B786 /* BFSupplierTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFSupplierTableViewCell.m; sourceTree = "<group>"; };
 		845108FC1A8BFFCB00CAF176 /* UserProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProduct.h; sourceTree = "<group>"; };
 		845108FD1A8BFFCB00CAF176 /* UserProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProduct.m; sourceTree = "<group>"; };
 		845108FF1A8C04A900CAF176 /* BFProductTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFProductTableViewCell.h; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 			children = (
 				846D34BC1A9812AD00754E06 /* BFSupplierViewController.h */,
 				846D34BD1A9812AD00754E06 /* BFSupplierViewController.m */,
+				840D1DF91A9ADCC10063B786 /* BFSupplierTableViewCell.h */,
+				840D1DFA1A9ADCC10063B786 /* BFSupplierTableViewCell.m */,
 			);
 			name = Supplier;
 			sourceTree = "<group>";
@@ -684,6 +689,7 @@
 				846D34B71A9800E600754E06 /* SGBDrillDownController+Setup.m in Sources */,
 				8488594F1A8B1A88004BB75C /* LoginScreen.m in Sources */,
 				846D34C51A981F8D00754E06 /* BFOrderTableViewCell.m in Sources */,
+				840D1DFB1A9ADCC10063B786 /* BFSupplierTableViewCell.m in Sources */,
 				848859471A8AAFC0004BB75C /* CategoryMain.m in Sources */,
 				848859031A8A82C5004BB75C /* main.m in Sources */,
 				8488594A1A8AB080004BB75C /* BFClientAPI.m in Sources */,
