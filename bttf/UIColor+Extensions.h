@@ -2,7 +2,7 @@
 //  UIColor+Extensions.h
 //  bttf
 //
-//  Created by Admin on 2/15/15.
+//  Created by Admin on 2/25/15.
 //  Copyright (c) 2015 bttf. All rights reserved.
 //
 
@@ -12,5 +12,8 @@
 
 + (UIColor *)colorMustard;
 + (UIColor *)colorSalmon;
++ (UIColor *)colorBrightRed;
 + (UIColor *)colorFog;
+
 @end
+

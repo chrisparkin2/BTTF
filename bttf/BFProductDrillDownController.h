@@ -22,5 +22,6 @@
 @protocol BFProductDrillDownDelegate <NSObject>
 
 - (void)didTapOrderButton;
+- (void)presentWholeAnimalScreen;
 
 @end

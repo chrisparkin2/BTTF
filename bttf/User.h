@@ -35,5 +35,6 @@
 -(BOOL)loadPercsFromFile;
 
 +(instancetype)sharedInstance;
+-(NSMutableDictionary*)meatDictionary;
 
 @end

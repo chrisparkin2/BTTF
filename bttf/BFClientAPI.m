@@ -26,6 +26,8 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *operationManager;
 
+@property (nonatomic, assign) BOOL alertShowing;
+
 @end
 
 @implementation BFClientAPI
@@ -58,6 +60,8 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 
         mBackgroundQueue = dispatch_queue_create("background", NULL);
         
+//        [self setupReachibility];
+        
     }
     return self;
 }
@@ -85,6 +89,9 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
                            
                        }
                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                           
+                           if ([operation.error code] == -1009) [self showOfflineAlert];
+
                            failure(error,[[operation response] statusCode]);
                        }];
 }
@@ -113,9 +120,9 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
                             success(responseDictionary);
                         }
                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                            NSLog(@"operation.responseString = %@",operation.responseString);
-                            
-                            
+                
+                            if ([operation.error code] == -1009) [self showOfflineAlert];
+
                             failure(error,[[operation response] statusCode]);
                         }];
 }
@@ -137,6 +144,9 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
+            
+            if ([operation.error code] == -1009) [self showOfflineAlert];
+
             failure(error,[[operation response] statusCode]);
         }
     }];
@@ -340,6 +350,56 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
     return @"user_product";
 }
 
+#pragma mark - Reachability
+- (void) setupReachibility {
+    
+    // Setup reachability
+    NSOperationQueue *operationQueue = self.operationManager.operationQueue;
+    [self.operationManager.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                [operationQueue setSuspended:NO];
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+            {
+                
+                // Suspend operation
+                [operationQueue setSuspended:YES];
+            }
+            default:
+                [operationQueue setSuspended:YES];
+                break;
+        }
+    }];
+    
+    [self.operationManager.reachabilityManager startMonitoring];
+}
+
+- (void)showOfflineAlert {
+    
+    if (self.alertShowing) return;
+    
+    // Show alert
+    NSMutableDictionary* details = [NSMutableDictionary dictionary];
+    [details setValue:@"No network connection. Please connect to the internet to continue using the app." forKey:NSLocalizedDescriptionKey];
+    NSError*error = [NSError errorWithDomain:@"network" code:200 userInfo:details];
+    
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                      message:[NSString stringWithFormat:@"%@",[error localizedDescription]]
+                                                     delegate:self
+                                            cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                            otherButtonTitles:nil];
+    self.alertShowing = YES;
+    [message show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.alertShowing = NO;
+}
+
 #pragma mark - Preload
 - (void)preloadGenericData {
     
@@ -347,22 +407,38 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
 
 - (void)preloadUserSpecificData {
     // need user token for access
-    [self getCategoriesMainWithParameters:nil withSuccess:^(NSArray *objects) {
-        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryMain class]];
-    } failure:nil];
+    if (![[BFCache sharedCache] objectsForClass:[CategoryMain class]]) {
+        [self getCategoriesMainWithParameters:nil withSuccess:^(NSArray *objects) {
+            if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryMain class]];
+        } failure:nil];
+    }
     
-    [self getCategoriesSubWithParameters:nil withSuccess:^(NSArray *objects) {
-        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategorySub class]];
-    } failure:nil];
+    if (![[BFCache sharedCache] objectsForClass:[CategorySub class]]) {
+        [self getCategoriesSubWithParameters:nil withSuccess:^(NSArray *objects) {
+            if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategorySub class]];
+        } failure:nil];
+    }
     
-    [self getCategoriesProductWithParameters:nil withSuccess:^(NSArray *objects) {
-        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryProduct class]];
-    } failure:nil];
+    if (![[BFCache sharedCache] objectsForClass:[CategoryProduct class]]) {
+        [self getCategoriesProductWithParameters:nil withSuccess:^(NSArray *objects) {
+            if (objects) [[BFCache sharedCache] setObjects:objects forClass:[CategoryProduct class]];
+        } failure:nil];
+    }
     
-    NSDictionary* parameters = @{ @"userId" : [User sharedInstance].objectId };
-    [self getUserProductsWithParameters:parameters withSuccess:^(NSArray *objects) {
-        if (objects) [[BFCache sharedCache] setObjects:objects forClass:[UserProduct class]];
-    } failure:nil];
+    if (![[BFCache sharedCache] objectsForClass:[UserProduct class]]) {
+        NSDictionary* parameters = @{ @"userId" : [User sharedInstance].objectId };
+        [self getUserProductsWithParameters:parameters withSuccess:^(NSArray *objects) {
+            if (objects) [[BFCache sharedCache] setObjects:objects forClass:[UserProduct class]];
+        } failure:nil];
+    }
+}
+
+- (void)reloadGenericData {
+    [self preloadGenericData];
+}
+
+- (void)reloadUserSpecificData {
+    [self preloadUserSpecificData];
 }
 
 #pragma mark - Utils
@@ -397,6 +473,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
     return [NSError errorWithDomain:@"network" code:200 userInfo:details];
 
 }
+
 
 
 #pragma mark - Cache

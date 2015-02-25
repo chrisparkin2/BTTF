@@ -10,6 +10,7 @@
 #import "UIColor+Extensions.h"
 #import "BFClientAPI.h"
 #import "BFSupplierTableViewCell.h"
+#import "BFConstants.h"
 
 static NSString *const SupplierCellIdentifier = @"SupplierCell";
 
@@ -26,6 +27,10 @@ static NSString *const SupplierCellIdentifier = @"SupplierCell";
         _objects = [NSArray new];
     }
     return _objects;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
 }
 
 #pragma mark - Lifecycle
@@ -59,6 +64,12 @@ static NSString *const SupplierCellIdentifier = @"SupplierCell";
     [self loadData];
 
 
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self registerForNotifications];
 }
 
 -(void)viewDidLayoutSubviews {
@@ -135,5 +146,19 @@ static NSString *const SupplierCellIdentifier = @"SupplierCell";
         [self.delegate didTapCellWithObject:newParentObject];
     }
 }
+
+#pragma mark - NSNotificationCenter
+- (void) registerForNotifications {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserProduct:) name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
+    
+}
+
+- (void)didUpdateUserProduct:(NSNotification*)notification {
+    
+    [self.tableView reloadData];
+}
+
 
 @end

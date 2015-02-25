@@ -79,6 +79,12 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
     
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self registerForNotifications];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
@@ -371,33 +377,6 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
 }
 
 - (void)didUpdateUserProduct:(NSNotification*)notification {
-    
-//    NSDictionary *dict = [notification userInfo];
-//    UserProduct* userProduct = [dict objectForKey:kBFNotificationInfoUserProductKey];
-//    NSMutableArray* mutableObjects = [self.objects mutableCopy];
-//    
-//    // First check if this userProduct exists
-//    __block BOOL foundObject = NO;
-//    [self.objects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        UserProduct* userProductToCheck = (UserProduct*)obj;
-//        if ([userProduct.objectId isEqualToString:userProductToCheck.objectId]) {
-//            [mutableObjects replaceObjectAtIndex:idx withObject:userProduct];
-//            foundObject = YES;
-//            *stop = YES;
-//            return;
-//        }
-//    }];
-//    if (foundObject) {
-//        self.objects = [mutableObjects copy];
-//        [self.tableView reloadData];
-//        return;
-//    }
-//    
-//    
-//    // If not, then add
-//    [mutableObjects addObject:userProduct];
-//    self.objects = [mutableObjects copy];
-    
     [self.tableView reloadData];
 }
 

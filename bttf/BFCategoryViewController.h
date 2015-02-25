@@ -32,4 +32,6 @@
 
 - (void)didTapCellWithObject:(id)parentObject tableViewIndex:(NSInteger)tableViewIndex;
 
+- (void)didTapCellForWholeAnimal;
+
 @end

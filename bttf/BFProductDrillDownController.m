@@ -129,6 +129,12 @@
     
 }
 
+- (void)didTapCellForWholeAnimal {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(presentWholeAnimalScreen)]) {
+        [self.delegate presentWholeAnimalScreen];
+    }
+}
+
 #pragma mark - BFProductVCDelegate
 - (void)didTapAddNewProduct:(id)parentObject {
     NSDictionary* data = @{ @"parentObject" : parentObject };

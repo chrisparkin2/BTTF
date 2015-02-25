@@ -197,6 +197,12 @@ static User *gInstance;
 }
 
 -(NSDictionary*)getPercData{
+    
+    NSLog(@"_percData = %@",_percData);
+    
+    if(!_percData) {
+        _percData = [self generatePercData:_meatData];
+    }
     return _percData;
 }
 
@@ -311,4 +317,230 @@ static User *gInstance;
     return gInstance;
 }
 
+-(NSMutableDictionary*)meatDictionary {
+    return @{
+      @"cow" : @{
+              @"Forequarter" : @{
+                      @"Shoulder" : @{
+                              @"Chuck Eye" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Chuck Roll" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Flat Iron" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Palomilla" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Petite Fillet" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Back Ribs" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Cross Ribs Steak" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Brisket" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              }.mutableCopy,
+                      
+                      @"Ribs" : @{
+                              
+                              @"Ribeye" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Short Ribs" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Outside Skirt" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              }.mutableCopy,
+                      }.mutableCopy,
+              @"Hindquarter" : @{
+                      @"Loin" : @{
+                              @"Bavette" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Flank" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"New York (Dry/BI)" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Sirloin Tip" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Tenderloin (Dry)" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Top Sirloin" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Tritip" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              }.mutableCopy,
+                      @"Round" : @{
+                              @"Baseball Steak" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Bottom Round" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Carne Asada" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Eye of Round" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Oyster" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Picanha" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Poire" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Top Round" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Velvet Steak" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              @"Stew Meat" : @{
+                                      @"Meat" : @(40),
+                                      @"Trim" : @(30),
+                                      @"Dogfood" : @(20),
+                                      @"Bones" : @(5),
+                                      @"Waste" : @(5),
+                                      }.mutableCopy,
+                              }.mutableCopy,
+                      }.mutableCopy,
+              }.mutableCopy, //cow
+      
+      @"pig" : @{
+              
+              }.mutableCopy,
+      @"sheep" : @{
+              
+              }.mutableCopy,
+      @"goat" : @{
+              
+              }.mutableCopy
+      }.mutableCopy;
+}
 @end

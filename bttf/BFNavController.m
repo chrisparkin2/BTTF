@@ -15,7 +15,8 @@
 #import "PopupView.h"
 #import "BFClientAPI.h"
 #import "BFConstants.h"
-#import "UIColor+Extensions.h"
+#import "ScreenNavigation.h"
+#import "User.h"
 
 
 @interface BFNavController () <BFProductDrillDownDelegate, BFOrderDrillDownDelegate>
@@ -148,6 +149,22 @@
 
     [self showOrderDrillDownController];
 }
+
+- (void)presentWholeAnimalScreen {
+    
+    // Present a screen in a modal
+    // NOTE: This is a hack to present the original dev's whole animal flow
+    ScreenNavigation* screenNavigation = [[ScreenNavigation alloc] init];
+    [screenNavigation startWithScreen:@"MainScreen" data:nil animated:NO];
+    [self presentViewController:screenNavigation animated:YES completion:nil];
+    
+    [User sharedInstance].meatData = [[User sharedInstance] meatDictionary];
+    
+    [[User sharedInstance] loadMeatFromFile];
+
+
+}
+    
 
 #pragma mark - BFOrderDrillDown Delegate
 - (void)didTapProductButton {

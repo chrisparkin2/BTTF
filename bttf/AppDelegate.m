@@ -23,12 +23,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+
+    return YES;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
     
-    // Preload non-user specific data
-    [[BFClientAPI sharedAPI] preloadGenericData];
+    // Reload data
+    [[BFClientAPI sharedAPI] reloadGenericData];
+    
+    if ([User sharedInstance].token) [[BFClientAPI sharedAPI] reloadUserSpecificData];
 
     
-    return YES;
 }
 
 

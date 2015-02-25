@@ -32,6 +32,8 @@ typedef void (^BFSuccessObjectBlock)(id object);
 #pragma mark - Preload
 - (void)preloadGenericData;
 - (void)preloadUserSpecificData;
+- (void)reloadGenericData;
+- (void)reloadUserSpecificData;
 
 #pragma mark - Category
 - (void)getCategoriesMainWithParameters:(NSDictionary *)parameters

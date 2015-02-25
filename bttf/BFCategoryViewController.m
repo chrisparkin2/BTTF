@@ -241,6 +241,12 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     
     cell.backgroundColor = [UIColor clearColor];
     
+    // Handle special whole animal cell -- highlight
+    if (self.categoryIndex == BFCategorySub &&
+        [category.name isEqualToString:@"Whole Animals"] ) {
+        cell.backgroundColor = [UIColor colorSalmon];
+    }
+    
     cell.textLabel.text = category.name;
 
     return cell;
@@ -254,6 +260,25 @@ static NSString *const CategoryCellIdentifier = @"CategoryCell";
     id newParentObject = self.objects[indexPath.row];
     NSAssert(newParentObject,@"No parentObject at indexPath.row");
     
+    // Handle special Whole Animal case -- Present whole animal screen
+    // NOTE: Hack to insert previous dev's work on Whole Animal flow
+    if (self.categoryIndex == BFCategorySub) {
+        
+        CategorySub* categorySub = (CategorySub*)newParentObject;
+        if ([categorySub.name isEqualToString:@"Whole Animals"]) {
+            
+            [self hasErrorWithLocalizedDescription:@"Please use the B2TF - Butcher app for Whole Animal processing"];
+            
+            // FIXME: Integration of previous dev's work not working
+//            if (self.delegate && [self.delegate respondsToSelector:@selector(didTapCellForWholeAnimal)]) {
+//                [self.delegate didTapCellForWholeAnimal];
+//            }
+            
+            return;
+        }
+    }
+    
+    // Delegate
     if (self.delegate && [self.delegate respondsToSelector:@selector(didTapCellWithObject:tableViewIndex:)]) {
         [self.delegate didTapCellWithObject:newParentObject tableViewIndex:self.categoryIndex];
     }
