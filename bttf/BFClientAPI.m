@@ -542,11 +542,6 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
             return;
         }
         
-        NSLog(@"categoriesMain = %@",categoriesMain);
-        NSLog(@"categoriesSub = %@",categoriesSub);
-        NSLog(@"categoriesProduct = %@",categoriesProduct);
-        
-        
         NSMutableSet* categoriesMainToSave = [NSMutableSet new];
         NSMutableSet* categoriesSubToSave = [NSMutableSet new];
         NSMutableSet* categoriesProductToSave = [NSMutableSet new];
@@ -593,11 +588,7 @@ NSString *const API_URL = @"http://backtothefarm.herokuapp.com";
             }
             
         }
-        
-        NSLog(@"categoriesMainToSave = %@",categoriesMainToSave);
-        NSLog(@"categoriesSubToSave = %@",categoriesSubToSave);
-        NSLog(@"categoriesProductToSave = %@",categoriesProductToSave);
-        
+    
         // Save these concurrently within each category, but serially overall
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{ // 1
 
