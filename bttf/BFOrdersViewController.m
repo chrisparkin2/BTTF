@@ -13,14 +13,17 @@
 #import "UserProduct.h"
 #import "BFClientAPI.h"
 #import "BFConstants.h"
+#import "User.h"
+#import <MessageUI/MessageUI.h>
 
 static NSString *const OrderCellIdentifier = @"OrderCell";
 static NSString *const OrderHeaderCellIdentifier = @"OrdersHeaderCell";
 static NSString *const SubmitCellIdentifier = @"SubmitCell";
 
 
-@interface BFOrdersViewController () <UITableViewDataSource, UITableViewDelegate, BFOrderTableViewCellDelegate>
+@interface BFOrdersViewController () <UITableViewDataSource, UITableViewDelegate, BFOrderTableViewCellDelegate, MFMailComposeViewControllerDelegate>
 
+@property (nonatomic, strong) MFMailComposeViewController *mailComposer;
 
 @property (nonatomic, strong) NSMutableDictionary* batchCounts;
 
@@ -239,17 +242,8 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
     if (indexPath.row == self.objects.count - 1 &&
         [self.objects.lastObject isEqualToString:@"submitCell"]) {
         
-        // Submit
-        [self resetBatchCountTracker];
-        [self.tableView reloadData];
-
-        // Show alert
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Submitted", @"Submitted")
-                                                          message:[NSString stringWithFormat:@"Your orders have been saved"]
-                                                         delegate:nil
-                                                cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
-                                                otherButtonTitles:nil];
-        [message show];
+        [self submit];
+        
     }
 }
 
@@ -285,6 +279,104 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+- (void)submit {
+    
+    // Get all userProducts that were updated
+    __block NSMutableArray* updatedUserProducts = [NSMutableArray new];
+    [self.objects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        // FIXME: Stupid to add headerCell and footerCell to self.objects -- take out in v2
+        if (![obj isKindOfClass:[UserProduct class]]) return;
+        
+        UserProduct* userProduct = (UserProduct*)obj;
+        if ([userProduct.quantityBulk intValue] > 0) [updatedUserProducts addObject:userProduct];
+    }];
+    
+    
+    // Send an e-mail
+    [self showMailComposeVCWithUserProducts:updatedUserProducts];
+    
+}
+
+- (void)didSubmitOrder {
+    
+    // Reset the view
+    [self resetBatchCountTracker];
+    [self.tableView reloadData];
+
+    
+    // Show alert
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Submitted", @"Submitted")
+                                                      message:[NSString stringWithFormat:@"Your orders have been saved"]
+                                                     delegate:nil
+                                            cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                            otherButtonTitles:nil];
+    [message show];
+
+}
+
+- (void)showMailComposeVCWithUserProducts:(NSArray*)userProducts {
+    
+    if ([MFMailComposeViewController canSendMail])
+    {
+        self.mailComposer = [[MFMailComposeViewController alloc] init];
+        self.mailComposer.mailComposeDelegate = self;
+        
+        // Compose subject
+        NSString* subject = [NSString stringWithFormat:@"Order for supplier: %@",(NSString*)self.parentObject];
+        
+        // Compose message
+        __block NSString* message = @"";
+        [userProducts enumerateObjectsUsingBlock:^(UserProduct* userProduct, NSUInteger idx, BOOL *stop) {
+            NSString* line = [NSString stringWithFormat:@"Supplier: %@ \t",(NSString*)self.parentObject];
+            line = [NSString stringWithFormat:@"Customer: %@ \t",[[User sharedInstance] username]];
+            line = [line stringByAppendingString:[NSString stringWithFormat:@"Product: %@ \t",[userProduct name]]];
+            line = [line stringByAppendingString:[NSString stringWithFormat:@"Price: %@ \t",[userProduct price]]];
+            line = [line stringByAppendingString:[NSString stringWithFormat:@"Bulk Quantity: %@ \t",[userProduct quantityBulk]]];
+            line = [line stringByAppendingString:[NSString stringWithFormat:@"Units Quantity: %@ \t",[userProduct quantityUnits]]];
+            line = [line stringByAppendingString:@"\n\n"];
+            
+            message = [message stringByAppendingString:line];
+        }];
+        
+        
+        // Set fields
+        [self.mailComposer setSubject:subject];
+        [self.mailComposer setMessageBody:message isHTML:NO];
+        [self.mailComposer setToRecipients:@[@"order@backtothefarm.com"]];
+        
+        [self presentViewController:self.mailComposer animated:YES completion:nil];
+    }
+    else
+    {
+        NSLog(@"This device cannot send email");
+    }
+}
+
+
+#pragma mark - MFMailComposeViewController Delegate
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result) {
+        case MFMailComposeResultSent:
+            [self didSubmitOrder];
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"You saved a draft of this email");
+            break;
+        case MFMailComposeResultCancelled:
+            NSLog(@"You cancelled sending this email.");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail failed:  An error occurred when trying to compose this email");
+            break;
+        default:
+            NSLog(@"An error occurred when trying to compose this email");
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 #pragma mark - BFOrderTableViewCell Delegate
 - (void)didTapEditButton:(UITableViewCell*)orderCell {
@@ -311,7 +403,7 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
         BOOL shouldEnableSubmitCell = [self shouldEnableSubmitCell];
         [self enableSubmitCell:shouldEnableSubmitCell];
 
-        
+        // FIXME: For v2 -- CHANGE this to batch persist all updated items on Submit. Just store in an array of items to updated here
         // Update in DB
         [[BFClientAPI sharedAPI] updateUserProduct:userProduct withSuccess:nil failure:^(NSError *error) {
             [self hasErrorWithLocalizedDescription:@"Unable to update Product"];
@@ -349,6 +441,7 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
         BOOL shouldEnableSubmitCell = [self shouldEnableSubmitCell];
         [self enableSubmitCell:shouldEnableSubmitCell];
         
+        // FIXME: For v2 -- CHANGE this to batch persist all updated items on Submit. Just store in an array of items to updated here
         // Update in DB
         [[BFClientAPI sharedAPI] updateUserProduct:userProduct withSuccess:nil failure:^(NSError *error) {
             [self hasErrorWithLocalizedDescription:@"Unable to update Product"];
