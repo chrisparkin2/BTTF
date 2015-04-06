@@ -37,6 +37,7 @@
 - (void)didTapEditButton:(UITableViewCell*)orderCell;
 - (void)didTapIncreaseBatchesButton:(UITableViewCell*)orderCell;
 - (void)didTapDecreaseBatchesButton:(UITableViewCell*)orderCell;
+- (void)didTapQuantityLabel:(UITableViewCell*)orderCell;
 
 
 @end

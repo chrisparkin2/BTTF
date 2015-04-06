@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E4CBE861AD2307700B406C5 /* Sales.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E4CBE851AD2307700B406C5 /* Sales.xib */; };
+		7E51C5E81AD232DC00982F98 /* Sales.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E51C5E71AD232DC00982F98 /* Sales.m */; };
 		840D1DF51A995CC20063B786 /* BFSubmitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D1DF41A995CC20063B786 /* BFSubmitTableViewCell.m */; };
 		840D1DF81A9AD20C0063B786 /* BFLogoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D1DF71A9AD20C0063B786 /* BFLogoViewController.m */; };
 		840D1DFB1A9ADCC10063B786 /* BFSupplierTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 840D1DFA1A9ADCC10063B786 /* BFSupplierTableViewCell.m */; };
@@ -114,8 +116,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0D2A53FEB50D4C28AD287B35 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		0875CDFA947D03C8E45B2DB7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		26642E948FEC0BEDD666FED1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF4CDF936F04892B289A082 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E4CBE851AD2307700B406C5 /* Sales.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Sales.xib; sourceTree = "<group>"; };
+		7E51C5E61AD232DC00982F98 /* Sales.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sales.h; sourceTree = "<group>"; };
+		7E51C5E71AD232DC00982F98 /* Sales.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sales.m; sourceTree = "<group>"; };
 		840D1DF31A995CC10063B786 /* BFSubmitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFSubmitTableViewCell.h; sourceTree = "<group>"; };
 		840D1DF41A995CC20063B786 /* BFSubmitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFSubmitTableViewCell.m; sourceTree = "<group>"; };
 		840D1DF61A9AD20C0063B786 /* BFLogoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFLogoViewController.h; sourceTree = "<group>"; };
@@ -276,6 +282,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2012CF3CDC9F08A2632523CD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				26642E948FEC0BEDD666FED1 /* Pods.debug.xcconfig */,
+				0875CDFA947D03C8E45B2DB7 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7E4CBE7C1AD2258000B406C5 /* Sales (Remove) */ = {
+			isa = PBXGroup;
+			children = (
+				7E4CBE851AD2307700B406C5 /* Sales.xib */,
+				7E51C5E61AD232DC00982F98 /* Sales.h */,
+				7E51C5E71AD232DC00982F98 /* Sales.m */,
+			);
+			name = "Sales (Remove)";
+			sourceTree = "<group>";
+		};
 		840D1DFC1A9E67D90063B786 /* Definition */ = {
 			isa = PBXGroup;
 			children = (
@@ -440,6 +465,7 @@
 		84796C1B1A8BFAEB00D83F7A /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				7E4CBE7C1AD2258000B406C5 /* Sales (Remove) */,
 				8461014B1A8D85EA00B4C3FD /* Add Product */,
 				84796C1C1A8BFB0600D83F7A /* BFProductViewController.h */,
 				84796C1D1A8BFB0600D83F7A /* BFProductViewController.m */,
@@ -466,8 +492,8 @@
 				848858FF1A8A82C5004BB75C /* bttf */,
 				848859191A8A82C5004BB75C /* bttfTests */,
 				848858FE1A8A82C5004BB75C /* Products */,
-				0D2A53FEB50D4C28AD287B35 /* Pods.xcconfig */,
 				A28039EFD2684D0488469617 /* Frameworks */,
+				2012CF3CDC9F08A2632523CD /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -741,6 +767,7 @@
 			files = (
 				840D1E121A9E67FF0063B786 /* AdjustYieldCell.xib in Resources */,
 				846D34CE1A9916B400754E06 /* chevron@3x.png in Resources */,
+				7E4CBE861AD2307700B406C5 /* Sales.xib in Resources */,
 				8488590C1A8A82C5004BB75C /* Main.storyboard in Resources */,
 				84C17A4B1A9E7D1F000D5A6D /* common_cow@2x.png in Resources */,
 				846D34A41A97DA4B00754E06 /* order_icon@3x.png in Resources */,
@@ -812,7 +839,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BF2964299E2847C68DF6EAF1 /* Check Pods Manifest.lock */ = {
@@ -839,6 +866,7 @@
 			files = (
 				84796C1E1A8BFB0600D83F7A /* BFProductViewController.m in Sources */,
 				840D1E181A9E68820063B786 /* InfoViewSubcutCell.m in Sources */,
+				7E51C5E81AD232DC00982F98 /* Sales.m in Sources */,
 				846D34AD1A97FB3700754E06 /* BFNavController.m in Sources */,
 				848278C71A91033400E568B0 /* BFCache.m in Sources */,
 				845109041A8C173C00CAF176 /* CategorySub.m in Sources */,
@@ -1002,7 +1030,7 @@
 		};
 		848859211A8A82C5004BB75C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D2A53FEB50D4C28AD287B35 /* Pods.xcconfig */;
+			baseConfigurationReference = 26642E948FEC0BEDD666FED1 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1018,7 +1046,7 @@
 		};
 		848859221A8A82C5004BB75C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D2A53FEB50D4C28AD287B35 /* Pods.xcconfig */;
+			baseConfigurationReference = 0875CDFA947D03C8E45B2DB7 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

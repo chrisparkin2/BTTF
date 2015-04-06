@@ -22,5 +22,5 @@
 @protocol BFOrderDrillDownDelegate <NSObject>
 
 - (void)didTapProductButton;
-
+- (void)didTapAdminButton;
 @end

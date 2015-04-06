@@ -23,6 +23,12 @@
     [self.rightArrow.layer setAffineTransform:CGAffineTransformMakeScale(-1, 1)];
 
     
+    // Add gesture to quantityLabel
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapQuantityLabel:)];
+    tap.numberOfTapsRequired = 1;
+    tap.numberOfTouchesRequired = 1;
+    [self.quantityUnitsTotalLabel addGestureRecognizer:tap];
+    self.quantityUnitsTotalLabel.userInteractionEnabled = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -72,6 +78,13 @@
 
 }
 
+
+- (void)didTapQuantityLabel:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didTapQuantityLabel:)]) {
+        [self.delegate didTapQuantityLabel:self];
+    }
+    
+}
 
 
 

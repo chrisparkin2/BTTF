@@ -12,6 +12,7 @@
 #import "UIColor+Extensions.h"
 #import "PopupView.h"
 #import "UserProduct.h"
+#import "User.h"
 
 @interface BFOrderDrillDownController () <BFSupplierVCDelegate, BFOrdersVCDelegate>
 
@@ -23,6 +24,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+//    [self setRightNavigationItem];
 }
 
 - (void) setLeftNavigationItem {
@@ -38,6 +45,21 @@
         
     }
 }
+
+//- (void) setRightNavigationItem {
+//    
+//    NSString* username = [User sharedInstance].username;
+//    if ([username isEqualToString:@"monkey"] ||
+//        [username isEqualToString:@"chrisparkin2"]) {
+//        
+//        UIBarButtonItem* rightBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Admin" style:UIBarButtonItemStylePlain target:self action:@selector(didTapAdminButton:)];
+//        [rightBarButton setTitleTextAttributes:@{
+//                                                 NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f],
+//                                                 NSForegroundColorAttributeName: [UIColor colorSalmon]
+//                                                 } forState:UIControlStateNormal];
+//        self.rightPlaceholderController.navigationItem.rightBarButtonItem = rightBarButton;
+//    }
+//}
 
 #pragma mark SupplierController
 - (void) presentSupplierController {
@@ -68,9 +90,12 @@
 
 - (void) reloadRightProductController:(id)parentObject{
     
-    BFOrdersViewController* ordersVC = (BFOrdersViewController*)[self.viewControllers lastObject];
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    BFOrdersViewController* ordersVC = (BFOrdersViewController*)[storyboard instantiateViewControllerWithIdentifier:@"OrdersViewController"];
+    ordersVC.delegate = self;
     ordersVC.parentObject = parentObject;
-    [ordersVC reloadData];
+    
+    [self replaceRightViewController:ordersVC animated:YES animationType:SGBDrillDownControllerReplaceAnimationTypeFade completion:^{}];
 }
 
 #pragma mark - BFSupplierVCDelegate
@@ -105,6 +130,22 @@
     
 }
 
+- (void)didTapSales:(UserProduct*)userProduct parentObject:(id)parentObject {
+    NSDictionary* data = @{ @"parentObject" : parentObject,
+                            @"userProduct" : userProduct };
+    
+    PopupView *pv = [[PopupView alloc] initWithScreen:@"Sales" andData:data onScreen:nil];
+    pv.delegate = self;
+    pv.closeAction = @selector(salesBoxClosed);
+    [self.view addSubview:pv];
+    [self.view bringSubviewToFront:pv];
+
+}
+
+-(void)salesBoxClosed {
+    
+}
+
 #pragma mark - Actions
 - (void)didTapProductButton:(id)sender {
     
@@ -112,5 +153,14 @@
         [self.delegate didTapProductButton];
     }
 }
+
+- (void)didTapAdminButton:(id)sender {
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didTapAdminButton)]) {
+        [self.delegate didTapProductButton];
+    }
+}
+
+
 
 @end

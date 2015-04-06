@@ -21,7 +21,7 @@ static NSString *const OrderHeaderCellIdentifier = @"OrdersHeaderCell";
 static NSString *const SubmitCellIdentifier = @"SubmitCell";
 
 
-@interface BFOrdersViewController () <UITableViewDataSource, UITableViewDelegate, BFOrderTableViewCellDelegate, MFMailComposeViewControllerDelegate>
+@interface BFOrdersViewController () <UITableViewDataSource, UITableViewDelegate, BFOrderTableViewCellDelegate, MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) MFMailComposeViewController *mailComposer;
 
@@ -45,8 +45,10 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
     return _objects;
 }
 
+
 - (void)dealloc {
-      [[NSNotificationCenter defaultCenter] removeObserver:self name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kBFNotificationCenterDidUpdateSalesKey object:nil];
 }
 
 #pragma mark - Lifecycle
@@ -82,10 +84,18 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
     
 }
 
+
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [self registerForNotifications];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self checkForUnsubmittedOrder];
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -259,9 +269,9 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
         NSNumber* batchCount = (NSNumber*)obj;
         batchCountTotal += [batchCount integerValue];
     }];
-    
 
     if (batchCountTotal > 0) return YES;
+    
     return NO;
     
 }
@@ -282,25 +292,18 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
 - (void)submit {
     
     // Get all userProducts that were updated
-    __block NSMutableArray* updatedUserProducts = [NSMutableArray new];
-    [self.objects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        
-        // FIXME: Stupid to add headerCell and footerCell to self.objects -- take out in v2
-        if (![obj isKindOfClass:[UserProduct class]]) return;
-        
-        UserProduct* userProduct = (UserProduct*)obj;
-        if ([userProduct.quantityBulk intValue] > 0) [updatedUserProducts addObject:userProduct];
-    }];
+    NSArray* updatedUserProducts = [self updatedUserProducts];
     
-    
-    // Send an e-mail
-    [self showMailComposeVCWithUserProducts:updatedUserProducts];
-    
+    // Send e-mails
+    if (updatedUserProducts.count > 0) {
+        [self showMailComposeVCWithUpdatedUserProducts:updatedUserProducts];
+    }
 }
 
 - (void)didSubmitOrder {
     
     // Reset the view
+    [self enableSubmitCell:NO];
     [self resetBatchCountTracker];
     [self.tableView reloadData];
 
@@ -315,7 +318,22 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
 
 }
 
-- (void)showMailComposeVCWithUserProducts:(NSArray*)userProducts {
+-(NSArray*)updatedUserProducts {
+    __block NSMutableArray* updatedUserProducts = [NSMutableArray new];
+    [self.objects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        // FIXME: Stupid to add headerCell and footerCell to self.objects -- take out in v2
+        if (![obj isKindOfClass:[UserProduct class]]) return;
+        
+        UserProduct* userProduct = (UserProduct*)obj;
+        if ([userProduct.quantityBulk intValue] > 0) [updatedUserProducts addObject:userProduct];
+    }];
+    
+    return [updatedUserProducts copy];
+
+}
+
+- (void)showMailComposeVCWithUpdatedUserProducts:(NSArray*)userProducts  {
     
     if ([MFMailComposeViewController canSendMail])
     {
@@ -323,7 +341,7 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
         self.mailComposer.mailComposeDelegate = self;
         
         // Compose subject
-        NSString* subject = [NSString stringWithFormat:@"Order for supplier: %@",(NSString*)self.parentObject];
+        NSString* subject = [NSString stringWithFormat:@"Orders for supplier: %@",(NSString*)self.parentObject];
         
         // Compose message
         __block NSString* message = @"";
@@ -339,7 +357,6 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
             message = [message stringByAppendingString:line];
         }];
         
-        
         // Set fields
         [self.mailComposer setSubject:subject];
         [self.mailComposer setMessageBody:message isHTML:NO];
@@ -353,6 +370,17 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
     }
 }
 
+- (BOOL) checkForUnsubmittedOrder {
+    
+    if ([self shouldEnableSubmitCell]) {
+        UIAlertView* submitAlertView = [[UIAlertView alloc] initWithTitle:@"Not Submitted!" message:@"You added batches to your order but did not tap the Submit button.\n The order was lost.\n Next time tap the Submit button before navigating away." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [submitAlertView show];
+        
+        return YES;
+    }
+
+    return NO;
+}
 
 #pragma mark - MFMailComposeViewController Delegate
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
@@ -461,11 +489,28 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
     }
 }
 
+-(void)didTapQuantityLabel:(UITableViewCell*)orderCell {
+    // A Product Cell
+    UserProduct* userProduct = self.objects[orderCell.tag];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didTapSales:parentObject:)]) {
+        [self.delegate didTapSales:userProduct parentObject:self.parentObject];
+    }
+}
+
+#pragma mark - UIAlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+
+    
+}
+
 #pragma mark - NSNotificationCenter
 - (void) registerForNotifications {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateUserProduct:) name:kBFNotificationCenterDidUpdateUserProductKey object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kBFNotificationCenterDidUpdateSalesKey object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateSales:) name:kBFNotificationCenterDidUpdateSalesKey object:nil];
     
 }
 
@@ -473,6 +518,8 @@ static NSString *const SubmitCellIdentifier = @"SubmitCell";
     [self.tableView reloadData];
 }
 
-
+- (void)didUpdateSales:(NSNotification*)notification {
+    [self.tableView reloadData];
+}
 
 @end

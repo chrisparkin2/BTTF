@@ -33,5 +33,6 @@
 @protocol BFOrdersVCDelegate <NSObject>
 
 - (void)didTapProduct:(UserProduct*)userProduct parentObject:(id)parentObject;
+- (void)didTapSales:(UserProduct*)userProduct parentObject:(id)parentObject;
 
 @end

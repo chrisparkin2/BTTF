@@ -16,7 +16,7 @@ extern NSString *const kBFNotificationCenterDidUpdateUserProductKey;
 
 #pragma mark NSNotificationCenter UserInfoKeys
 extern NSString *const kBFNotificationInfoUserProductKey;
-
+extern NSString *const kBFNotificationCenterDidUpdateSalesKey;
 
 
 #pragma mark - Images

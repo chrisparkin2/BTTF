@@ -14,7 +14,7 @@ NSString *const kBFUserDefaultsCurrentUserKey                     = @"com.bttf.u
 
 #pragma mark - NSNotificationCenter
 NSString *const kBFNotificationCenterDidUpdateUserProductKey                     = @"com.bttf.notification.didUpdateUserProduct";
-
+NSString *const kBFNotificationCenterDidUpdateSalesKey                     = @"com.bttf.notification.didUpdateSales";
 
 #pragma mark NSNotificationCenter UserInfoKeys
 NSString *const kBFNotificationInfoUserProductKey = @"userProduct";

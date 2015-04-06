@@ -21,6 +21,9 @@
 
 @interface BFNavController () <BFProductDrillDownDelegate, BFOrderDrillDownDelegate>
 
+@property (nonatomic, strong) UIAlertView *adminAlertView;
+
+
 @end
 
 @implementation BFNavController
@@ -73,6 +76,24 @@
 -(void)loginBoxClosed {
     [self proceedToMainInterface];
     
+    [self shouldShowAdmin];
+}
+
+#pragma mark - Admin
+- (BOOL) shouldShowAdmin {
+    
+    NSString* username = [User sharedInstance].username;
+    if ([username isEqualToString:@"admin"]) {
+        
+        self.adminAlertView = [[UIAlertView alloc] initWithTitle:@"Admin"
+                                                         message:@"Enter username:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        self.adminAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+        [self.adminAlertView show];
+        
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark - DrillDownController
@@ -177,6 +198,14 @@
     [self showProductDrillDownController];
 }
 
+
+#pragma mark - UIAlertView
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *username = [[alertView textFieldAtIndex:0] text];
+
+    
+}
 
 
 

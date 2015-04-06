@@ -164,7 +164,7 @@ typedef enum {
         self.quantityUnitsTextField.text = [self.userProduct.quantityUnits stringValue];
     }
     else {
-        self.quantityTriggerTextField.text = [@([UserProduct defaultQuantityTrigger]) stringValue];
+
     }
 
 }
